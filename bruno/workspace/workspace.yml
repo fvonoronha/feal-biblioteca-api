@@ -1,0 +1,16 @@
+opencollection: 1.0.0
+info:
+  name: "Feal - Biblioteca"
+  type: workspace
+
+collections:
+  - name: "Usuário"
+    path: "collections/Usuário"
+  - name: "Autenticação"
+    path: "collections/Autenticação"
+
+specs:
+
+docs: ''
+
+activeEnvironmentUid: 17yofv800000000000000
