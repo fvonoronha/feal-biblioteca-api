@@ -1,0 +1,20 @@
+info:
+  name: Listar tags
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{URL}}/tags"
+  body:
+    type: json
+    data: ""
+  auth:
+    type: bearer
+    token: "{{AUTH_TOKEN}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

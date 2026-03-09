@@ -1,7 +1,7 @@
 info:
   name: Login
   type: http
-  seq: 4
+  seq: 3
 
 http:
   method: POST
@@ -14,6 +14,13 @@ http:
         "password":"12345678"
       }
   auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        let data = res.getBody();
+        bru.setGlobalEnvVar("AUTH_TOKEN", data.body.token.jwt_token);
 
 settings:
   encodeUrl: true

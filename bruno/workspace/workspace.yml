@@ -8,6 +8,10 @@ collections:
     path: "collections/Usuário"
   - name: "Autenticação"
     path: "collections/Autenticação"
+  - name: "Acervo"
+    path: "collections/Acervo"
+  - name: "Gerenciamento"
+    path: "collections/Gerenciamento"
 
 specs:
 

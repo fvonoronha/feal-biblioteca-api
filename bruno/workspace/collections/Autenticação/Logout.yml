@@ -1,0 +1,20 @@
+info:
+  name: Logout
+  type: http
+  seq: 2
+
+http:
+  method: DELETE
+  url: "{{URL}}/logout"
+  body:
+    type: json
+    data: ""
+  auth:
+    type: bearer
+    token: "{{AUTH_TOKEN}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
