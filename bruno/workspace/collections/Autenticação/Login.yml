@@ -1,0 +1,29 @@
+info:
+  name: Login
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{URL}}/login"
+  body:
+    type: json
+    data: |-
+      {
+        "login":"fvonoronha",
+        "password":"12345678"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        let data = res.getBody();
+        bru.setGlobalEnvVar("AUTH_TOKEN", data.body.token.jwt_token);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

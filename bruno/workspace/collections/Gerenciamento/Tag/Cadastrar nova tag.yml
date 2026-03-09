@@ -1,0 +1,25 @@
+info:
+  name: Cadastrar nova tag
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{URL}}/tag"
+  body:
+    type: json
+    data: |-
+      {
+        "name":"Mediunidade",
+        "slug":"mediunidade",
+        "description":"Conteúdos sobre mediunidade"
+      }
+  auth:
+    type: bearer
+    token: "{{AUTH_TOKEN}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

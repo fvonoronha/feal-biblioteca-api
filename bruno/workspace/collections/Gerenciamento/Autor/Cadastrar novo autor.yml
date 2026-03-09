@@ -1,0 +1,25 @@
+info:
+  name: Cadastrar novo autor
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{URL}}/author"
+  body:
+    type: json
+    data: |-
+      {
+        "name":"Emmanuel",
+        "slug":"emmanel",
+        "is_spirit":true
+      }
+  auth:
+    type: bearer
+    token: "{{AUTH_TOKEN}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

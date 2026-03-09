@@ -1,0 +1,6 @@
+name: Localhost
+variables:
+  - name: URL
+    value: http://localhost:3000
+  - name: AUTH_TOKEN
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEwMDAwMDksImxnbiI6ImZ2b25vcm9uaGEiLCJzY3QiOiIyUDRjUWdLdkg5IiwiaWF0IjoxNzczMDI4OTM2fQ.YBrGrhGZPga0vilIRqS6LPrA4JyM7ExYmr0li8SXKz8
