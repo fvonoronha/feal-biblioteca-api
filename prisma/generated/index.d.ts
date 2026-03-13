@@ -5808,6 +5808,7 @@ export namespace Prisma {
     status: $Enums.StatusEnum | null
     author_id: bigint | null
     book_id: bigint | null
+    description: string | null
   }
 
   export type BookAuthorMaxAggregateOutputType = {
@@ -5820,6 +5821,7 @@ export namespace Prisma {
     status: $Enums.StatusEnum | null
     author_id: bigint | null
     book_id: bigint | null
+    description: string | null
   }
 
   export type BookAuthorCountAggregateOutputType = {
@@ -5832,6 +5834,7 @@ export namespace Prisma {
     status: number
     author_id: number
     book_id: number
+    description: number
     _all: number
   }
 
@@ -5862,6 +5865,7 @@ export namespace Prisma {
     status?: true
     author_id?: true
     book_id?: true
+    description?: true
   }
 
   export type BookAuthorMaxAggregateInputType = {
@@ -5874,6 +5878,7 @@ export namespace Prisma {
     status?: true
     author_id?: true
     book_id?: true
+    description?: true
   }
 
   export type BookAuthorCountAggregateInputType = {
@@ -5886,6 +5891,7 @@ export namespace Prisma {
     status?: true
     author_id?: true
     book_id?: true
+    description?: true
     _all?: true
   }
 
@@ -5985,6 +5991,7 @@ export namespace Prisma {
     status: $Enums.StatusEnum
     author_id: bigint
     book_id: bigint
+    description: string | null
     _count: BookAuthorCountAggregateOutputType | null
     _avg: BookAuthorAvgAggregateOutputType | null
     _sum: BookAuthorSumAggregateOutputType | null
@@ -6016,6 +6023,7 @@ export namespace Prisma {
     status?: boolean
     author_id?: boolean
     book_id?: boolean
+    description?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | BookAuthor$updated_by_userArgs<ExtArgs>
     author?: boolean | AuthorDefaultArgs<ExtArgs>
@@ -6032,6 +6040,7 @@ export namespace Prisma {
     status?: boolean
     author_id?: boolean
     book_id?: boolean
+    description?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | BookAuthor$updated_by_userArgs<ExtArgs>
     author?: boolean | AuthorDefaultArgs<ExtArgs>
@@ -6048,6 +6057,7 @@ export namespace Prisma {
     status?: boolean
     author_id?: boolean
     book_id?: boolean
+    description?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | BookAuthor$updated_by_userArgs<ExtArgs>
     author?: boolean | AuthorDefaultArgs<ExtArgs>
@@ -6064,9 +6074,10 @@ export namespace Prisma {
     status?: boolean
     author_id?: boolean
     book_id?: boolean
+    description?: boolean
   }
 
-  export type BookAuthorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "status" | "author_id" | "book_id", ExtArgs["result"]["bookAuthor"]>
+  export type BookAuthorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "status" | "author_id" | "book_id" | "description", ExtArgs["result"]["bookAuthor"]>
   export type BookAuthorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | BookAuthor$updated_by_userArgs<ExtArgs>
@@ -6104,6 +6115,7 @@ export namespace Prisma {
       status: $Enums.StatusEnum
       author_id: bigint
       book_id: bigint
+      description: string | null
     }, ExtArgs["result"]["bookAuthor"]>
     composites: {}
   }
@@ -6540,6 +6552,7 @@ export namespace Prisma {
     readonly status: FieldRef<"BookAuthor", 'StatusEnum'>
     readonly author_id: FieldRef<"BookAuthor", 'BigInt'>
     readonly book_id: FieldRef<"BookAuthor", 'BigInt'>
+    readonly description: FieldRef<"BookAuthor", 'String'>
   }
     
 
@@ -12127,7 +12140,8 @@ export namespace Prisma {
     updated_by_user_id: 'updated_by_user_id',
     status: 'status',
     author_id: 'author_id',
-    book_id: 'book_id'
+    book_id: 'book_id',
+    description: 'description'
   };
 
   export type BookAuthorScalarFieldEnum = (typeof BookAuthorScalarFieldEnum)[keyof typeof BookAuthorScalarFieldEnum]
@@ -12683,6 +12697,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFilter<"BookAuthor"> | $Enums.StatusEnum
     author_id?: BigIntFilter<"BookAuthor"> | bigint | number
     book_id?: BigIntFilter<"BookAuthor"> | bigint | number
+    description?: StringNullableFilter<"BookAuthor"> | string | null
     created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     author?: XOR<AuthorScalarRelationFilter, AuthorWhereInput>
@@ -12699,6 +12714,7 @@ export namespace Prisma {
     status?: SortOrder
     author_id?: SortOrder
     book_id?: SortOrder
+    description?: SortOrderInput | SortOrder
     created_by_user?: UserOrderByWithRelationInput
     updated_by_user?: UserOrderByWithRelationInput
     author?: AuthorOrderByWithRelationInput
@@ -12718,6 +12734,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFilter<"BookAuthor"> | $Enums.StatusEnum
     author_id?: BigIntFilter<"BookAuthor"> | bigint | number
     book_id?: BigIntFilter<"BookAuthor"> | bigint | number
+    description?: StringNullableFilter<"BookAuthor"> | string | null
     created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     author?: XOR<AuthorScalarRelationFilter, AuthorWhereInput>
@@ -12734,6 +12751,7 @@ export namespace Prisma {
     status?: SortOrder
     author_id?: SortOrder
     book_id?: SortOrder
+    description?: SortOrderInput | SortOrder
     _count?: BookAuthorCountOrderByAggregateInput
     _avg?: BookAuthorAvgOrderByAggregateInput
     _max?: BookAuthorMaxOrderByAggregateInput
@@ -12754,6 +12772,7 @@ export namespace Prisma {
     status?: EnumStatusEnumWithAggregatesFilter<"BookAuthor"> | $Enums.StatusEnum
     author_id?: BigIntWithAggregatesFilter<"BookAuthor"> | bigint | number
     book_id?: BigIntWithAggregatesFilter<"BookAuthor"> | bigint | number
+    description?: StringNullableWithAggregatesFilter<"BookAuthor"> | string | null
   }
 
   export type TagWhereInput = {
@@ -13539,6 +13558,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
+    description?: string | null
     created_by_user: UserCreateNestedOneWithoutCreated_book_authorsInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_book_authorsInput
     author: AuthorCreateNestedOneWithoutBooksInput
@@ -13555,6 +13575,7 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     author_id: bigint | number
     book_id: bigint | number
+    description?: string | null
   }
 
   export type BookAuthorUpdateInput = {
@@ -13563,6 +13584,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_book_authorsNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_book_authorsNestedInput
     author?: AuthorUpdateOneRequiredWithoutBooksNestedInput
@@ -13579,6 +13601,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     author_id?: BigIntFieldUpdateOperationsInput | bigint | number
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookAuthorCreateManyInput = {
@@ -13591,6 +13614,7 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     author_id: bigint | number
     book_id: bigint | number
+    description?: string | null
   }
 
   export type BookAuthorUpdateManyMutationInput = {
@@ -13599,6 +13623,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookAuthorUncheckedUpdateManyInput = {
@@ -13611,6 +13636,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     author_id?: BigIntFieldUpdateOperationsInput | bigint | number
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TagCreateInput = {
@@ -14556,6 +14582,7 @@ export namespace Prisma {
     status?: SortOrder
     author_id?: SortOrder
     book_id?: SortOrder
+    description?: SortOrder
   }
 
   export type BookAuthorAvgOrderByAggregateInput = {
@@ -14576,6 +14603,7 @@ export namespace Prisma {
     status?: SortOrder
     author_id?: SortOrder
     book_id?: SortOrder
+    description?: SortOrder
   }
 
   export type BookAuthorMinOrderByAggregateInput = {
@@ -14588,6 +14616,7 @@ export namespace Prisma {
     status?: SortOrder
     author_id?: SortOrder
     book_id?: SortOrder
+    description?: SortOrder
   }
 
   export type BookAuthorSumOrderByAggregateInput = {
@@ -16560,6 +16589,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
+    description?: string | null
     updated_by_user?: UserCreateNestedOneWithoutUpdated_book_authorsInput
     author: AuthorCreateNestedOneWithoutBooksInput
     book: BookCreateNestedOneWithoutAuthorsInput
@@ -16574,6 +16604,7 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     author_id: bigint | number
     book_id: bigint | number
+    description?: string | null
   }
 
   export type BookAuthorCreateOrConnectWithoutCreated_by_userInput = {
@@ -16592,6 +16623,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
+    description?: string | null
     created_by_user: UserCreateNestedOneWithoutCreated_book_authorsInput
     author: AuthorCreateNestedOneWithoutBooksInput
     book: BookCreateNestedOneWithoutAuthorsInput
@@ -16606,6 +16638,7 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     author_id: bigint | number
     book_id: bigint | number
+    description?: string | null
   }
 
   export type BookAuthorCreateOrConnectWithoutUpdated_by_userInput = {
@@ -17035,6 +17068,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFilter<"BookAuthor"> | $Enums.StatusEnum
     author_id?: BigIntFilter<"BookAuthor"> | bigint | number
     book_id?: BigIntFilter<"BookAuthor"> | bigint | number
+    description?: StringNullableFilter<"BookAuthor"> | string | null
   }
 
   export type BookAuthorUpsertWithWhereUniqueWithoutUpdated_by_userInput = {
@@ -17461,6 +17495,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
+    description?: string | null
     created_by_user: UserCreateNestedOneWithoutCreated_book_authorsInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_book_authorsInput
     book: BookCreateNestedOneWithoutAuthorsInput
@@ -17475,6 +17510,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     book_id: bigint | number
+    description?: string | null
   }
 
   export type BookAuthorCreateOrConnectWithoutAuthorInput = {
@@ -18925,6 +18961,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
+    description?: string | null
     created_by_user: UserCreateNestedOneWithoutCreated_book_authorsInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_book_authorsInput
     author: AuthorCreateNestedOneWithoutBooksInput
@@ -18939,6 +18976,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     author_id: bigint | number
+    description?: string | null
   }
 
   export type BookAuthorCreateOrConnectWithoutBookInput = {
@@ -19786,6 +19824,7 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     author_id: bigint | number
     book_id: bigint | number
+    description?: string | null
   }
 
   export type BookAuthorCreateManyUpdated_by_userInput = {
@@ -19797,6 +19836,7 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     author_id: bigint | number
     book_id: bigint | number
+    description?: string | null
   }
 
   export type TagCreateManyCreated_by_userInput = {
@@ -20165,6 +20205,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by_user?: UserUpdateOneWithoutUpdated_book_authorsNestedInput
     author?: AuthorUpdateOneRequiredWithoutBooksNestedInput
     book?: BookUpdateOneRequiredWithoutAuthorsNestedInput
@@ -20179,6 +20220,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     author_id?: BigIntFieldUpdateOperationsInput | bigint | number
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookAuthorUncheckedUpdateManyWithoutCreated_by_userInput = {
@@ -20190,6 +20232,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     author_id?: BigIntFieldUpdateOperationsInput | bigint | number
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookAuthorUpdateWithoutUpdated_by_userInput = {
@@ -20198,6 +20241,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_book_authorsNestedInput
     author?: AuthorUpdateOneRequiredWithoutBooksNestedInput
     book?: BookUpdateOneRequiredWithoutAuthorsNestedInput
@@ -20212,6 +20256,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     author_id?: BigIntFieldUpdateOperationsInput | bigint | number
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookAuthorUncheckedUpdateManyWithoutUpdated_by_userInput = {
@@ -20223,6 +20268,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     author_id?: BigIntFieldUpdateOperationsInput | bigint | number
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TagUpdateWithoutCreated_by_userInput = {
@@ -20496,6 +20542,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     book_id: bigint | number
+    description?: string | null
   }
 
   export type BookAuthorUpdateWithoutAuthorInput = {
@@ -20504,6 +20551,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_book_authorsNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_book_authorsNestedInput
     book?: BookUpdateOneRequiredWithoutAuthorsNestedInput
@@ -20518,6 +20566,7 @@ export namespace Prisma {
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookAuthorUncheckedUpdateManyWithoutAuthorInput = {
@@ -20529,6 +20578,7 @@ export namespace Prisma {
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookTagCreateManyTagInput = {
@@ -20584,6 +20634,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     author_id: bigint | number
+    description?: string | null
   }
 
   export type BookTagCreateManyBookInput = {
@@ -20617,6 +20668,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_book_authorsNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_book_authorsNestedInput
     author?: AuthorUpdateOneRequiredWithoutBooksNestedInput
@@ -20631,6 +20683,7 @@ export namespace Prisma {
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     author_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookAuthorUncheckedUpdateManyWithoutBookInput = {
@@ -20642,6 +20695,7 @@ export namespace Prisma {
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     author_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookTagUpdateWithoutBookInput = {

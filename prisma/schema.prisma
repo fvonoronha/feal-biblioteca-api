@@ -123,8 +123,9 @@ model BookAuthor {
 
   status StatusEnum @default(A)
 
-  author_id BigInt
-  book_id   BigInt
+  author_id   BigInt
+  book_id     BigInt
+  description String?
 
   created_by_user User   @relation(fields: [created_by_user_id], references: [id], name: "BookAuthor_User_created_by_user_id")
   updated_by_user User?  @relation(fields: [updated_by_user_id], references: [id], name: "BookAuthor_User_updated_by_user_id")
@@ -167,8 +168,9 @@ model BookTag {
   updated_at         DateTime?  @db.Timestamptz(6)
   updated_by_user_id BigInt?
   status             StatusEnum @default(A)
-  tag_id             BigInt
-  book_id            BigInt
+
+  tag_id  BigInt
+  book_id BigInt
 
   created_by_user User  @relation(fields: [created_by_user_id], references: [id], name: "BookTag_User_created_by_user_id")
   updated_by_user User? @relation(fields: [updated_by_user_id], references: [id], name: "BookTag_User_updated_by_user_id")

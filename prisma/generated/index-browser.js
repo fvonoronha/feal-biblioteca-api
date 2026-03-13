@@ -173,7 +173,8 @@ exports.Prisma.BookAuthorScalarFieldEnum = {
   updated_by_user_id: 'updated_by_user_id',
   status: 'status',
   author_id: 'author_id',
-  book_id: 'book_id'
+  book_id: 'book_id',
+  description: 'description'
 };
 
 exports.Prisma.TagScalarFieldEnum = {
