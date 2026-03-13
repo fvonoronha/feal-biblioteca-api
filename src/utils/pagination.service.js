@@ -14,6 +14,15 @@ module.exports = {
                 ? parseInt(pagination.page)
                 : DEFAULT_PAGINATION_PAGE
             : DEFAULT_PAGINATION_PAGE;
+
+        // ToDo: Validar orderBy e orderDirection
+        if (Object.prototype.hasOwnProperty.call(pagination, "orderBy")) {
+            obj.orderBy = pagination.orderBy;
+            obj.orderDirection =
+                pagination.orderDirection && ["asc", "desc"].includes(pagination.orderDirection.toLowerCase())
+                    ? pagination.orderDirection.toLowerCase()
+                    : "asc";
+        }
         return obj;
     },
 
