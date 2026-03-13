@@ -1,0 +1,37 @@
+info:
+  name: Cadastrar novo livro
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{URL}}/book"
+  body:
+    type: json
+    data: |-
+      {
+        "slug":"o-livro-dos-espiritos",
+        "title":"O Livro dos Espíritos",
+        "subtitle":"Tradução Guillon Ribeiro",
+        "publisher":"FEB Editora",
+        "year":2024,
+        "edition":"5",
+        "isbn":"ISBN",
+        "pages":510,
+        "summary":"",
+        "pdf_url":"https://feal.espirita.casa/livro/o-livro-dos-espiritos",
+        "cover_url":"https://feal.espirita.casa/wp-content/uploads/O-Livro-dos-Espiritos-Capa.jpg",
+        "images_url":["https://feal.espirita.casa/wp-content/uploads/O-Livro-dos-Espiritos-Capa.jpg", "https://feal.espirita.casa/wp-content/uploads/O-Livro-dos-Espiritos-Capa.jpg"],
+        "label":"AK-00001",
+        "shelf":"A-3",
+        "description":"Dos cinco livros fundamentais que compõem a Codificação do Espiritismo, este foi o primeiro, reunindo os ensinos dos Espíritos Superiores através de médiuns de várias partes do Mundo. Ele é o marco inicial de uma Doutrina que trouxe uma profunda repercussão no pensamento e na visão de vida de considerável parcela da Humanidade, desde 1857, data da primeira edição francesa. Estruturado em quatro partes e contendo 1.019 perguntas formuladas pelo Codificador, aborda os ensinamentos espíritas, de uma forma lógica e racional, sob os aspectos científico, filosófico e religioso. Independentemente de crença ou convicção religiosa, a leitura de “O Livro dos Espíritos” será de imenso valor para todos, porque trata de Deus, da imortalidade da alma, da natureza dos Espíritos, de suas relações com os homens, das leis morais, da vida presente, da vida futura e do porvir da Humanidade, assuntos de interesse geral e de grande atualidade."
+      }
+  auth:
+    type: bearer
+    token: "{{AUTH_TOKEN}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

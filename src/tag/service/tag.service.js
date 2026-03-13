@@ -25,6 +25,7 @@ module.exports = {
 
             return newTag;
         } catch (err) {
+            console.log(err);
             return parseError(err);
         }
     },

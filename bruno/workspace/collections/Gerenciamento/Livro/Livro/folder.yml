@@ -1,0 +1,7 @@
+info:
+  name: Livro
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit

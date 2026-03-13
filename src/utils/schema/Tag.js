@@ -3,6 +3,7 @@ const { z } = require("zod");
 const createTagSchema = z.object({
     name: z.string().min(1, "Nome é obrigatório"),
     description: z.string().optional(),
+    status: z.enum(["A", "I", "D"]).optional(),
     slug: z
         .string()
         .min(3, "O slug deve ter pelo menos 3 caracteres.")
