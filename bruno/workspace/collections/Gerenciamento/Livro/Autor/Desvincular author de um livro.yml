@@ -1,18 +1,15 @@
 info:
-  name: Cadastrar nova tag
+  name: Desvincular author de um livro
   type: http
   seq: 2
 
 http:
-  method: POST
-  url: "{{URL}}/tag"
+  method: DELETE
+  url: "{{URL}}/book/1000001/author/1000001/unlink"
   body:
     type: json
     data: |-
       {
-        "name":"Codificação",
-        "slug":"codificacao",
-        "description":"Obras básicas da codificação"
       }
   auth:
     type: bearer

@@ -1,18 +1,19 @@
 info:
-  name: Cadastrar nova tag
+  name: Listar livros
   type: http
-  seq: 2
+  seq: 1
 
 http:
   method: POST
-  url: "{{URL}}/tag"
+  url: "{{URL}}/public/books"
   body:
     type: json
     data: |-
       {
-        "name":"Codificação",
-        "slug":"codificacao",
-        "description":"Obras básicas da codificação"
+        "pagination":{
+          "limit":"3",
+          "page":"1"
+        }
       }
   auth:
     type: bearer

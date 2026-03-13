@@ -1,18 +1,16 @@
 info:
-  name: Cadastrar nova tag
+  name: Vincular tag a um livro
   type: http
-  seq: 2
+  seq: 4
 
 http:
-  method: POST
-  url: "{{URL}}/tag"
+  method: PUT
+  url: "{{URL}}/book/1000001/tag/1000003/link"
   body:
     type: json
     data: |-
       {
-        "name":"Codificação",
-        "slug":"codificacao",
-        "description":"Obras básicas da codificação"
+        
       }
   auth:
     type: bearer
