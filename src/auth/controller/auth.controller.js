@@ -5,7 +5,7 @@ const { getClientIp } = require("../../utils/ip.service");
 
 const { validateSchema } = require("../../utils/validation.service");
 
-const {loginSchema} = require("../../utils/schema/Login");
+const { loginSchema } = require("../../utils/schema/Login");
 
 module.exports = {
     async login(req, res, next) {
@@ -41,6 +41,21 @@ module.exports = {
             // req.response.body.token = { error };
             // req.response.body.user = { error };
             return end(req, res);
+        }
+
+        req.response.meta.feedback = FEEDBACK.VALIDATED;
+        req.response.params.user = user;
+
+        return next();
+    },
+
+    async isAuthOrNot(req, res, next) {
+        const { error, user } = await authService.isAuth(req, getClientIp(req));
+
+        if (error) {
+            req.response.meta.feedback = FEEDBACK.OK;
+            req.response.params.user = null;
+            return next();
         }
 
         req.response.meta.feedback = FEEDBACK.VALIDATED;

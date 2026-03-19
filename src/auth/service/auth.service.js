@@ -135,8 +135,6 @@ module.exports = {
                 };
             }
 
-            console.log("passou?");
-
             returnObj.user = userToken.user;
             returnObj.token = {
                 keep: userToken.keep,

@@ -2,6 +2,7 @@ const { parsePagination } = require("../../utils/pagination.service");
 const { getSlug } = require("../../utils/id.service");
 const { encrypt2, decrypt2 } = require("../../utils/cryptography.service");
 const { db, parseError } = require("../../utils/db.service");
+const { getBookFiltersWhereClause } = require("../../utils/filters.service");
 
 module.exports = {
     // Operaçoes de Gerenciamento
@@ -161,22 +162,17 @@ module.exports = {
         }
     },
 
-    // Operações de Consumo
     async listPublicBooks(filter, pagination) {
         try {
             const paginationObj = parsePagination(pagination);
 
+            const where = getBookFiltersWhereClause(filter);
+
             const books = await db.book.findMany({
                 skip: paginationObj.limit * (paginationObj.page - 1),
                 take: paginationObj.limit,
-                orderBy: {
-                    ...paginationObj.orderBy
-                },
-                where: {
-                    // ToDo: Listar apenas livros com obras publicadas
-                    ...filter,
-                    status: "A"
-                },
+                orderBy: paginationObj.orderBy || { title: "asc" },
+                where,
                 select: {
                     id: true,
                     slug: true,
@@ -232,11 +228,7 @@ module.exports = {
             });
 
             const total = await db.book.count({
-                where: {
-                    // ToDo: Listar apenas livros com obras publicadas
-                    ...filter,
-                    status: "A"
-                }
+                where
             });
 
             const totalPages = Math.ceil(total / paginationObj.limit);
@@ -250,6 +242,57 @@ module.exports = {
                     total_pages: totalPages,
                     has_next: paginationObj.page < totalPages,
                     has_previous: paginationObj.page > 1
+                }
+            };
+        } catch (err) {
+            return parseError(err);
+        }
+    },
+
+    async listPublicPublishers(filter) {
+        try {
+            const booksWhere = getBookFiltersWhereClause(filter);
+
+            const allPublishers = await db.book.groupBy({
+                by: ["publisher"],
+                where: {
+                    status: "A",
+                    publisher: { not: null }
+                },
+                orderBy: {
+                    publisher: "asc"
+                }
+            });
+
+            const filteredCounts = await db.book.groupBy({
+                by: ["publisher"],
+                where: {
+                    ...booksWhere,
+                    publisher: { not: null }
+                },
+                _count: {
+                    publisher: true
+                }
+            });
+
+            const countsMap = new Map(filteredCounts.map((item) => [item.publisher, item._count.publisher]));
+
+            const elements = allPublishers.map((item) => ({
+                name: item.publisher,
+                _count: {
+                    books: countsMap.get(item.publisher) || 0
+                }
+            }));
+
+            return {
+                elements: elements,
+                pagination: {
+                    page: 1,
+                    limit: elements.length,
+                    total_elements: elements.length,
+                    total_pages: 1,
+                    has_next: false,
+                    has_previous: false
                 }
             };
         } catch (err) {

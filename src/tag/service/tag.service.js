@@ -3,6 +3,8 @@ const { getSlug } = require("../../utils/id.service");
 const { encrypt2, decrypt2 } = require("../../utils/cryptography.service");
 const { db, parseError } = require("../../utils/db.service");
 
+const { getBookFiltersWhereClause } = require("../../utils/filters.service");
+
 module.exports = {
     // Operaçoes de Gerenciamento
     async createTag(tag, req) {
@@ -25,7 +27,6 @@ module.exports = {
 
             return newTag;
         } catch (err) {
-            console.log(err);
             return parseError(err);
         }
     },
@@ -95,24 +96,53 @@ module.exports = {
     async listPublicTags(filter, pagination) {
         try {
             const paginationObj = parsePagination(pagination);
+            const booksWhere = getBookFiltersWhereClause(filter);
 
-            const tags = await db.tag.findMany({
+            const where = {
+                status: "A",
+                books: {
+                    some: {
+                        status: "A",
+                        book: { status: "A" }
+                    }
+                }
+            };
+
+            const tagsList = await db.tag.findMany({
                 skip: paginationObj.limit * (paginationObj.page - 1),
                 take: paginationObj.limit,
-                where: {
-                    ...filter,
-                    status: "A"
-                },
+                where,
                 select: {
                     id: true,
                     slug: true,
                     name: true,
                     status: true,
-                    description: true
-                }
+                    description: true,
+                    _count: {
+                        select: {
+                            books: {
+                                where: { status: "A", book: booksWhere }
+                            }
+                        }
+                    }
+                },
+                orderBy: { name: "asc" }
             });
 
-            return { elements: tags };
+            const total = await db.tag.count({ where });
+            const totalPages = Math.ceil(total / paginationObj.limit);
+
+            return {
+                elements: tagsList,
+                pagination: {
+                    page: paginationObj.page,
+                    limit: paginationObj.limit,
+                    total_elements: total,
+                    total_pages: totalPages,
+                    has_next: paginationObj.page < totalPages,
+                    has_previous: paginationObj.page > 1
+                }
+            };
         } catch (err) {
             return parseError(err);
         }

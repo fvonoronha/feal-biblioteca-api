@@ -3,6 +3,8 @@ const { getSlug } = require("../../utils/id.service");
 const { encrypt2, decrypt2 } = require("../../utils/cryptography.service");
 const { db, parseError } = require("../../utils/db.service");
 
+const { getBookFiltersWhereClause } = require("../../utils/filters.service");
+
 module.exports = {
     // Operaçoes de Gerenciamento
     async createAuthor(author, req) {
@@ -97,19 +99,27 @@ module.exports = {
         }
     },
 
-    // Operações de Consumo
     async listPublicAuthors(filter, pagination) {
         try {
             const paginationObj = parsePagination(pagination);
+            const booksWhere = getBookFiltersWhereClause(filter);
 
-            const authors = await db.author.findMany({
+            const where = {
+                status: "A",
+                // Filtra autores que tenham "algum" livro que bata com o where de livros
+                books: {
+                    some: {
+                        status: "A",
+                        book: { status: "A" }
+                        //book: booksWhere // Acessa o objeto livro através da pivot
+                    }
+                }
+            };
+
+            const authorsList = await db.author.findMany({
                 skip: paginationObj.limit * (paginationObj.page - 1),
                 take: paginationObj.limit,
-                where: {
-                    // ToDo: Lisar apenas autores com obras publicadas
-                    ...filter,
-                    status: "A"
-                },
+                where,
                 select: {
                     id: true,
                     slug: true,
@@ -117,11 +127,32 @@ module.exports = {
                     status: true,
                     description: true,
                     avatar_url: true,
-                    is_spirit: true
-                }
+                    is_spirit: true,
+                    _count: {
+                        select: {
+                            books: {
+                                where: { status: "A", book: booksWhere }
+                            }
+                        }
+                    }
+                },
+                orderBy: { name: "asc" }
             });
 
-            return { elements: authors };
+            const total = await db.author.count({ where });
+            const totalPages = Math.ceil(total / paginationObj.limit);
+
+            return {
+                elements: authorsList,
+                pagination: {
+                    page: paginationObj.page,
+                    limit: paginationObj.limit,
+                    total_elements: total,
+                    total_pages: totalPages,
+                    has_next: paginationObj.page < totalPages,
+                    has_previous: paginationObj.page > 1
+                }
+            };
         } catch (err) {
             return parseError(err);
         }

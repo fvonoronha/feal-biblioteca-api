@@ -67,5 +67,19 @@ module.exports = {
         req.response.meta.feedback = FEEDBACK.READ;
         req.response.body.book = book;
         return next();
+    },
+
+    async listPublicPublishers(req, res, next) {
+        const publishers = await bookService.listPublicPublishers(req.body.filter, req.body.pagination);
+
+        if (publishers.error) {
+            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
+            req.response.body.publisher = { error: publishers.error };
+            return end(req, res);
+        }
+
+        req.response.meta.feedback = FEEDBACK.READ;
+        req.response.body.publisher = publishers;
+        return next();
     }
 };
