@@ -166,7 +166,6 @@ exports.Prisma.AuthorScalarFieldEnum = {
 
 exports.Prisma.BookAuthorScalarFieldEnum = {
   id: 'id',
-  slug: 'slug',
   created_at: 'created_at',
   created_by_user_id: 'created_by_user_id',
   updated_at: 'updated_at',
@@ -191,7 +190,6 @@ exports.Prisma.TagScalarFieldEnum = {
 
 exports.Prisma.BookTagScalarFieldEnum = {
   id: 'id',
-  slug: 'slug',
   created_at: 'created_at',
   created_by_user_id: 'created_by_user_id',
   updated_at: 'updated_at',
@@ -219,6 +217,7 @@ exports.Prisma.BookScalarFieldEnum = {
   pdf_url: 'pdf_url',
   cover_url: 'cover_url',
   images_url: 'images_url',
+  keywords: 'keywords',
   label: 'label',
   shelf: 'shelf',
   status: 'status',

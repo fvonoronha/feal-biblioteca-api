@@ -190,6 +190,22 @@ module.exports = {
                     label: true,
                     shelf: true,
                     description: true,
+                    keywords: true,
+
+                    loans: {
+                        select: {
+                            due_date: true,
+                            loan_date: true
+                        },
+                        where: {
+                            status: "A",
+                            return_date: null
+                        },
+                        orderBy: {
+                            due_date: "desc"
+                        },
+                        take: 1
+                    },
 
                     tags: {
                         select: {
@@ -244,6 +260,104 @@ module.exports = {
                     has_previous: paginationObj.page > 1
                 }
             };
+        } catch (err) {
+            return parseError(err);
+        }
+    },
+
+    async getPublicBook(id, slug) {
+        try {
+            let filter = {};
+            if (id) {
+                filter.id = id;
+            } else if (slug) {
+                filter.slug = slug;
+            } else {
+                throw {
+                    code: "P2025",
+                    message: "Livro inválido"
+                };
+            }
+            const book = await db.book.findFirst({
+                where: {
+                    ...filter,
+                    status: "A"
+                },
+                select: {
+                    id: true,
+                    slug: true,
+                    title: true,
+                    subtitle: true,
+                    publisher: true,
+                    year: true,
+                    edition: true,
+                    isbn: true,
+                    pages: true,
+                    summary: true,
+                    pdf_url: true,
+                    cover_url: true,
+                    images_url: true,
+                    label: true,
+                    shelf: true,
+                    description: true,
+                    keywords: true,
+
+                    loans: {
+                        select: {
+                            due_date: true,
+                            loan_date: true
+                        },
+                        where: {
+                            status: "A",
+                            return_date: null
+                        },
+                        orderBy: {
+                            due_date: "desc"
+                        },
+                        take: 1
+                    },
+
+                    tags: {
+                        select: {
+                            tag: {
+                                select: {
+                                    id: true,
+                                    slug: true,
+                                    name: true,
+                                    description: true
+                                }
+                            }
+                        },
+                        where: {
+                            status: "A"
+                        }
+                    },
+                    authors: {
+                        select: {
+                            description: true,
+                            author: {
+                                select: {
+                                    id: true,
+                                    slug: true,
+                                    name: true,
+                                    description: true,
+                                    avatar_url: true,
+                                    is_spirit: true
+                                }
+                            }
+                        },
+                        where: {
+                            status: "A"
+                        }
+                    }
+                }
+            });
+            if (!book)
+                throw {
+                    code: "P2025",
+                    message: "Livro inválido"
+                };
+            return book;
         } catch (err) {
             return parseError(err);
         }
