@@ -1,11 +1,11 @@
 info:
-  name: Listar livros
+  name: Listar Editoras
   type: http
-  seq: 1
+  seq: 2
 
 http:
   method: POST
-  url: "{{URL}}/public/books"
+  url: "{{URL}}/public/publishers"
   body:
     type: json
     data: |-

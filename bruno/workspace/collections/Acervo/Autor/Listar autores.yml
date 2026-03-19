@@ -8,7 +8,15 @@ http:
   url: "{{URL}}/public/authors"
   body:
     type: json
-    data: ""
+    data: |-
+      {
+        "filter":{
+          "is_spirit":false
+        },
+        "pagination":{
+          "limit":10
+        }
+      }
   auth:
     type: bearer
     token: "{{AUTH_TOKEN}}"

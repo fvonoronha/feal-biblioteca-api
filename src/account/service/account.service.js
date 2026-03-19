@@ -43,7 +43,6 @@ module.exports = {
 
             return !newUser;
         } catch (err) {
-            console.log("q?", err);
             return parseError(err);
         }
     },
@@ -57,7 +56,6 @@ module.exports = {
                 }
             });
 
-            console.log("found: ", newUser);
             return !newUser;
         } catch (err) {
             return parseError(err);
