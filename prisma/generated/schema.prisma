@@ -115,7 +115,6 @@ model Author {
 
 model BookAuthor {
   id                 BigInt    @id() @unique() @default(autoincrement())
-  slug               String    @unique() @default(uuid())
   created_at         DateTime  @default(now()) @db.Timestamptz(6)
   created_by_user_id BigInt
   updated_at         DateTime? @db.Timestamptz(6)
@@ -162,7 +161,6 @@ model Tag {
 
 model BookTag {
   id                 BigInt     @id() @unique() @default(autoincrement())
-  slug               String     @unique() @default(uuid())
   created_at         DateTime   @default(now()) @db.Timestamptz(6)
   created_by_user_id BigInt
   updated_at         DateTime?  @db.Timestamptz(6)
@@ -201,6 +199,7 @@ model Book {
   pdf_url            String?
   cover_url          String?
   images_url         String[]
+  keywords           String[]
   label              String?
   shelf              String?
   status             StatusEnum @default(A)

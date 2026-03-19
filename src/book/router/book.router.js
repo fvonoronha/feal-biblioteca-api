@@ -9,6 +9,7 @@ const {
     listBooks,
     getBook,
     listPublicBooks,
+    getPublicBook,
     listPublicPublishers
 } = require("../controller/book.controller");
 
@@ -19,6 +20,8 @@ method.post(`/books`, init, isAuth, isAdmin, listBooks, end);
 method.get(`/book/${slug("bookSlug")}`, init, isAuth, isAdmin, getBook, end);
 
 method.post(`/public/books`, init, isAuthOrNot, listPublicBooks, end);
+
+method.get(`/public/book/${slug("bookSlug")}`, init, isAuthOrNot, getPublicBook, end);
 
 method.post(`/public/publishers`, init, isAuthOrNot, listPublicPublishers, end);
 
