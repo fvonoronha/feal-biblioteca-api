@@ -1,7 +1,7 @@
 const method = require("express").Router();
 const { init, end } = require("../../utils/request.service");
 const { isAdmin } = require("../../utils/permission.service");
-const { slug } = require("../../utils/urlParams.service");
+const { slug, id } = require("../../utils/urlParams.service");
 
 const { isAuth, isAuthOrNot } = require("../../auth/controller/auth.controller");
 const {
@@ -10,6 +10,7 @@ const {
     getBook,
     listPublicBooks,
     getPublicBook,
+    listRelatedBooks,
     listPublicPublishers
 } = require("../controller/book.controller");
 
@@ -22,6 +23,8 @@ method.get(`/book/${slug("bookSlug")}`, init, isAuth, isAdmin, getBook, end);
 method.post(`/public/books`, init, isAuthOrNot, listPublicBooks, end);
 
 method.get(`/public/book/${slug("bookSlug")}`, init, isAuthOrNot, getPublicBook, end);
+
+method.post(`/public/book/${id("bookId")}/related-books`, init, isAuthOrNot, listRelatedBooks, end);
 
 method.post(`/public/publishers`, init, isAuthOrNot, listPublicPublishers, end);
 
