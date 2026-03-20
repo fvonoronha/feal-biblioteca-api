@@ -28,9 +28,6 @@ COPY . .
 ## Gera os arquivos do Prisma
 RUN npx prisma generate
 
-## Gera os arquivos do Prisma DW
-RUN npx prisma generate --schema=prisma-dw/schema.prisma
-
 ## Adiciona permissão de execução ao entrypoint
 RUN chmod +x /usr/app/entrypoint.sh
 
