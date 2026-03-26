@@ -16,7 +16,7 @@ http:
 runtime:
   variables:
     - name: BOOK_SLUG
-      value: obsessao-desobsessao
+      value: voltei
 
 settings:
   encodeUrl: true

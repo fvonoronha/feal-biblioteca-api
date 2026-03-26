@@ -56,6 +56,7 @@ model User {
   created_loans        Loan[]          @relation(name: "Loan_User_created_by_user_id")
   updated_loans        Loan[]          @relation(name: "Loan_User_updated_by_user_id")
   user_loans           Loan[]          @relation(name: "Loan_User_user_id")
+  book_accesses        BookAccess[]    @relation(name: "BookAccess_User_created_by_user_id")
 
   @@index([login])
   @@index([status])
@@ -182,35 +183,39 @@ model BookTag {
 }
 
 model Book {
-  id                 BigInt     @id() @unique() @default(autoincrement())
-  slug               String     @unique() @default(uuid())
-  created_at         DateTime   @default(now()) @db.Timestamptz(6)
-  created_by_user_id BigInt
-  updated_at         DateTime?  @db.Timestamptz(6)
-  updated_by_user_id BigInt?
-  title              String
-  subtitle           String?
-  publisher          String?
-  year               Int?
-  edition            String?
-  isbn               String?
-  pages              Int?
-  summary            String?
-  pdf_url            String?
-  cover_url          String?
-  images_url         String[]
-  keywords           String[]
-  label              String?
-  shelf              String?
-  status             StatusEnum @default(A)
-  description        String?
+  id                                 BigInt     @id() @unique() @default(autoincrement())
+  slug                               String     @unique() @default(uuid())
+  created_at                         DateTime   @default(now()) @db.Timestamptz(6)
+  created_by_user_id                 BigInt
+  updated_at                         DateTime?  @db.Timestamptz(6)
+  updated_by_user_id                 BigInt?
+  title                              String
+  subtitle                           String?
+  publisher                          String?
+  year                               Int?
+  edition                            String?
+  isbn                               String?
+  pages                              Int?
+  summary                            String?
+  pdf_url                            String?
+  cover_url                          String?
+  back_url                           String?
+  images_url                         String[]
+  keywords                           String[]
+  label                              String?
+  shelf                              String?
+  status                             StatusEnum @default(A)
+  description                        String?
+  last_month_access_count            BigInt     @default(0)
+  last_month_access_count_updated_at DateTime?  @db.Timestamptz(6)
 
   created_by_user User  @relation(fields: [created_by_user_id], references: [id], name: "Book_User_created_by_user_id")
   updated_by_user User? @relation(fields: [updated_by_user_id], references: [id], name: "Book_User_updated_by_user_id")
 
-  authors BookAuthor[] @relation(name: "BookAuthor_Book_book_id")
-  tags    BookTag[]    @relation(name: "BookTag_Book_book_id")
-  loans   Loan[]       @relation(name: "Loan_Book_book_id")
+  authors       BookAuthor[] @relation(name: "BookAuthor_Book_book_id")
+  tags          BookTag[]    @relation(name: "BookTag_Book_book_id")
+  loans         Loan[]       @relation(name: "Loan_Book_book_id")
+  book_accesses BookAccess[] @relation(name: "BookAccess_Book_book_id")
 
   @@index([status])
   @@index([title])
@@ -223,6 +228,8 @@ model Book {
   @@index([summary])
   @@index([label])
   @@index([shelf])
+  @@index([keywords])
+  @@index([last_month_access_count])
   @@map("book")
 }
 
@@ -250,6 +257,23 @@ model Loan {
 
   @@index([status])
   @@map("loan")
+}
+
+model BookAccess {
+  id                 BigInt     @id() @unique() @default(autoincrement())
+  created_at         DateTime   @default(now()) @db.Timestamptz(6)
+  created_by_user_id BigInt?
+  book_id            BigInt?
+  status             StatusEnum @default(A)
+
+  created_by_user User? @relation(fields: [created_by_user_id], references: [id], name: "BookAccess_User_created_by_user_id")
+  book            Book? @relation(fields: [book_id], references: [id], name: "BookAccess_Book_book_id")
+
+  @@index([created_by_user_id])
+  @@index([book_id])
+  @@index([created_at])
+  @@index([book_id, created_at])
+  @@map("book_access")
 }
 
 /**

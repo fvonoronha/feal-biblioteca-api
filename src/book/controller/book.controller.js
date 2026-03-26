@@ -70,7 +70,7 @@ module.exports = {
     },
 
     async getPublicBook(req, res, next) {
-        const book = await bookService.getPublicBook(req.params.bookId, req.params.bookSlug);
+        const book = await bookService.getPublicBook(req.params.bookId, req.params.bookSlug, req.response.params.user);
 
         if (book.error) {
             req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
