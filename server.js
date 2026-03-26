@@ -24,4 +24,8 @@ httpServer.listen(env.PORT, () => {
     console.log(
         `\t[NodeJs] ${CMD_STYLE.UNDERLINE}${CMD_STYLE.BOLD}listening on port ${CMD_STYLE.GREEN}${env.PORT}${CMD_STYLE.DEFAULT}\nRequests: `
     );
+
+    // ToDo: fazer um service para interfacear os cronJobs
+    const cronService = require("./src/utils/cron.service");
+    cronService.setupCronJobs();
 });

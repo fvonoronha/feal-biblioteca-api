@@ -4,6 +4,7 @@ const { encrypt2, decrypt2 } = require("../../utils/cryptography.service");
 const { db, parseError } = require("../../utils/db.service");
 const { getBookFiltersWhereClause } = require("../../utils/filters.service");
 
+const bookSelectFields = {};
 module.exports = {
     // Operaçoes de Gerenciamento
     async createBook(book, req) {
@@ -165,13 +166,25 @@ module.exports = {
     async listPublicBooks(filter, pagination) {
         try {
             const paginationObj = parsePagination(pagination);
-
             const where = getBookFiltersWhereClause(filter);
+
+            // Lógica de Ordenação Customizada
+            let orderBy = paginationObj.orderBy || { title: "asc" };
+
+            // Se o usuário enviar { orderBy: { access_count: 'desc' } }
+            if (orderBy.access_count) {
+                const direction = orderBy.access_count; // 'asc' ou 'desc'
+                orderBy = {
+                    book_accesses: {
+                        _count: direction
+                    }
+                };
+            }
 
             const books = await db.book.findMany({
                 skip: paginationObj.limit * (paginationObj.page - 1),
                 take: paginationObj.limit,
-                orderBy: paginationObj.orderBy || { title: "asc" },
+                orderBy: orderBy,
                 where,
                 select: {
                     id: true,
@@ -186,41 +199,35 @@ module.exports = {
                     summary: true,
                     pdf_url: true,
                     cover_url: true,
+                    back_url: true,
                     images_url: true,
                     label: true,
                     shelf: true,
                     description: true,
                     keywords: true,
 
+                    // Adicionado: Contador de acessos geral
+                    _count: {
+                        select: { book_accesses: true }
+                    },
+
                     loans: {
                         select: {
                             due_date: true,
                             loan_date: true
                         },
-                        where: {
-                            status: "A",
-                            return_date: null
-                        },
-                        orderBy: {
-                            due_date: "desc"
-                        },
+                        where: { status: "A", return_date: null },
+                        orderBy: { due_date: "desc" },
                         take: 1
                     },
 
                     tags: {
                         select: {
                             tag: {
-                                select: {
-                                    id: true,
-                                    slug: true,
-                                    name: true,
-                                    description: true
-                                }
+                                select: { id: true, slug: true, name: true, description: true }
                             }
                         },
-                        where: {
-                            status: "A"
-                        }
+                        where: { status: "A" }
                     },
                     authors: {
                         select: {
@@ -236,21 +243,23 @@ module.exports = {
                                 }
                             }
                         },
-                        where: {
-                            status: "A"
-                        }
+                        where: { status: "A" }
                     }
                 }
             });
 
-            const total = await db.book.count({
-                where
+            // Formatação dos elementos para o Front-end
+            const formattedBooks = books.map((book) => {
+                const b = { ...book, access_count: book._count?.book_accesses || 0 };
+                delete b._count;
+                return b;
             });
 
+            const total = await db.book.count({ where });
             const totalPages = Math.ceil(total / paginationObj.limit);
 
             return {
-                elements: books,
+                elements: formattedBooks,
                 pagination: {
                     page: paginationObj.page,
                     limit: paginationObj.limit,
@@ -425,7 +434,7 @@ module.exports = {
         }
     },
 
-    async getPublicBook(id, slug) {
+    async getPublicBook(id, slug, userId) {
         try {
             let filter = {};
             if (id) {
@@ -456,11 +465,16 @@ module.exports = {
                     summary: true,
                     pdf_url: true,
                     cover_url: true,
+                    back_url: true,
                     images_url: true,
                     label: true,
                     shelf: true,
                     description: true,
                     keywords: true,
+
+                    _count: {
+                        select: { book_accesses: true }
+                    },
 
                     loans: {
                         select: {
@@ -492,6 +506,7 @@ module.exports = {
                             status: "A"
                         }
                     },
+
                     authors: {
                         select: {
                             description: true,
@@ -517,6 +532,16 @@ module.exports = {
                     code: "P2025",
                     message: "Livro inválido"
                 };
+
+            db.bookAccess
+                .create({
+                    data: {
+                        book_id: book.id,
+                        created_by_user_id: userId ? BigInt(userId) : null
+                    }
+                })
+                .catch((err) => console.error("Falha ao registrar log de acesso:", err));
+
             return book;
         } catch (err) {
             return parseError(err);
@@ -572,5 +597,26 @@ module.exports = {
         } catch (err) {
             return parseError(err);
         }
+    },
+
+    /// Throwws error
+    async updateMonthlyAccessCounter() {
+        const trintaDiasAtras = new Date();
+        trintaDiasAtras.setDate(trintaDiasAtras.getDate() - 30); // Últimos 30 dias
+        const dateISO = trintaDiasAtras.toISOString();
+
+        await db.$executeRawUnsafe(`
+                        UPDATE book
+                        SET last_month_access_count_updated_at = NOW(), 
+                        last_month_access_count = (
+                            SELECT COUNT(*)
+                            FROM book_access
+                            WHERE book_access.book_id = book.id
+                              AND book_access.created_at >= '${dateISO}'
+                        )
+                        WHERE status = 'A';
+                    `);
+
+        console.log(" [CRON] Estatísticas atualizadas com sucesso...");
     }
 };

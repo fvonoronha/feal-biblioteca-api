@@ -53,6 +53,11 @@ export type Book = $Result.DefaultSelection<Prisma.$BookPayload>
  * 
  */
 export type Loan = $Result.DefaultSelection<Prisma.$LoanPayload>
+/**
+ * Model BookAccess
+ * 
+ */
+export type BookAccess = $Result.DefaultSelection<Prisma.$BookAccessPayload>
 
 /**
  * Enums
@@ -297,6 +302,16 @@ export class PrismaClient<
     * ```
     */
   get loan(): Prisma.LoanDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.bookAccess`: Exposes CRUD operations for the **BookAccess** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BookAccesses
+    * const bookAccesses = await prisma.bookAccess.findMany()
+    * ```
+    */
+  get bookAccess(): Prisma.BookAccessDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -745,7 +760,8 @@ export namespace Prisma {
     Tag: 'Tag',
     BookTag: 'BookTag',
     Book: 'Book',
-    Loan: 'Loan'
+    Loan: 'Loan',
+    BookAccess: 'BookAccess'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -764,7 +780,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userAuthToken" | "author" | "bookAuthor" | "tag" | "bookTag" | "book" | "loan"
+      modelProps: "user" | "userAuthToken" | "author" | "bookAuthor" | "tag" | "bookTag" | "book" | "loan" | "bookAccess"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1360,6 +1376,80 @@ export namespace Prisma {
           }
         }
       }
+      BookAccess: {
+        payload: Prisma.$BookAccessPayload<ExtArgs>
+        fields: Prisma.BookAccessFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BookAccessFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BookAccessFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload>
+          }
+          findFirst: {
+            args: Prisma.BookAccessFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BookAccessFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload>
+          }
+          findMany: {
+            args: Prisma.BookAccessFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload>[]
+          }
+          create: {
+            args: Prisma.BookAccessCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload>
+          }
+          createMany: {
+            args: Prisma.BookAccessCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BookAccessCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload>[]
+          }
+          delete: {
+            args: Prisma.BookAccessDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload>
+          }
+          update: {
+            args: Prisma.BookAccessUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload>
+          }
+          deleteMany: {
+            args: Prisma.BookAccessDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BookAccessUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BookAccessUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload>[]
+          }
+          upsert: {
+            args: Prisma.BookAccessUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BookAccessPayload>
+          }
+          aggregate: {
+            args: Prisma.BookAccessAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBookAccess>
+          }
+          groupBy: {
+            args: Prisma.BookAccessGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BookAccessGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BookAccessCountArgs<ExtArgs>
+            result: $Utils.Optional<BookAccessCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1464,6 +1554,7 @@ export namespace Prisma {
     bookTag?: BookTagOmit
     book?: BookOmit
     loan?: LoanOmit
+    bookAccess?: BookAccessOmit
   }
 
   /* Types for Logging */
@@ -1558,6 +1649,7 @@ export namespace Prisma {
     created_loans: number
     updated_loans: number
     user_loans: number
+    book_accesses: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1575,6 +1667,7 @@ export namespace Prisma {
     created_loans?: boolean | UserCountOutputTypeCountCreated_loansArgs
     updated_loans?: boolean | UserCountOutputTypeCountUpdated_loansArgs
     user_loans?: boolean | UserCountOutputTypeCountUser_loansArgs
+    book_accesses?: boolean | UserCountOutputTypeCountBook_accessesArgs
   }
 
   // Custom InputTypes
@@ -1686,6 +1779,13 @@ export namespace Prisma {
     where?: LoanWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBook_accessesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookAccessWhereInput
+  }
+
 
   /**
    * Count Type AuthorCountOutputType
@@ -1757,12 +1857,14 @@ export namespace Prisma {
     authors: number
     tags: number
     loans: number
+    book_accesses: number
   }
 
   export type BookCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     authors?: boolean | BookCountOutputTypeCountAuthorsArgs
     tags?: boolean | BookCountOutputTypeCountTagsArgs
     loans?: boolean | BookCountOutputTypeCountLoansArgs
+    book_accesses?: boolean | BookCountOutputTypeCountBook_accessesArgs
   }
 
   // Custom InputTypes
@@ -1795,6 +1897,13 @@ export namespace Prisma {
    */
   export type BookCountOutputTypeCountLoansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LoanWhereInput
+  }
+
+  /**
+   * BookCountOutputType without action
+   */
+  export type BookCountOutputTypeCountBook_accessesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookAccessWhereInput
   }
 
 
@@ -2062,6 +2171,7 @@ export namespace Prisma {
     created_loans?: boolean | User$created_loansArgs<ExtArgs>
     updated_loans?: boolean | User$updated_loansArgs<ExtArgs>
     user_loans?: boolean | User$user_loansArgs<ExtArgs>
+    book_accesses?: boolean | User$book_accessesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2123,6 +2233,7 @@ export namespace Prisma {
     created_loans?: boolean | User$created_loansArgs<ExtArgs>
     updated_loans?: boolean | User$updated_loansArgs<ExtArgs>
     user_loans?: boolean | User$user_loansArgs<ExtArgs>
+    book_accesses?: boolean | User$book_accessesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2145,6 +2256,7 @@ export namespace Prisma {
       created_loans: Prisma.$LoanPayload<ExtArgs>[]
       updated_loans: Prisma.$LoanPayload<ExtArgs>[]
       user_loans: Prisma.$LoanPayload<ExtArgs>[]
+      book_accesses: Prisma.$BookAccessPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -2566,6 +2678,7 @@ export namespace Prisma {
     created_loans<T extends User$created_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$created_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     updated_loans<T extends User$updated_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user_loans<T extends User$user_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$user_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    book_accesses<T extends User$book_accessesArgs<ExtArgs> = {}>(args?: Subset<T, User$book_accessesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3327,6 +3440,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LoanScalarFieldEnum | LoanScalarFieldEnum[]
+  }
+
+  /**
+   * User.book_accesses
+   */
+  export type User$book_accessesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    where?: BookAccessWhereInput
+    orderBy?: BookAccessOrderByWithRelationInput | BookAccessOrderByWithRelationInput[]
+    cursor?: BookAccessWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BookAccessScalarFieldEnum | BookAccessScalarFieldEnum[]
   }
 
   /**
@@ -9390,6 +9527,7 @@ export namespace Prisma {
     updated_by_user_id: number | null
     year: number | null
     pages: number | null
+    last_month_access_count: number | null
   }
 
   export type BookSumAggregateOutputType = {
@@ -9398,6 +9536,7 @@ export namespace Prisma {
     updated_by_user_id: bigint | null
     year: number | null
     pages: number | null
+    last_month_access_count: bigint | null
   }
 
   export type BookMinAggregateOutputType = {
@@ -9417,10 +9556,13 @@ export namespace Prisma {
     summary: string | null
     pdf_url: string | null
     cover_url: string | null
+    back_url: string | null
     label: string | null
     shelf: string | null
     status: $Enums.StatusEnum | null
     description: string | null
+    last_month_access_count: bigint | null
+    last_month_access_count_updated_at: Date | null
   }
 
   export type BookMaxAggregateOutputType = {
@@ -9440,10 +9582,13 @@ export namespace Prisma {
     summary: string | null
     pdf_url: string | null
     cover_url: string | null
+    back_url: string | null
     label: string | null
     shelf: string | null
     status: $Enums.StatusEnum | null
     description: string | null
+    last_month_access_count: bigint | null
+    last_month_access_count_updated_at: Date | null
   }
 
   export type BookCountAggregateOutputType = {
@@ -9463,12 +9608,15 @@ export namespace Prisma {
     summary: number
     pdf_url: number
     cover_url: number
+    back_url: number
     images_url: number
     keywords: number
     label: number
     shelf: number
     status: number
     description: number
+    last_month_access_count: number
+    last_month_access_count_updated_at: number
     _all: number
   }
 
@@ -9479,6 +9627,7 @@ export namespace Prisma {
     updated_by_user_id?: true
     year?: true
     pages?: true
+    last_month_access_count?: true
   }
 
   export type BookSumAggregateInputType = {
@@ -9487,6 +9636,7 @@ export namespace Prisma {
     updated_by_user_id?: true
     year?: true
     pages?: true
+    last_month_access_count?: true
   }
 
   export type BookMinAggregateInputType = {
@@ -9506,10 +9656,13 @@ export namespace Prisma {
     summary?: true
     pdf_url?: true
     cover_url?: true
+    back_url?: true
     label?: true
     shelf?: true
     status?: true
     description?: true
+    last_month_access_count?: true
+    last_month_access_count_updated_at?: true
   }
 
   export type BookMaxAggregateInputType = {
@@ -9529,10 +9682,13 @@ export namespace Prisma {
     summary?: true
     pdf_url?: true
     cover_url?: true
+    back_url?: true
     label?: true
     shelf?: true
     status?: true
     description?: true
+    last_month_access_count?: true
+    last_month_access_count_updated_at?: true
   }
 
   export type BookCountAggregateInputType = {
@@ -9552,12 +9708,15 @@ export namespace Prisma {
     summary?: true
     pdf_url?: true
     cover_url?: true
+    back_url?: true
     images_url?: true
     keywords?: true
     label?: true
     shelf?: true
     status?: true
     description?: true
+    last_month_access_count?: true
+    last_month_access_count_updated_at?: true
     _all?: true
   }
 
@@ -9664,12 +9823,15 @@ export namespace Prisma {
     summary: string | null
     pdf_url: string | null
     cover_url: string | null
+    back_url: string | null
     images_url: string[]
     keywords: string[]
     label: string | null
     shelf: string | null
     status: $Enums.StatusEnum
     description: string | null
+    last_month_access_count: bigint
+    last_month_access_count_updated_at: Date | null
     _count: BookCountAggregateOutputType | null
     _avg: BookAvgAggregateOutputType | null
     _sum: BookSumAggregateOutputType | null
@@ -9708,17 +9870,21 @@ export namespace Prisma {
     summary?: boolean
     pdf_url?: boolean
     cover_url?: boolean
+    back_url?: boolean
     images_url?: boolean
     keywords?: boolean
     label?: boolean
     shelf?: boolean
     status?: boolean
     description?: boolean
+    last_month_access_count?: boolean
+    last_month_access_count_updated_at?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
     authors?: boolean | Book$authorsArgs<ExtArgs>
     tags?: boolean | Book$tagsArgs<ExtArgs>
     loans?: boolean | Book$loansArgs<ExtArgs>
+    book_accesses?: boolean | Book$book_accessesArgs<ExtArgs>
     _count?: boolean | BookCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["book"]>
 
@@ -9739,12 +9905,15 @@ export namespace Prisma {
     summary?: boolean
     pdf_url?: boolean
     cover_url?: boolean
+    back_url?: boolean
     images_url?: boolean
     keywords?: boolean
     label?: boolean
     shelf?: boolean
     status?: boolean
     description?: boolean
+    last_month_access_count?: boolean
+    last_month_access_count_updated_at?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
   }, ExtArgs["result"]["book"]>
@@ -9766,12 +9935,15 @@ export namespace Prisma {
     summary?: boolean
     pdf_url?: boolean
     cover_url?: boolean
+    back_url?: boolean
     images_url?: boolean
     keywords?: boolean
     label?: boolean
     shelf?: boolean
     status?: boolean
     description?: boolean
+    last_month_access_count?: boolean
+    last_month_access_count_updated_at?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
   }, ExtArgs["result"]["book"]>
@@ -9793,21 +9965,25 @@ export namespace Prisma {
     summary?: boolean
     pdf_url?: boolean
     cover_url?: boolean
+    back_url?: boolean
     images_url?: boolean
     keywords?: boolean
     label?: boolean
     shelf?: boolean
     status?: boolean
     description?: boolean
+    last_month_access_count?: boolean
+    last_month_access_count_updated_at?: boolean
   }
 
-  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "title" | "subtitle" | "publisher" | "year" | "edition" | "isbn" | "pages" | "summary" | "pdf_url" | "cover_url" | "images_url" | "keywords" | "label" | "shelf" | "status" | "description", ExtArgs["result"]["book"]>
+  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "title" | "subtitle" | "publisher" | "year" | "edition" | "isbn" | "pages" | "summary" | "pdf_url" | "cover_url" | "back_url" | "images_url" | "keywords" | "label" | "shelf" | "status" | "description" | "last_month_access_count" | "last_month_access_count_updated_at", ExtArgs["result"]["book"]>
   export type BookInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
     authors?: boolean | Book$authorsArgs<ExtArgs>
     tags?: boolean | Book$tagsArgs<ExtArgs>
     loans?: boolean | Book$loansArgs<ExtArgs>
+    book_accesses?: boolean | Book$book_accessesArgs<ExtArgs>
     _count?: boolean | BookCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BookIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9827,6 +10003,7 @@ export namespace Prisma {
       authors: Prisma.$BookAuthorPayload<ExtArgs>[]
       tags: Prisma.$BookTagPayload<ExtArgs>[]
       loans: Prisma.$LoanPayload<ExtArgs>[]
+      book_accesses: Prisma.$BookAccessPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -9845,12 +10022,15 @@ export namespace Prisma {
       summary: string | null
       pdf_url: string | null
       cover_url: string | null
+      back_url: string | null
       images_url: string[]
       keywords: string[]
       label: string | null
       shelf: string | null
       status: $Enums.StatusEnum
       description: string | null
+      last_month_access_count: bigint
+      last_month_access_count_updated_at: Date | null
     }, ExtArgs["result"]["book"]>
     composites: {}
   }
@@ -10250,6 +10430,7 @@ export namespace Prisma {
     authors<T extends Book$authorsArgs<ExtArgs> = {}>(args?: Subset<T, Book$authorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookAuthorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tags<T extends Book$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Book$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     loans<T extends Book$loansArgs<ExtArgs> = {}>(args?: Subset<T, Book$loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    book_accesses<T extends Book$book_accessesArgs<ExtArgs> = {}>(args?: Subset<T, Book$book_accessesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10295,12 +10476,15 @@ export namespace Prisma {
     readonly summary: FieldRef<"Book", 'String'>
     readonly pdf_url: FieldRef<"Book", 'String'>
     readonly cover_url: FieldRef<"Book", 'String'>
+    readonly back_url: FieldRef<"Book", 'String'>
     readonly images_url: FieldRef<"Book", 'String[]'>
     readonly keywords: FieldRef<"Book", 'String[]'>
     readonly label: FieldRef<"Book", 'String'>
     readonly shelf: FieldRef<"Book", 'String'>
     readonly status: FieldRef<"Book", 'StatusEnum'>
     readonly description: FieldRef<"Book", 'String'>
+    readonly last_month_access_count: FieldRef<"Book", 'BigInt'>
+    readonly last_month_access_count_updated_at: FieldRef<"Book", 'DateTime'>
   }
     
 
@@ -10785,6 +10969,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LoanScalarFieldEnum | LoanScalarFieldEnum[]
+  }
+
+  /**
+   * Book.book_accesses
+   */
+  export type Book$book_accessesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    where?: BookAccessWhereInput
+    orderBy?: BookAccessOrderByWithRelationInput | BookAccessOrderByWithRelationInput[]
+    cursor?: BookAccessWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BookAccessScalarFieldEnum | BookAccessScalarFieldEnum[]
   }
 
   /**
@@ -12049,6 +12257,1152 @@ export namespace Prisma {
 
 
   /**
+   * Model BookAccess
+   */
+
+  export type AggregateBookAccess = {
+    _count: BookAccessCountAggregateOutputType | null
+    _avg: BookAccessAvgAggregateOutputType | null
+    _sum: BookAccessSumAggregateOutputType | null
+    _min: BookAccessMinAggregateOutputType | null
+    _max: BookAccessMaxAggregateOutputType | null
+  }
+
+  export type BookAccessAvgAggregateOutputType = {
+    id: number | null
+    created_by_user_id: number | null
+    book_id: number | null
+  }
+
+  export type BookAccessSumAggregateOutputType = {
+    id: bigint | null
+    created_by_user_id: bigint | null
+    book_id: bigint | null
+  }
+
+  export type BookAccessMinAggregateOutputType = {
+    id: bigint | null
+    created_at: Date | null
+    created_by_user_id: bigint | null
+    book_id: bigint | null
+    status: $Enums.StatusEnum | null
+  }
+
+  export type BookAccessMaxAggregateOutputType = {
+    id: bigint | null
+    created_at: Date | null
+    created_by_user_id: bigint | null
+    book_id: bigint | null
+    status: $Enums.StatusEnum | null
+  }
+
+  export type BookAccessCountAggregateOutputType = {
+    id: number
+    created_at: number
+    created_by_user_id: number
+    book_id: number
+    status: number
+    _all: number
+  }
+
+
+  export type BookAccessAvgAggregateInputType = {
+    id?: true
+    created_by_user_id?: true
+    book_id?: true
+  }
+
+  export type BookAccessSumAggregateInputType = {
+    id?: true
+    created_by_user_id?: true
+    book_id?: true
+  }
+
+  export type BookAccessMinAggregateInputType = {
+    id?: true
+    created_at?: true
+    created_by_user_id?: true
+    book_id?: true
+    status?: true
+  }
+
+  export type BookAccessMaxAggregateInputType = {
+    id?: true
+    created_at?: true
+    created_by_user_id?: true
+    book_id?: true
+    status?: true
+  }
+
+  export type BookAccessCountAggregateInputType = {
+    id?: true
+    created_at?: true
+    created_by_user_id?: true
+    book_id?: true
+    status?: true
+    _all?: true
+  }
+
+  export type BookAccessAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BookAccess to aggregate.
+     */
+    where?: BookAccessWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookAccesses to fetch.
+     */
+    orderBy?: BookAccessOrderByWithRelationInput | BookAccessOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BookAccessWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookAccesses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookAccesses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BookAccesses
+    **/
+    _count?: true | BookAccessCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BookAccessAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BookAccessSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BookAccessMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BookAccessMaxAggregateInputType
+  }
+
+  export type GetBookAccessAggregateType<T extends BookAccessAggregateArgs> = {
+        [P in keyof T & keyof AggregateBookAccess]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBookAccess[P]>
+      : GetScalarType<T[P], AggregateBookAccess[P]>
+  }
+
+
+
+
+  export type BookAccessGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookAccessWhereInput
+    orderBy?: BookAccessOrderByWithAggregationInput | BookAccessOrderByWithAggregationInput[]
+    by: BookAccessScalarFieldEnum[] | BookAccessScalarFieldEnum
+    having?: BookAccessScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BookAccessCountAggregateInputType | true
+    _avg?: BookAccessAvgAggregateInputType
+    _sum?: BookAccessSumAggregateInputType
+    _min?: BookAccessMinAggregateInputType
+    _max?: BookAccessMaxAggregateInputType
+  }
+
+  export type BookAccessGroupByOutputType = {
+    id: bigint
+    created_at: Date
+    created_by_user_id: bigint | null
+    book_id: bigint | null
+    status: $Enums.StatusEnum
+    _count: BookAccessCountAggregateOutputType | null
+    _avg: BookAccessAvgAggregateOutputType | null
+    _sum: BookAccessSumAggregateOutputType | null
+    _min: BookAccessMinAggregateOutputType | null
+    _max: BookAccessMaxAggregateOutputType | null
+  }
+
+  type GetBookAccessGroupByPayload<T extends BookAccessGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BookAccessGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BookAccessGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BookAccessGroupByOutputType[P]>
+            : GetScalarType<T[P], BookAccessGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BookAccessSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    book_id?: boolean
+    status?: boolean
+    created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
+    book?: boolean | BookAccess$bookArgs<ExtArgs>
+  }, ExtArgs["result"]["bookAccess"]>
+
+  export type BookAccessSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    book_id?: boolean
+    status?: boolean
+    created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
+    book?: boolean | BookAccess$bookArgs<ExtArgs>
+  }, ExtArgs["result"]["bookAccess"]>
+
+  export type BookAccessSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    book_id?: boolean
+    status?: boolean
+    created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
+    book?: boolean | BookAccess$bookArgs<ExtArgs>
+  }, ExtArgs["result"]["bookAccess"]>
+
+  export type BookAccessSelectScalar = {
+    id?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    book_id?: boolean
+    status?: boolean
+  }
+
+  export type BookAccessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "created_by_user_id" | "book_id" | "status", ExtArgs["result"]["bookAccess"]>
+  export type BookAccessInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
+    book?: boolean | BookAccess$bookArgs<ExtArgs>
+  }
+  export type BookAccessIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
+    book?: boolean | BookAccess$bookArgs<ExtArgs>
+  }
+  export type BookAccessIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
+    book?: boolean | BookAccess$bookArgs<ExtArgs>
+  }
+
+  export type $BookAccessPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BookAccess"
+    objects: {
+      created_by_user: Prisma.$UserPayload<ExtArgs> | null
+      book: Prisma.$BookPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      created_at: Date
+      created_by_user_id: bigint | null
+      book_id: bigint | null
+      status: $Enums.StatusEnum
+    }, ExtArgs["result"]["bookAccess"]>
+    composites: {}
+  }
+
+  type BookAccessGetPayload<S extends boolean | null | undefined | BookAccessDefaultArgs> = $Result.GetResult<Prisma.$BookAccessPayload, S>
+
+  type BookAccessCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BookAccessFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BookAccessCountAggregateInputType | true
+    }
+
+  export interface BookAccessDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BookAccess'], meta: { name: 'BookAccess' } }
+    /**
+     * Find zero or one BookAccess that matches the filter.
+     * @param {BookAccessFindUniqueArgs} args - Arguments to find a BookAccess
+     * @example
+     * // Get one BookAccess
+     * const bookAccess = await prisma.bookAccess.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BookAccessFindUniqueArgs>(args: SelectSubset<T, BookAccessFindUniqueArgs<ExtArgs>>): Prisma__BookAccessClient<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BookAccess that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BookAccessFindUniqueOrThrowArgs} args - Arguments to find a BookAccess
+     * @example
+     * // Get one BookAccess
+     * const bookAccess = await prisma.bookAccess.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BookAccessFindUniqueOrThrowArgs>(args: SelectSubset<T, BookAccessFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BookAccessClient<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BookAccess that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookAccessFindFirstArgs} args - Arguments to find a BookAccess
+     * @example
+     * // Get one BookAccess
+     * const bookAccess = await prisma.bookAccess.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BookAccessFindFirstArgs>(args?: SelectSubset<T, BookAccessFindFirstArgs<ExtArgs>>): Prisma__BookAccessClient<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BookAccess that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookAccessFindFirstOrThrowArgs} args - Arguments to find a BookAccess
+     * @example
+     * // Get one BookAccess
+     * const bookAccess = await prisma.bookAccess.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BookAccessFindFirstOrThrowArgs>(args?: SelectSubset<T, BookAccessFindFirstOrThrowArgs<ExtArgs>>): Prisma__BookAccessClient<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BookAccesses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookAccessFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BookAccesses
+     * const bookAccesses = await prisma.bookAccess.findMany()
+     * 
+     * // Get first 10 BookAccesses
+     * const bookAccesses = await prisma.bookAccess.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bookAccessWithIdOnly = await prisma.bookAccess.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BookAccessFindManyArgs>(args?: SelectSubset<T, BookAccessFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BookAccess.
+     * @param {BookAccessCreateArgs} args - Arguments to create a BookAccess.
+     * @example
+     * // Create one BookAccess
+     * const BookAccess = await prisma.bookAccess.create({
+     *   data: {
+     *     // ... data to create a BookAccess
+     *   }
+     * })
+     * 
+     */
+    create<T extends BookAccessCreateArgs>(args: SelectSubset<T, BookAccessCreateArgs<ExtArgs>>): Prisma__BookAccessClient<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BookAccesses.
+     * @param {BookAccessCreateManyArgs} args - Arguments to create many BookAccesses.
+     * @example
+     * // Create many BookAccesses
+     * const bookAccess = await prisma.bookAccess.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BookAccessCreateManyArgs>(args?: SelectSubset<T, BookAccessCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BookAccesses and returns the data saved in the database.
+     * @param {BookAccessCreateManyAndReturnArgs} args - Arguments to create many BookAccesses.
+     * @example
+     * // Create many BookAccesses
+     * const bookAccess = await prisma.bookAccess.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BookAccesses and only return the `id`
+     * const bookAccessWithIdOnly = await prisma.bookAccess.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BookAccessCreateManyAndReturnArgs>(args?: SelectSubset<T, BookAccessCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BookAccess.
+     * @param {BookAccessDeleteArgs} args - Arguments to delete one BookAccess.
+     * @example
+     * // Delete one BookAccess
+     * const BookAccess = await prisma.bookAccess.delete({
+     *   where: {
+     *     // ... filter to delete one BookAccess
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BookAccessDeleteArgs>(args: SelectSubset<T, BookAccessDeleteArgs<ExtArgs>>): Prisma__BookAccessClient<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BookAccess.
+     * @param {BookAccessUpdateArgs} args - Arguments to update one BookAccess.
+     * @example
+     * // Update one BookAccess
+     * const bookAccess = await prisma.bookAccess.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BookAccessUpdateArgs>(args: SelectSubset<T, BookAccessUpdateArgs<ExtArgs>>): Prisma__BookAccessClient<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BookAccesses.
+     * @param {BookAccessDeleteManyArgs} args - Arguments to filter BookAccesses to delete.
+     * @example
+     * // Delete a few BookAccesses
+     * const { count } = await prisma.bookAccess.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BookAccessDeleteManyArgs>(args?: SelectSubset<T, BookAccessDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BookAccesses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookAccessUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BookAccesses
+     * const bookAccess = await prisma.bookAccess.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BookAccessUpdateManyArgs>(args: SelectSubset<T, BookAccessUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BookAccesses and returns the data updated in the database.
+     * @param {BookAccessUpdateManyAndReturnArgs} args - Arguments to update many BookAccesses.
+     * @example
+     * // Update many BookAccesses
+     * const bookAccess = await prisma.bookAccess.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BookAccesses and only return the `id`
+     * const bookAccessWithIdOnly = await prisma.bookAccess.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BookAccessUpdateManyAndReturnArgs>(args: SelectSubset<T, BookAccessUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BookAccess.
+     * @param {BookAccessUpsertArgs} args - Arguments to update or create a BookAccess.
+     * @example
+     * // Update or create a BookAccess
+     * const bookAccess = await prisma.bookAccess.upsert({
+     *   create: {
+     *     // ... data to create a BookAccess
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BookAccess we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BookAccessUpsertArgs>(args: SelectSubset<T, BookAccessUpsertArgs<ExtArgs>>): Prisma__BookAccessClient<$Result.GetResult<Prisma.$BookAccessPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BookAccesses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookAccessCountArgs} args - Arguments to filter BookAccesses to count.
+     * @example
+     * // Count the number of BookAccesses
+     * const count = await prisma.bookAccess.count({
+     *   where: {
+     *     // ... the filter for the BookAccesses we want to count
+     *   }
+     * })
+    **/
+    count<T extends BookAccessCountArgs>(
+      args?: Subset<T, BookAccessCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BookAccessCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BookAccess.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookAccessAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BookAccessAggregateArgs>(args: Subset<T, BookAccessAggregateArgs>): Prisma.PrismaPromise<GetBookAccessAggregateType<T>>
+
+    /**
+     * Group by BookAccess.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookAccessGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BookAccessGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BookAccessGroupByArgs['orderBy'] }
+        : { orderBy?: BookAccessGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BookAccessGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBookAccessGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BookAccess model
+   */
+  readonly fields: BookAccessFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BookAccess.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BookAccessClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    created_by_user<T extends BookAccess$created_by_userArgs<ExtArgs> = {}>(args?: Subset<T, BookAccess$created_by_userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    book<T extends BookAccess$bookArgs<ExtArgs> = {}>(args?: Subset<T, BookAccess$bookArgs<ExtArgs>>): Prisma__BookClient<$Result.GetResult<Prisma.$BookPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BookAccess model
+   */
+  interface BookAccessFieldRefs {
+    readonly id: FieldRef<"BookAccess", 'BigInt'>
+    readonly created_at: FieldRef<"BookAccess", 'DateTime'>
+    readonly created_by_user_id: FieldRef<"BookAccess", 'BigInt'>
+    readonly book_id: FieldRef<"BookAccess", 'BigInt'>
+    readonly status: FieldRef<"BookAccess", 'StatusEnum'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BookAccess findUnique
+   */
+  export type BookAccessFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which BookAccess to fetch.
+     */
+    where: BookAccessWhereUniqueInput
+  }
+
+  /**
+   * BookAccess findUniqueOrThrow
+   */
+  export type BookAccessFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which BookAccess to fetch.
+     */
+    where: BookAccessWhereUniqueInput
+  }
+
+  /**
+   * BookAccess findFirst
+   */
+  export type BookAccessFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which BookAccess to fetch.
+     */
+    where?: BookAccessWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookAccesses to fetch.
+     */
+    orderBy?: BookAccessOrderByWithRelationInput | BookAccessOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BookAccesses.
+     */
+    cursor?: BookAccessWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookAccesses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookAccesses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BookAccesses.
+     */
+    distinct?: BookAccessScalarFieldEnum | BookAccessScalarFieldEnum[]
+  }
+
+  /**
+   * BookAccess findFirstOrThrow
+   */
+  export type BookAccessFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which BookAccess to fetch.
+     */
+    where?: BookAccessWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookAccesses to fetch.
+     */
+    orderBy?: BookAccessOrderByWithRelationInput | BookAccessOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BookAccesses.
+     */
+    cursor?: BookAccessWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookAccesses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookAccesses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BookAccesses.
+     */
+    distinct?: BookAccessScalarFieldEnum | BookAccessScalarFieldEnum[]
+  }
+
+  /**
+   * BookAccess findMany
+   */
+  export type BookAccessFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which BookAccesses to fetch.
+     */
+    where?: BookAccessWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookAccesses to fetch.
+     */
+    orderBy?: BookAccessOrderByWithRelationInput | BookAccessOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BookAccesses.
+     */
+    cursor?: BookAccessWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookAccesses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookAccesses.
+     */
+    skip?: number
+    distinct?: BookAccessScalarFieldEnum | BookAccessScalarFieldEnum[]
+  }
+
+  /**
+   * BookAccess create
+   */
+  export type BookAccessCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BookAccess.
+     */
+    data?: XOR<BookAccessCreateInput, BookAccessUncheckedCreateInput>
+  }
+
+  /**
+   * BookAccess createMany
+   */
+  export type BookAccessCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BookAccesses.
+     */
+    data: BookAccessCreateManyInput | BookAccessCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BookAccess createManyAndReturn
+   */
+  export type BookAccessCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * The data used to create many BookAccesses.
+     */
+    data: BookAccessCreateManyInput | BookAccessCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BookAccess update
+   */
+  export type BookAccessUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BookAccess.
+     */
+    data: XOR<BookAccessUpdateInput, BookAccessUncheckedUpdateInput>
+    /**
+     * Choose, which BookAccess to update.
+     */
+    where: BookAccessWhereUniqueInput
+  }
+
+  /**
+   * BookAccess updateMany
+   */
+  export type BookAccessUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BookAccesses.
+     */
+    data: XOR<BookAccessUpdateManyMutationInput, BookAccessUncheckedUpdateManyInput>
+    /**
+     * Filter which BookAccesses to update
+     */
+    where?: BookAccessWhereInput
+    /**
+     * Limit how many BookAccesses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BookAccess updateManyAndReturn
+   */
+  export type BookAccessUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * The data used to update BookAccesses.
+     */
+    data: XOR<BookAccessUpdateManyMutationInput, BookAccessUncheckedUpdateManyInput>
+    /**
+     * Filter which BookAccesses to update
+     */
+    where?: BookAccessWhereInput
+    /**
+     * Limit how many BookAccesses to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BookAccess upsert
+   */
+  export type BookAccessUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BookAccess to update in case it exists.
+     */
+    where: BookAccessWhereUniqueInput
+    /**
+     * In case the BookAccess found by the `where` argument doesn't exist, create a new BookAccess with this data.
+     */
+    create: XOR<BookAccessCreateInput, BookAccessUncheckedCreateInput>
+    /**
+     * In case the BookAccess was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BookAccessUpdateInput, BookAccessUncheckedUpdateInput>
+  }
+
+  /**
+   * BookAccess delete
+   */
+  export type BookAccessDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+    /**
+     * Filter which BookAccess to delete.
+     */
+    where: BookAccessWhereUniqueInput
+  }
+
+  /**
+   * BookAccess deleteMany
+   */
+  export type BookAccessDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BookAccesses to delete
+     */
+    where?: BookAccessWhereInput
+    /**
+     * Limit how many BookAccesses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BookAccess.created_by_user
+   */
+  export type BookAccess$created_by_userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * BookAccess.book
+   */
+  export type BookAccess$bookArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Book
+     */
+    omit?: BookOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookInclude<ExtArgs> | null
+    where?: BookWhereInput
+  }
+
+  /**
+   * BookAccess without action
+   */
+  export type BookAccessDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BookAccess
+     */
+    select?: BookAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BookAccess
+     */
+    omit?: BookAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookAccessInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12175,12 +13529,15 @@ export namespace Prisma {
     summary: 'summary',
     pdf_url: 'pdf_url',
     cover_url: 'cover_url',
+    back_url: 'back_url',
     images_url: 'images_url',
     keywords: 'keywords',
     label: 'label',
     shelf: 'shelf',
     status: 'status',
-    description: 'description'
+    description: 'description',
+    last_month_access_count: 'last_month_access_count',
+    last_month_access_count_updated_at: 'last_month_access_count_updated_at'
   };
 
   export type BookScalarFieldEnum = (typeof BookScalarFieldEnum)[keyof typeof BookScalarFieldEnum]
@@ -12202,6 +13559,17 @@ export namespace Prisma {
   };
 
   export type LoanScalarFieldEnum = (typeof LoanScalarFieldEnum)[keyof typeof LoanScalarFieldEnum]
+
+
+  export const BookAccessScalarFieldEnum: {
+    id: 'id',
+    created_at: 'created_at',
+    created_by_user_id: 'created_by_user_id',
+    book_id: 'book_id',
+    status: 'status'
+  };
+
+  export type BookAccessScalarFieldEnum = (typeof BookAccessScalarFieldEnum)[keyof typeof BookAccessScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -12384,6 +13752,7 @@ export namespace Prisma {
     created_loans?: LoanListRelationFilter
     updated_loans?: LoanListRelationFilter
     user_loans?: LoanListRelationFilter
+    book_accesses?: BookAccessListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -12412,6 +13781,7 @@ export namespace Prisma {
     created_loans?: LoanOrderByRelationAggregateInput
     updated_loans?: LoanOrderByRelationAggregateInput
     user_loans?: LoanOrderByRelationAggregateInput
+    book_accesses?: BookAccessOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -12443,6 +13813,7 @@ export namespace Prisma {
     created_loans?: LoanListRelationFilter
     updated_loans?: LoanListRelationFilter
     user_loans?: LoanListRelationFilter
+    book_accesses?: BookAccessListRelationFilter
   }, "id" | "id" | "slug" | "login" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -12936,17 +14307,21 @@ export namespace Prisma {
     summary?: StringNullableFilter<"Book"> | string | null
     pdf_url?: StringNullableFilter<"Book"> | string | null
     cover_url?: StringNullableFilter<"Book"> | string | null
+    back_url?: StringNullableFilter<"Book"> | string | null
     images_url?: StringNullableListFilter<"Book">
     keywords?: StringNullableListFilter<"Book">
     label?: StringNullableFilter<"Book"> | string | null
     shelf?: StringNullableFilter<"Book"> | string | null
     status?: EnumStatusEnumFilter<"Book"> | $Enums.StatusEnum
     description?: StringNullableFilter<"Book"> | string | null
+    last_month_access_count?: BigIntFilter<"Book"> | bigint | number
+    last_month_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
     created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     authors?: BookAuthorListRelationFilter
     tags?: BookTagListRelationFilter
     loans?: LoanListRelationFilter
+    book_accesses?: BookAccessListRelationFilter
   }
 
   export type BookOrderByWithRelationInput = {
@@ -12966,17 +14341,21 @@ export namespace Prisma {
     summary?: SortOrderInput | SortOrder
     pdf_url?: SortOrderInput | SortOrder
     cover_url?: SortOrderInput | SortOrder
+    back_url?: SortOrderInput | SortOrder
     images_url?: SortOrder
     keywords?: SortOrder
     label?: SortOrderInput | SortOrder
     shelf?: SortOrderInput | SortOrder
     status?: SortOrder
     description?: SortOrderInput | SortOrder
+    last_month_access_count?: SortOrder
+    last_month_access_count_updated_at?: SortOrderInput | SortOrder
     created_by_user?: UserOrderByWithRelationInput
     updated_by_user?: UserOrderByWithRelationInput
     authors?: BookAuthorOrderByRelationAggregateInput
     tags?: BookTagOrderByRelationAggregateInput
     loans?: LoanOrderByRelationAggregateInput
+    book_accesses?: BookAccessOrderByRelationAggregateInput
   }
 
   export type BookWhereUniqueInput = Prisma.AtLeast<{
@@ -12999,17 +14378,21 @@ export namespace Prisma {
     summary?: StringNullableFilter<"Book"> | string | null
     pdf_url?: StringNullableFilter<"Book"> | string | null
     cover_url?: StringNullableFilter<"Book"> | string | null
+    back_url?: StringNullableFilter<"Book"> | string | null
     images_url?: StringNullableListFilter<"Book">
     keywords?: StringNullableListFilter<"Book">
     label?: StringNullableFilter<"Book"> | string | null
     shelf?: StringNullableFilter<"Book"> | string | null
     status?: EnumStatusEnumFilter<"Book"> | $Enums.StatusEnum
     description?: StringNullableFilter<"Book"> | string | null
+    last_month_access_count?: BigIntFilter<"Book"> | bigint | number
+    last_month_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
     created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     authors?: BookAuthorListRelationFilter
     tags?: BookTagListRelationFilter
     loans?: LoanListRelationFilter
+    book_accesses?: BookAccessListRelationFilter
   }, "id" | "id" | "slug">
 
   export type BookOrderByWithAggregationInput = {
@@ -13029,12 +14412,15 @@ export namespace Prisma {
     summary?: SortOrderInput | SortOrder
     pdf_url?: SortOrderInput | SortOrder
     cover_url?: SortOrderInput | SortOrder
+    back_url?: SortOrderInput | SortOrder
     images_url?: SortOrder
     keywords?: SortOrder
     label?: SortOrderInput | SortOrder
     shelf?: SortOrderInput | SortOrder
     status?: SortOrder
     description?: SortOrderInput | SortOrder
+    last_month_access_count?: SortOrder
+    last_month_access_count_updated_at?: SortOrderInput | SortOrder
     _count?: BookCountOrderByAggregateInput
     _avg?: BookAvgOrderByAggregateInput
     _max?: BookMaxOrderByAggregateInput
@@ -13062,12 +14448,15 @@ export namespace Prisma {
     summary?: StringNullableWithAggregatesFilter<"Book"> | string | null
     pdf_url?: StringNullableWithAggregatesFilter<"Book"> | string | null
     cover_url?: StringNullableWithAggregatesFilter<"Book"> | string | null
+    back_url?: StringNullableWithAggregatesFilter<"Book"> | string | null
     images_url?: StringNullableListFilter<"Book">
     keywords?: StringNullableListFilter<"Book">
     label?: StringNullableWithAggregatesFilter<"Book"> | string | null
     shelf?: StringNullableWithAggregatesFilter<"Book"> | string | null
     status?: EnumStatusEnumWithAggregatesFilter<"Book"> | $Enums.StatusEnum
     description?: StringNullableWithAggregatesFilter<"Book"> | string | null
+    last_month_access_count?: BigIntWithAggregatesFilter<"Book"> | bigint | number
+    last_month_access_count_updated_at?: DateTimeNullableWithAggregatesFilter<"Book"> | Date | string | null
   }
 
   export type LoanWhereInput = {
@@ -13171,6 +14560,66 @@ export namespace Prisma {
     user_id?: BigIntWithAggregatesFilter<"Loan"> | bigint | number
   }
 
+  export type BookAccessWhereInput = {
+    AND?: BookAccessWhereInput | BookAccessWhereInput[]
+    OR?: BookAccessWhereInput[]
+    NOT?: BookAccessWhereInput | BookAccessWhereInput[]
+    id?: BigIntFilter<"BookAccess"> | bigint | number
+    created_at?: DateTimeFilter<"BookAccess"> | Date | string
+    created_by_user_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
+    book_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
+    status?: EnumStatusEnumFilter<"BookAccess"> | $Enums.StatusEnum
+    created_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    book?: XOR<BookNullableScalarRelationFilter, BookWhereInput> | null
+  }
+
+  export type BookAccessOrderByWithRelationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrderInput | SortOrder
+    book_id?: SortOrderInput | SortOrder
+    status?: SortOrder
+    created_by_user?: UserOrderByWithRelationInput
+    book?: BookOrderByWithRelationInput
+  }
+
+  export type BookAccessWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    AND?: BookAccessWhereInput | BookAccessWhereInput[]
+    OR?: BookAccessWhereInput[]
+    NOT?: BookAccessWhereInput | BookAccessWhereInput[]
+    created_at?: DateTimeFilter<"BookAccess"> | Date | string
+    created_by_user_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
+    book_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
+    status?: EnumStatusEnumFilter<"BookAccess"> | $Enums.StatusEnum
+    created_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    book?: XOR<BookNullableScalarRelationFilter, BookWhereInput> | null
+  }, "id" | "id">
+
+  export type BookAccessOrderByWithAggregationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrderInput | SortOrder
+    book_id?: SortOrderInput | SortOrder
+    status?: SortOrder
+    _count?: BookAccessCountOrderByAggregateInput
+    _avg?: BookAccessAvgOrderByAggregateInput
+    _max?: BookAccessMaxOrderByAggregateInput
+    _min?: BookAccessMinOrderByAggregateInput
+    _sum?: BookAccessSumOrderByAggregateInput
+  }
+
+  export type BookAccessScalarWhereWithAggregatesInput = {
+    AND?: BookAccessScalarWhereWithAggregatesInput | BookAccessScalarWhereWithAggregatesInput[]
+    OR?: BookAccessScalarWhereWithAggregatesInput[]
+    NOT?: BookAccessScalarWhereWithAggregatesInput | BookAccessScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"BookAccess"> | bigint | number
+    created_at?: DateTimeWithAggregatesFilter<"BookAccess"> | Date | string
+    created_by_user_id?: BigIntNullableWithAggregatesFilter<"BookAccess"> | bigint | number | null
+    book_id?: BigIntNullableWithAggregatesFilter<"BookAccess"> | bigint | number | null
+    status?: EnumStatusEnumWithAggregatesFilter<"BookAccess"> | $Enums.StatusEnum
+  }
+
   export type UserCreateInput = {
     id?: bigint | number
     slug?: string
@@ -13197,6 +14646,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13225,6 +14675,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUpdateInput = {
@@ -13253,6 +14704,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13281,6 +14733,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -13783,17 +15236,21 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateInput = {
@@ -13813,15 +15270,19 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookUpdateInput = {
@@ -13839,17 +15300,21 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateInput = {
@@ -13869,15 +15334,19 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookCreateManyInput = {
@@ -13897,12 +15366,15 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
   }
 
   export type BookUpdateManyMutationInput = {
@@ -13920,12 +15392,15 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type BookUncheckedUpdateManyInput = {
@@ -13945,12 +15420,15 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type LoanCreateInput = {
@@ -13960,7 +15438,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_loansInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_loansInput
@@ -13977,7 +15455,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     book_id: bigint | number
     user_id: bigint | number
@@ -14022,7 +15500,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     book_id: bigint | number
     user_id: bigint | number
@@ -14052,6 +15530,60 @@ export namespace Prisma {
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type BookAccessCreateInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    status?: $Enums.StatusEnum
+    created_by_user?: UserCreateNestedOneWithoutBook_accessesInput
+    book?: BookCreateNestedOneWithoutBook_accessesInput
+  }
+
+  export type BookAccessUncheckedCreateInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id?: bigint | number | null
+    book_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+  }
+
+  export type BookAccessUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    created_by_user?: UserUpdateOneWithoutBook_accessesNestedInput
+    book?: BookUpdateOneWithoutBook_accessesNestedInput
+  }
+
+  export type BookAccessUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    book_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  }
+
+  export type BookAccessCreateManyInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id?: bigint | number | null
+    book_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+  }
+
+  export type BookAccessUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  }
+
+  export type BookAccessUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    book_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 
   export type BigIntFilter<$PrismaModel = never> = {
@@ -14154,6 +15686,12 @@ export namespace Prisma {
     none?: LoanWhereInput
   }
 
+  export type BookAccessListRelationFilter = {
+    every?: BookAccessWhereInput
+    some?: BookAccessWhereInput
+    none?: BookAccessWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -14184,6 +15722,10 @@ export namespace Prisma {
   }
 
   export type LoanOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BookAccessOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14732,12 +16274,15 @@ export namespace Prisma {
     summary?: SortOrder
     pdf_url?: SortOrder
     cover_url?: SortOrder
+    back_url?: SortOrder
     images_url?: SortOrder
     keywords?: SortOrder
     label?: SortOrder
     shelf?: SortOrder
     status?: SortOrder
     description?: SortOrder
+    last_month_access_count?: SortOrder
+    last_month_access_count_updated_at?: SortOrder
   }
 
   export type BookAvgOrderByAggregateInput = {
@@ -14746,6 +16291,7 @@ export namespace Prisma {
     updated_by_user_id?: SortOrder
     year?: SortOrder
     pages?: SortOrder
+    last_month_access_count?: SortOrder
   }
 
   export type BookMaxOrderByAggregateInput = {
@@ -14765,10 +16311,13 @@ export namespace Prisma {
     summary?: SortOrder
     pdf_url?: SortOrder
     cover_url?: SortOrder
+    back_url?: SortOrder
     label?: SortOrder
     shelf?: SortOrder
     status?: SortOrder
     description?: SortOrder
+    last_month_access_count?: SortOrder
+    last_month_access_count_updated_at?: SortOrder
   }
 
   export type BookMinOrderByAggregateInput = {
@@ -14788,10 +16337,13 @@ export namespace Prisma {
     summary?: SortOrder
     pdf_url?: SortOrder
     cover_url?: SortOrder
+    back_url?: SortOrder
     label?: SortOrder
     shelf?: SortOrder
     status?: SortOrder
     description?: SortOrder
+    last_month_access_count?: SortOrder
+    last_month_access_count_updated_at?: SortOrder
   }
 
   export type BookSumOrderByAggregateInput = {
@@ -14800,6 +16352,7 @@ export namespace Prisma {
     updated_by_user_id?: SortOrder
     year?: SortOrder
     pages?: SortOrder
+    last_month_access_count?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -14877,6 +16430,47 @@ export namespace Prisma {
     updated_by_user_id?: SortOrder
     book_id?: SortOrder
     user_id?: SortOrder
+  }
+
+  export type BookNullableScalarRelationFilter = {
+    is?: BookWhereInput | null
+    isNot?: BookWhereInput | null
+  }
+
+  export type BookAccessCountOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    book_id?: SortOrder
+    status?: SortOrder
+  }
+
+  export type BookAccessAvgOrderByAggregateInput = {
+    id?: SortOrder
+    created_by_user_id?: SortOrder
+    book_id?: SortOrder
+  }
+
+  export type BookAccessMaxOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    book_id?: SortOrder
+    status?: SortOrder
+  }
+
+  export type BookAccessMinOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    book_id?: SortOrder
+    status?: SortOrder
+  }
+
+  export type BookAccessSumOrderByAggregateInput = {
+    id?: SortOrder
+    created_by_user_id?: SortOrder
+    book_id?: SortOrder
   }
 
   export type UserAuthTokenCreateNestedManyWithoutUserInput = {
@@ -14977,6 +16571,13 @@ export namespace Prisma {
     connect?: LoanWhereUniqueInput | LoanWhereUniqueInput[]
   }
 
+  export type BookAccessCreateNestedManyWithoutCreated_by_userInput = {
+    create?: XOR<BookAccessCreateWithoutCreated_by_userInput, BookAccessUncheckedCreateWithoutCreated_by_userInput> | BookAccessCreateWithoutCreated_by_userInput[] | BookAccessUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: BookAccessCreateOrConnectWithoutCreated_by_userInput | BookAccessCreateOrConnectWithoutCreated_by_userInput[]
+    createMany?: BookAccessCreateManyCreated_by_userInputEnvelope
+    connect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+  }
+
   export type UserAuthTokenUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserAuthTokenCreateWithoutUserInput, UserAuthTokenUncheckedCreateWithoutUserInput> | UserAuthTokenCreateWithoutUserInput[] | UserAuthTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserAuthTokenCreateOrConnectWithoutUserInput | UserAuthTokenCreateOrConnectWithoutUserInput[]
@@ -15073,6 +16674,13 @@ export namespace Prisma {
     connectOrCreate?: LoanCreateOrConnectWithoutUserInput | LoanCreateOrConnectWithoutUserInput[]
     createMany?: LoanCreateManyUserInputEnvelope
     connect?: LoanWhereUniqueInput | LoanWhereUniqueInput[]
+  }
+
+  export type BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput = {
+    create?: XOR<BookAccessCreateWithoutCreated_by_userInput, BookAccessUncheckedCreateWithoutCreated_by_userInput> | BookAccessCreateWithoutCreated_by_userInput[] | BookAccessUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: BookAccessCreateOrConnectWithoutCreated_by_userInput | BookAccessCreateOrConnectWithoutCreated_by_userInput[]
+    createMany?: BookAccessCreateManyCreated_by_userInputEnvelope
+    connect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
   }
 
   export type BigIntFieldUpdateOperationsInput = {
@@ -15299,6 +16907,20 @@ export namespace Prisma {
     deleteMany?: LoanScalarWhereInput | LoanScalarWhereInput[]
   }
 
+  export type BookAccessUpdateManyWithoutCreated_by_userNestedInput = {
+    create?: XOR<BookAccessCreateWithoutCreated_by_userInput, BookAccessUncheckedCreateWithoutCreated_by_userInput> | BookAccessCreateWithoutCreated_by_userInput[] | BookAccessUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: BookAccessCreateOrConnectWithoutCreated_by_userInput | BookAccessCreateOrConnectWithoutCreated_by_userInput[]
+    upsert?: BookAccessUpsertWithWhereUniqueWithoutCreated_by_userInput | BookAccessUpsertWithWhereUniqueWithoutCreated_by_userInput[]
+    createMany?: BookAccessCreateManyCreated_by_userInputEnvelope
+    set?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    disconnect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    delete?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    connect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    update?: BookAccessUpdateWithWhereUniqueWithoutCreated_by_userInput | BookAccessUpdateWithWhereUniqueWithoutCreated_by_userInput[]
+    updateMany?: BookAccessUpdateManyWithWhereWithoutCreated_by_userInput | BookAccessUpdateManyWithWhereWithoutCreated_by_userInput[]
+    deleteMany?: BookAccessScalarWhereInput | BookAccessScalarWhereInput[]
+  }
+
   export type UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserAuthTokenCreateWithoutUserInput, UserAuthTokenUncheckedCreateWithoutUserInput> | UserAuthTokenCreateWithoutUserInput[] | UserAuthTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserAuthTokenCreateOrConnectWithoutUserInput | UserAuthTokenCreateOrConnectWithoutUserInput[]
@@ -15493,6 +17115,20 @@ export namespace Prisma {
     update?: LoanUpdateWithWhereUniqueWithoutUserInput | LoanUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: LoanUpdateManyWithWhereWithoutUserInput | LoanUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: LoanScalarWhereInput | LoanScalarWhereInput[]
+  }
+
+  export type BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput = {
+    create?: XOR<BookAccessCreateWithoutCreated_by_userInput, BookAccessUncheckedCreateWithoutCreated_by_userInput> | BookAccessCreateWithoutCreated_by_userInput[] | BookAccessUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: BookAccessCreateOrConnectWithoutCreated_by_userInput | BookAccessCreateOrConnectWithoutCreated_by_userInput[]
+    upsert?: BookAccessUpsertWithWhereUniqueWithoutCreated_by_userInput | BookAccessUpsertWithWhereUniqueWithoutCreated_by_userInput[]
+    createMany?: BookAccessCreateManyCreated_by_userInputEnvelope
+    set?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    disconnect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    delete?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    connect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    update?: BookAccessUpdateWithWhereUniqueWithoutCreated_by_userInput | BookAccessUpdateWithWhereUniqueWithoutCreated_by_userInput[]
+    updateMany?: BookAccessUpdateManyWithWhereWithoutCreated_by_userInput | BookAccessUpdateManyWithWhereWithoutCreated_by_userInput[]
+    deleteMany?: BookAccessScalarWhereInput | BookAccessScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAuth_tokensInput = {
@@ -15830,6 +17466,13 @@ export namespace Prisma {
     connect?: LoanWhereUniqueInput | LoanWhereUniqueInput[]
   }
 
+  export type BookAccessCreateNestedManyWithoutBookInput = {
+    create?: XOR<BookAccessCreateWithoutBookInput, BookAccessUncheckedCreateWithoutBookInput> | BookAccessCreateWithoutBookInput[] | BookAccessUncheckedCreateWithoutBookInput[]
+    connectOrCreate?: BookAccessCreateOrConnectWithoutBookInput | BookAccessCreateOrConnectWithoutBookInput[]
+    createMany?: BookAccessCreateManyBookInputEnvelope
+    connect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+  }
+
   export type BookAuthorUncheckedCreateNestedManyWithoutBookInput = {
     create?: XOR<BookAuthorCreateWithoutBookInput, BookAuthorUncheckedCreateWithoutBookInput> | BookAuthorCreateWithoutBookInput[] | BookAuthorUncheckedCreateWithoutBookInput[]
     connectOrCreate?: BookAuthorCreateOrConnectWithoutBookInput | BookAuthorCreateOrConnectWithoutBookInput[]
@@ -15849,6 +17492,13 @@ export namespace Prisma {
     connectOrCreate?: LoanCreateOrConnectWithoutBookInput | LoanCreateOrConnectWithoutBookInput[]
     createMany?: LoanCreateManyBookInputEnvelope
     connect?: LoanWhereUniqueInput | LoanWhereUniqueInput[]
+  }
+
+  export type BookAccessUncheckedCreateNestedManyWithoutBookInput = {
+    create?: XOR<BookAccessCreateWithoutBookInput, BookAccessUncheckedCreateWithoutBookInput> | BookAccessCreateWithoutBookInput[] | BookAccessUncheckedCreateWithoutBookInput[]
+    connectOrCreate?: BookAccessCreateOrConnectWithoutBookInput | BookAccessCreateOrConnectWithoutBookInput[]
+    createMany?: BookAccessCreateManyBookInputEnvelope
+    connect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -15929,6 +17579,20 @@ export namespace Prisma {
     deleteMany?: LoanScalarWhereInput | LoanScalarWhereInput[]
   }
 
+  export type BookAccessUpdateManyWithoutBookNestedInput = {
+    create?: XOR<BookAccessCreateWithoutBookInput, BookAccessUncheckedCreateWithoutBookInput> | BookAccessCreateWithoutBookInput[] | BookAccessUncheckedCreateWithoutBookInput[]
+    connectOrCreate?: BookAccessCreateOrConnectWithoutBookInput | BookAccessCreateOrConnectWithoutBookInput[]
+    upsert?: BookAccessUpsertWithWhereUniqueWithoutBookInput | BookAccessUpsertWithWhereUniqueWithoutBookInput[]
+    createMany?: BookAccessCreateManyBookInputEnvelope
+    set?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    disconnect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    delete?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    connect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    update?: BookAccessUpdateWithWhereUniqueWithoutBookInput | BookAccessUpdateWithWhereUniqueWithoutBookInput[]
+    updateMany?: BookAccessUpdateManyWithWhereWithoutBookInput | BookAccessUpdateManyWithWhereWithoutBookInput[]
+    deleteMany?: BookAccessScalarWhereInput | BookAccessScalarWhereInput[]
+  }
+
   export type BookAuthorUncheckedUpdateManyWithoutBookNestedInput = {
     create?: XOR<BookAuthorCreateWithoutBookInput, BookAuthorUncheckedCreateWithoutBookInput> | BookAuthorCreateWithoutBookInput[] | BookAuthorUncheckedCreateWithoutBookInput[]
     connectOrCreate?: BookAuthorCreateOrConnectWithoutBookInput | BookAuthorCreateOrConnectWithoutBookInput[]
@@ -15969,6 +17633,20 @@ export namespace Prisma {
     update?: LoanUpdateWithWhereUniqueWithoutBookInput | LoanUpdateWithWhereUniqueWithoutBookInput[]
     updateMany?: LoanUpdateManyWithWhereWithoutBookInput | LoanUpdateManyWithWhereWithoutBookInput[]
     deleteMany?: LoanScalarWhereInput | LoanScalarWhereInput[]
+  }
+
+  export type BookAccessUncheckedUpdateManyWithoutBookNestedInput = {
+    create?: XOR<BookAccessCreateWithoutBookInput, BookAccessUncheckedCreateWithoutBookInput> | BookAccessCreateWithoutBookInput[] | BookAccessUncheckedCreateWithoutBookInput[]
+    connectOrCreate?: BookAccessCreateOrConnectWithoutBookInput | BookAccessCreateOrConnectWithoutBookInput[]
+    upsert?: BookAccessUpsertWithWhereUniqueWithoutBookInput | BookAccessUpsertWithWhereUniqueWithoutBookInput[]
+    createMany?: BookAccessCreateManyBookInputEnvelope
+    set?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    disconnect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    delete?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    connect?: BookAccessWhereUniqueInput | BookAccessWhereUniqueInput[]
+    update?: BookAccessUpdateWithWhereUniqueWithoutBookInput | BookAccessUpdateWithWhereUniqueWithoutBookInput[]
+    updateMany?: BookAccessUpdateManyWithWhereWithoutBookInput | BookAccessUpdateManyWithWhereWithoutBookInput[]
+    deleteMany?: BookAccessScalarWhereInput | BookAccessScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutCreated_loansInput = {
@@ -16027,6 +17705,38 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutUser_loansInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUser_loansInput, UserUpdateWithoutUser_loansInput>, UserUncheckedUpdateWithoutUser_loansInput>
+  }
+
+  export type UserCreateNestedOneWithoutBook_accessesInput = {
+    create?: XOR<UserCreateWithoutBook_accessesInput, UserUncheckedCreateWithoutBook_accessesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBook_accessesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BookCreateNestedOneWithoutBook_accessesInput = {
+    create?: XOR<BookCreateWithoutBook_accessesInput, BookUncheckedCreateWithoutBook_accessesInput>
+    connectOrCreate?: BookCreateOrConnectWithoutBook_accessesInput
+    connect?: BookWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutBook_accessesNestedInput = {
+    create?: XOR<UserCreateWithoutBook_accessesInput, UserUncheckedCreateWithoutBook_accessesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBook_accessesInput
+    upsert?: UserUpsertWithoutBook_accessesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBook_accessesInput, UserUpdateWithoutBook_accessesInput>, UserUncheckedUpdateWithoutBook_accessesInput>
+  }
+
+  export type BookUpdateOneWithoutBook_accessesNestedInput = {
+    create?: XOR<BookCreateWithoutBook_accessesInput, BookUncheckedCreateWithoutBook_accessesInput>
+    connectOrCreate?: BookCreateOrConnectWithoutBook_accessesInput
+    upsert?: BookUpsertWithoutBook_accessesInput
+    disconnect?: BookWhereInput | boolean
+    delete?: BookWhereInput | boolean
+    connect?: BookWhereUniqueInput
+    update?: XOR<XOR<BookUpdateToOneWithWhereWithoutBook_accessesInput, BookUpdateWithoutBook_accessesInput>, BookUncheckedUpdateWithoutBook_accessesInput>
   }
 
   export type NestedBigIntFilter<$PrismaModel = never> = {
@@ -16448,16 +18158,20 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutCreated_by_userInput = {
@@ -16476,15 +18190,19 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutCreated_by_userInput = {
@@ -16512,16 +18230,20 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutUpdated_by_userInput = {
@@ -16540,15 +18262,19 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutUpdated_by_userInput = {
@@ -16760,7 +18486,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     updated_by_user?: UserCreateNestedOneWithoutUpdated_loansInput
     book: BookCreateNestedOneWithoutLoansInput
@@ -16775,7 +18501,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     book_id: bigint | number
     user_id: bigint | number
@@ -16798,7 +18524,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_loansInput
     book: BookCreateNestedOneWithoutLoansInput
@@ -16813,7 +18539,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     book_id: bigint | number
     user_id: bigint | number
@@ -16836,7 +18562,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_loansInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_loansInput
@@ -16852,7 +18578,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     book_id: bigint | number
   }
@@ -16864,6 +18590,30 @@ export namespace Prisma {
 
   export type LoanCreateManyUserInputEnvelope = {
     data: LoanCreateManyUserInput | LoanCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BookAccessCreateWithoutCreated_by_userInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    status?: $Enums.StatusEnum
+    book?: BookCreateNestedOneWithoutBook_accessesInput
+  }
+
+  export type BookAccessUncheckedCreateWithoutCreated_by_userInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    book_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+  }
+
+  export type BookAccessCreateOrConnectWithoutCreated_by_userInput = {
+    where: BookAccessWhereUniqueInput
+    create: XOR<BookAccessCreateWithoutCreated_by_userInput, BookAccessUncheckedCreateWithoutCreated_by_userInput>
+  }
+
+  export type BookAccessCreateManyCreated_by_userInputEnvelope = {
+    data: BookAccessCreateManyCreated_by_userInput | BookAccessCreateManyCreated_by_userInput[]
     skipDuplicates?: boolean
   }
 
@@ -16986,12 +18736,15 @@ export namespace Prisma {
     summary?: StringNullableFilter<"Book"> | string | null
     pdf_url?: StringNullableFilter<"Book"> | string | null
     cover_url?: StringNullableFilter<"Book"> | string | null
+    back_url?: StringNullableFilter<"Book"> | string | null
     images_url?: StringNullableListFilter<"Book">
     keywords?: StringNullableListFilter<"Book">
     label?: StringNullableFilter<"Book"> | string | null
     shelf?: StringNullableFilter<"Book"> | string | null
     status?: EnumStatusEnumFilter<"Book"> | $Enums.StatusEnum
     description?: StringNullableFilter<"Book"> | string | null
+    last_month_access_count?: BigIntFilter<"Book"> | bigint | number
+    last_month_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
   }
 
   export type BookUpsertWithWhereUniqueWithoutUpdated_by_userInput = {
@@ -17216,6 +18969,33 @@ export namespace Prisma {
     data: XOR<LoanUpdateManyMutationInput, LoanUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type BookAccessUpsertWithWhereUniqueWithoutCreated_by_userInput = {
+    where: BookAccessWhereUniqueInput
+    update: XOR<BookAccessUpdateWithoutCreated_by_userInput, BookAccessUncheckedUpdateWithoutCreated_by_userInput>
+    create: XOR<BookAccessCreateWithoutCreated_by_userInput, BookAccessUncheckedCreateWithoutCreated_by_userInput>
+  }
+
+  export type BookAccessUpdateWithWhereUniqueWithoutCreated_by_userInput = {
+    where: BookAccessWhereUniqueInput
+    data: XOR<BookAccessUpdateWithoutCreated_by_userInput, BookAccessUncheckedUpdateWithoutCreated_by_userInput>
+  }
+
+  export type BookAccessUpdateManyWithWhereWithoutCreated_by_userInput = {
+    where: BookAccessScalarWhereInput
+    data: XOR<BookAccessUpdateManyMutationInput, BookAccessUncheckedUpdateManyWithoutCreated_by_userInput>
+  }
+
+  export type BookAccessScalarWhereInput = {
+    AND?: BookAccessScalarWhereInput | BookAccessScalarWhereInput[]
+    OR?: BookAccessScalarWhereInput[]
+    NOT?: BookAccessScalarWhereInput | BookAccessScalarWhereInput[]
+    id?: BigIntFilter<"BookAccess"> | bigint | number
+    created_at?: DateTimeFilter<"BookAccess"> | Date | string
+    created_by_user_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
+    book_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
+    status?: EnumStatusEnumFilter<"BookAccess"> | $Enums.StatusEnum
+  }
+
   export type UserCreateWithoutAuth_tokensInput = {
     id?: bigint | number
     slug?: string
@@ -17241,6 +19021,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutAuth_tokensInput = {
@@ -17268,6 +19049,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutAuth_tokensInput = {
@@ -17311,6 +19093,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuth_tokensInput = {
@@ -17338,6 +19121,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserCreateWithoutCreated_authorsInput = {
@@ -17365,6 +19149,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutCreated_authorsInput = {
@@ -17392,6 +19177,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutCreated_authorsInput = {
@@ -17424,6 +19210,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_authorsInput = {
@@ -17451,6 +19238,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_authorsInput = {
@@ -17526,6 +19314,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_authorsInput = {
@@ -17553,6 +19342,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUpsertWithoutUpdated_authorsInput = {
@@ -17591,6 +19381,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_authorsInput = {
@@ -17618,6 +19409,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type BookAuthorUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -17661,6 +19453,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutCreated_book_authorsInput = {
@@ -17688,6 +19481,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutCreated_book_authorsInput = {
@@ -17720,6 +19514,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_book_authorsInput = {
@@ -17747,6 +19542,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_book_authorsInput = {
@@ -17802,16 +19598,20 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutAuthorsInput = {
@@ -17831,14 +19631,18 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutAuthorsInput = {
@@ -17882,6 +19686,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_book_authorsInput = {
@@ -17909,6 +19714,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUpsertWithoutUpdated_book_authorsInput = {
@@ -17947,6 +19753,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_book_authorsInput = {
@@ -17974,6 +19781,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type AuthorUpsertWithoutBooksInput = {
@@ -18041,16 +19849,20 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutAuthorsInput = {
@@ -18070,14 +19882,18 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type UserCreateWithoutCreated_tagsInput = {
@@ -18105,6 +19921,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutCreated_tagsInput = {
@@ -18132,6 +19949,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutCreated_tagsInput = {
@@ -18164,6 +19982,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_tagsInput = {
@@ -18191,6 +20010,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_tagsInput = {
@@ -18264,6 +20084,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_tagsInput = {
@@ -18291,6 +20112,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUpsertWithoutUpdated_tagsInput = {
@@ -18329,6 +20151,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_tagsInput = {
@@ -18356,6 +20179,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type BookTagUpsertWithWhereUniqueWithoutTagInput = {
@@ -18399,6 +20223,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutCreated_book_tagsInput = {
@@ -18426,6 +20251,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutCreated_book_tagsInput = {
@@ -18458,6 +20284,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_book_tagsInput = {
@@ -18485,6 +20312,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_book_tagsInput = {
@@ -18536,16 +20364,20 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutTagsInput = {
@@ -18565,14 +20397,18 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutTagsInput = {
@@ -18616,6 +20452,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_book_tagsInput = {
@@ -18643,6 +20480,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUpsertWithoutUpdated_book_tagsInput = {
@@ -18681,6 +20519,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_book_tagsInput = {
@@ -18708,6 +20547,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type TagUpsertWithoutBooksInput = {
@@ -18771,16 +20611,20 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutTagsInput = {
@@ -18800,14 +20644,18 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type UserCreateWithoutCreated_booksInput = {
@@ -18835,6 +20683,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutCreated_booksInput = {
@@ -18862,6 +20711,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutCreated_booksInput = {
@@ -18894,6 +20744,7 @@ export namespace Prisma {
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_booksInput = {
@@ -18921,6 +20772,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_booksInput = {
@@ -18997,7 +20849,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_loansInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_loansInput
@@ -19013,7 +20865,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     user_id: bigint | number
   }
@@ -19025,6 +20877,30 @@ export namespace Prisma {
 
   export type LoanCreateManyBookInputEnvelope = {
     data: LoanCreateManyBookInput | LoanCreateManyBookInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BookAccessCreateWithoutBookInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    status?: $Enums.StatusEnum
+    created_by_user?: UserCreateNestedOneWithoutBook_accessesInput
+  }
+
+  export type BookAccessUncheckedCreateWithoutBookInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+  }
+
+  export type BookAccessCreateOrConnectWithoutBookInput = {
+    where: BookAccessWhereUniqueInput
+    create: XOR<BookAccessCreateWithoutBookInput, BookAccessUncheckedCreateWithoutBookInput>
+  }
+
+  export type BookAccessCreateManyBookInputEnvelope = {
+    data: BookAccessCreateManyBookInput | BookAccessCreateManyBookInput[]
     skipDuplicates?: boolean
   }
 
@@ -19064,6 +20940,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_booksInput = {
@@ -19091,6 +20968,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUpsertWithoutUpdated_booksInput = {
@@ -19129,6 +21007,7 @@ export namespace Prisma {
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_booksInput = {
@@ -19156,6 +21035,7 @@ export namespace Prisma {
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type BookAuthorUpsertWithWhereUniqueWithoutBookInput = {
@@ -19206,6 +21086,22 @@ export namespace Prisma {
     data: XOR<LoanUpdateManyMutationInput, LoanUncheckedUpdateManyWithoutBookInput>
   }
 
+  export type BookAccessUpsertWithWhereUniqueWithoutBookInput = {
+    where: BookAccessWhereUniqueInput
+    update: XOR<BookAccessUpdateWithoutBookInput, BookAccessUncheckedUpdateWithoutBookInput>
+    create: XOR<BookAccessCreateWithoutBookInput, BookAccessUncheckedCreateWithoutBookInput>
+  }
+
+  export type BookAccessUpdateWithWhereUniqueWithoutBookInput = {
+    where: BookAccessWhereUniqueInput
+    data: XOR<BookAccessUpdateWithoutBookInput, BookAccessUncheckedUpdateWithoutBookInput>
+  }
+
+  export type BookAccessUpdateManyWithWhereWithoutBookInput = {
+    where: BookAccessScalarWhereInput
+    data: XOR<BookAccessUpdateManyMutationInput, BookAccessUncheckedUpdateManyWithoutBookInput>
+  }
+
   export type UserCreateWithoutCreated_loansInput = {
     id?: bigint | number
     slug?: string
@@ -19231,6 +21127,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutCreated_loansInput = {
@@ -19258,6 +21155,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutCreated_loansInput = {
@@ -19290,6 +21188,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_loansInput = {
@@ -19317,6 +21216,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_loansInput = {
@@ -19339,16 +21239,20 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     tags?: BookTagCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateWithoutLoansInput = {
@@ -19368,14 +21272,18 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookCreateOrConnectWithoutLoansInput = {
@@ -19408,6 +21316,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserUncheckedCreateWithoutUser_loansInput = {
@@ -19435,6 +21344,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
   }
 
   export type UserCreateOrConnectWithoutUser_loansInput = {
@@ -19478,6 +21388,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_loansInput = {
@@ -19505,6 +21416,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUpsertWithoutUpdated_loansInput = {
@@ -19543,6 +21455,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_loansInput = {
@@ -19570,6 +21483,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type BookUpsertWithoutLoansInput = {
@@ -19598,16 +21512,20 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutLoansInput = {
@@ -19627,14 +21545,18 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type UserUpsertWithoutUser_loansInput = {
@@ -19673,6 +21595,7 @@ export namespace Prisma {
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUser_loansInput = {
@@ -19700,6 +21623,275 @@ export namespace Prisma {
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+  }
+
+  export type UserCreateWithoutBook_accessesInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password: string
+    email: string
+    role: $Enums.UserRole
+    auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
+    created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: BookAuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_book_authors?: BookAuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
+    updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
+    user_loans?: LoanCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBook_accessesInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password: string
+    email: string
+    role: $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
+    created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: BookAuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_authors?: BookAuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBook_accessesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBook_accessesInput, UserUncheckedCreateWithoutBook_accessesInput>
+  }
+
+  export type BookCreateWithoutBook_accessesInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    title: string
+    subtitle?: string | null
+    publisher?: string | null
+    year?: number | null
+    edition?: string | null
+    isbn?: string | null
+    pages?: number | null
+    summary?: string | null
+    pdf_url?: string | null
+    cover_url?: string | null
+    back_url?: string | null
+    images_url?: BookCreateimages_urlInput | string[]
+    keywords?: BookCreatekeywordsInput | string[]
+    label?: string | null
+    shelf?: string | null
+    status?: $Enums.StatusEnum
+    description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_booksInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
+    authors?: BookAuthorCreateNestedManyWithoutBookInput
+    tags?: BookTagCreateNestedManyWithoutBookInput
+    loans?: LoanCreateNestedManyWithoutBookInput
+  }
+
+  export type BookUncheckedCreateWithoutBook_accessesInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    title: string
+    subtitle?: string | null
+    publisher?: string | null
+    year?: number | null
+    edition?: string | null
+    isbn?: string | null
+    pages?: number | null
+    summary?: string | null
+    pdf_url?: string | null
+    cover_url?: string | null
+    back_url?: string | null
+    images_url?: BookCreateimages_urlInput | string[]
+    keywords?: BookCreatekeywordsInput | string[]
+    label?: string | null
+    shelf?: string | null
+    status?: $Enums.StatusEnum
+    description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
+    authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
+    tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
+    loans?: LoanUncheckedCreateNestedManyWithoutBookInput
+  }
+
+  export type BookCreateOrConnectWithoutBook_accessesInput = {
+    where: BookWhereUniqueInput
+    create: XOR<BookCreateWithoutBook_accessesInput, BookUncheckedCreateWithoutBook_accessesInput>
+  }
+
+  export type UserUpsertWithoutBook_accessesInput = {
+    update: XOR<UserUpdateWithoutBook_accessesInput, UserUncheckedUpdateWithoutBook_accessesInput>
+    create: XOR<UserCreateWithoutBook_accessesInput, UserUncheckedCreateWithoutBook_accessesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBook_accessesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBook_accessesInput, UserUncheckedUpdateWithoutBook_accessesInput>
+  }
+
+  export type UserUpdateWithoutBook_accessesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: BookAuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_authors?: BookAuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
+    user_loans?: LoanUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBook_accessesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: BookAuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_authors?: BookAuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type BookUpsertWithoutBook_accessesInput = {
+    update: XOR<BookUpdateWithoutBook_accessesInput, BookUncheckedUpdateWithoutBook_accessesInput>
+    create: XOR<BookCreateWithoutBook_accessesInput, BookUncheckedCreateWithoutBook_accessesInput>
+    where?: BookWhereInput
+  }
+
+  export type BookUpdateToOneWithWhereWithoutBook_accessesInput = {
+    where?: BookWhereInput
+    data: XOR<BookUpdateWithoutBook_accessesInput, BookUncheckedUpdateWithoutBook_accessesInput>
+  }
+
+  export type BookUpdateWithoutBook_accessesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    publisher?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    edition?: NullableStringFieldUpdateOperationsInput | string | null
+    isbn?: NullableStringFieldUpdateOperationsInput | string | null
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
+    images_url?: BookUpdateimages_urlInput | string[]
+    keywords?: BookUpdatekeywordsInput | string[]
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    shelf?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
+    authors?: BookAuthorUpdateManyWithoutBookNestedInput
+    tags?: BookTagUpdateManyWithoutBookNestedInput
+    loans?: LoanUpdateManyWithoutBookNestedInput
+  }
+
+  export type BookUncheckedUpdateWithoutBook_accessesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    publisher?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    edition?: NullableStringFieldUpdateOperationsInput | string | null
+    isbn?: NullableStringFieldUpdateOperationsInput | string | null
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
+    images_url?: BookUpdateimages_urlInput | string[]
+    keywords?: BookUpdatekeywordsInput | string[]
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    shelf?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
+    tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
+    loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type UserAuthTokenCreateManyUserInput = {
@@ -19758,12 +21950,15 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
   }
 
   export type BookCreateManyUpdated_by_userInput = {
@@ -19782,12 +21977,15 @@ export namespace Prisma {
     summary?: string | null
     pdf_url?: string | null
     cover_url?: string | null
+    back_url?: string | null
     images_url?: BookCreateimages_urlInput | string[]
     keywords?: BookCreatekeywordsInput | string[]
     label?: string | null
     shelf?: string | null
     status?: $Enums.StatusEnum
     description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
   }
 
   export type BookAuthorCreateManyCreated_by_userInput = {
@@ -19862,7 +22060,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     book_id: bigint | number
     user_id: bigint | number
@@ -19876,7 +22074,7 @@ export namespace Prisma {
     updated_at?: Date | string | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     book_id: bigint | number
     user_id: bigint | number
@@ -19891,9 +22089,16 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     book_id: bigint | number
+  }
+
+  export type BookAccessCreateManyCreated_by_userInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    book_id?: bigint | number | null
+    status?: $Enums.StatusEnum
   }
 
   export type UserAuthTokenUpdateWithoutUserInput = {
@@ -20035,16 +22240,20 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutCreated_by_userInput = {
@@ -20063,15 +22272,19 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateManyWithoutCreated_by_userInput = {
@@ -20090,12 +22303,15 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type BookUpdateWithoutUpdated_by_userInput = {
@@ -20113,16 +22329,20 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateWithoutUpdated_by_userInput = {
@@ -20141,15 +22361,19 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateManyWithoutUpdated_by_userInput = {
@@ -20168,12 +22392,15 @@ export namespace Prisma {
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
     cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
     images_url?: BookUpdateimages_urlInput | string[]
     keywords?: BookUpdatekeywordsInput | string[]
     label?: NullableStringFieldUpdateOperationsInput | string | null
     shelf?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type BookAuthorUpdateWithoutCreated_by_userInput = {
@@ -20498,6 +22725,27 @@ export namespace Prisma {
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type BookAccessUpdateWithoutCreated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    book?: BookUpdateOneWithoutBook_accessesNestedInput
+  }
+
+  export type BookAccessUncheckedUpdateWithoutCreated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    book_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  }
+
+  export type BookAccessUncheckedUpdateManyWithoutCreated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    book_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  }
+
   export type BookAuthorCreateManyAuthorInput = {
     id?: bigint | number
     created_at?: Date | string
@@ -20612,9 +22860,16 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     loan_date?: Date | string
-    due_date?: Date | string
+    due_date: Date | string
     return_date?: Date | string | null
     user_id: bigint | number
+  }
+
+  export type BookAccessCreateManyBookInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
   }
 
   export type BookAuthorUpdateWithoutBookInput = {
@@ -20720,6 +22975,27 @@ export namespace Prisma {
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type BookAccessUpdateWithoutBookInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    created_by_user?: UserUpdateOneWithoutBook_accessesNestedInput
+  }
+
+  export type BookAccessUncheckedUpdateWithoutBookInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  }
+
+  export type BookAccessUncheckedUpdateManyWithoutBookInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 
 

@@ -216,12 +216,15 @@ exports.Prisma.BookScalarFieldEnum = {
   summary: 'summary',
   pdf_url: 'pdf_url',
   cover_url: 'cover_url',
+  back_url: 'back_url',
   images_url: 'images_url',
   keywords: 'keywords',
   label: 'label',
   shelf: 'shelf',
   status: 'status',
-  description: 'description'
+  description: 'description',
+  last_month_access_count: 'last_month_access_count',
+  last_month_access_count_updated_at: 'last_month_access_count_updated_at'
 };
 
 exports.Prisma.LoanScalarFieldEnum = {
@@ -237,6 +240,14 @@ exports.Prisma.LoanScalarFieldEnum = {
   return_date: 'return_date',
   book_id: 'book_id',
   user_id: 'user_id'
+};
+
+exports.Prisma.BookAccessScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  created_by_user_id: 'created_by_user_id',
+  book_id: 'book_id',
+  status: 'status'
 };
 
 exports.Prisma.SortOrder = {
@@ -281,7 +292,8 @@ exports.Prisma.ModelName = {
   Tag: 'Tag',
   BookTag: 'BookTag',
   Book: 'Book',
-  Loan: 'Loan'
+  Loan: 'Loan',
+  BookAccess: 'BookAccess'
 };
 
 /**
