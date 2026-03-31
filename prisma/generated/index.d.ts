@@ -39,6 +39,11 @@ export type BookAuthor = $Result.DefaultSelection<Prisma.$BookAuthorPayload>
  */
 export type Tag = $Result.DefaultSelection<Prisma.$TagPayload>
 /**
+ * Model Category
+ * 
+ */
+export type Category = $Result.DefaultSelection<Prisma.$CategoryPayload>
+/**
  * Model BookTag
  * 
  */
@@ -272,6 +277,16 @@ export class PrismaClient<
     * ```
     */
   get tag(): Prisma.TagDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.category`: Exposes CRUD operations for the **Category** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Categories
+    * const categories = await prisma.category.findMany()
+    * ```
+    */
+  get category(): Prisma.CategoryDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.bookTag`: Exposes CRUD operations for the **BookTag** model.
@@ -758,6 +773,7 @@ export namespace Prisma {
     Author: 'Author',
     BookAuthor: 'BookAuthor',
     Tag: 'Tag',
+    Category: 'Category',
     BookTag: 'BookTag',
     Book: 'Book',
     Loan: 'Loan',
@@ -780,7 +796,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userAuthToken" | "author" | "bookAuthor" | "tag" | "bookTag" | "book" | "loan" | "bookAccess"
+      modelProps: "user" | "userAuthToken" | "author" | "bookAuthor" | "tag" | "category" | "bookTag" | "book" | "loan" | "bookAccess"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1151,6 +1167,80 @@ export namespace Prisma {
           count: {
             args: Prisma.TagCountArgs<ExtArgs>
             result: $Utils.Optional<TagCountAggregateOutputType> | number
+          }
+        }
+      }
+      Category: {
+        payload: Prisma.$CategoryPayload<ExtArgs>
+        fields: Prisma.CategoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CategoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CategoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
+          }
+          findFirst: {
+            args: Prisma.CategoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CategoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
+          }
+          findMany: {
+            args: Prisma.CategoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>[]
+          }
+          create: {
+            args: Prisma.CategoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
+          }
+          createMany: {
+            args: Prisma.CategoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CategoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>[]
+          }
+          delete: {
+            args: Prisma.CategoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
+          }
+          update: {
+            args: Prisma.CategoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.CategoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CategoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CategoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.CategoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoryPayload>
+          }
+          aggregate: {
+            args: Prisma.CategoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCategory>
+          }
+          groupBy: {
+            args: Prisma.CategoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CategoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CategoryCountArgs<ExtArgs>
+            result: $Utils.Optional<CategoryCountAggregateOutputType> | number
           }
         }
       }
@@ -1551,6 +1641,7 @@ export namespace Prisma {
     author?: AuthorOmit
     bookAuthor?: BookAuthorOmit
     tag?: TagOmit
+    category?: CategoryOmit
     bookTag?: BookTagOmit
     book?: BookOmit
     loan?: LoanOmit
@@ -1646,6 +1737,8 @@ export namespace Prisma {
     updated_tags: number
     created_book_tags: number
     updated_book_tags: number
+    created_categories: number
+    updated_categories: number
     created_loans: number
     updated_loans: number
     user_loans: number
@@ -1664,6 +1757,8 @@ export namespace Prisma {
     updated_tags?: boolean | UserCountOutputTypeCountUpdated_tagsArgs
     created_book_tags?: boolean | UserCountOutputTypeCountCreated_book_tagsArgs
     updated_book_tags?: boolean | UserCountOutputTypeCountUpdated_book_tagsArgs
+    created_categories?: boolean | UserCountOutputTypeCountCreated_categoriesArgs
+    updated_categories?: boolean | UserCountOutputTypeCountUpdated_categoriesArgs
     created_loans?: boolean | UserCountOutputTypeCountCreated_loansArgs
     updated_loans?: boolean | UserCountOutputTypeCountUpdated_loansArgs
     user_loans?: boolean | UserCountOutputTypeCountUser_loansArgs
@@ -1761,6 +1856,20 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountCreated_categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategoryWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUpdated_categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategoryWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountCreated_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LoanWhereInput
   }
@@ -1846,6 +1955,37 @@ export namespace Prisma {
    */
   export type TagCountOutputTypeCountBooksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BookTagWhereInput
+  }
+
+
+  /**
+   * Count Type CategoryCountOutputType
+   */
+
+  export type CategoryCountOutputType = {
+    books: number
+  }
+
+  export type CategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    books?: boolean | CategoryCountOutputTypeCountBooksArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategoryCountOutputType
+     */
+    select?: CategoryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeCountBooksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookWhereInput
   }
 
 
@@ -2168,6 +2308,8 @@ export namespace Prisma {
     updated_tags?: boolean | User$updated_tagsArgs<ExtArgs>
     created_book_tags?: boolean | User$created_book_tagsArgs<ExtArgs>
     updated_book_tags?: boolean | User$updated_book_tagsArgs<ExtArgs>
+    created_categories?: boolean | User$created_categoriesArgs<ExtArgs>
+    updated_categories?: boolean | User$updated_categoriesArgs<ExtArgs>
     created_loans?: boolean | User$created_loansArgs<ExtArgs>
     updated_loans?: boolean | User$updated_loansArgs<ExtArgs>
     user_loans?: boolean | User$user_loansArgs<ExtArgs>
@@ -2230,6 +2372,8 @@ export namespace Prisma {
     updated_tags?: boolean | User$updated_tagsArgs<ExtArgs>
     created_book_tags?: boolean | User$created_book_tagsArgs<ExtArgs>
     updated_book_tags?: boolean | User$updated_book_tagsArgs<ExtArgs>
+    created_categories?: boolean | User$created_categoriesArgs<ExtArgs>
+    updated_categories?: boolean | User$updated_categoriesArgs<ExtArgs>
     created_loans?: boolean | User$created_loansArgs<ExtArgs>
     updated_loans?: boolean | User$updated_loansArgs<ExtArgs>
     user_loans?: boolean | User$user_loansArgs<ExtArgs>
@@ -2253,6 +2397,8 @@ export namespace Prisma {
       updated_tags: Prisma.$TagPayload<ExtArgs>[]
       created_book_tags: Prisma.$BookTagPayload<ExtArgs>[]
       updated_book_tags: Prisma.$BookTagPayload<ExtArgs>[]
+      created_categories: Prisma.$CategoryPayload<ExtArgs>[]
+      updated_categories: Prisma.$CategoryPayload<ExtArgs>[]
       created_loans: Prisma.$LoanPayload<ExtArgs>[]
       updated_loans: Prisma.$LoanPayload<ExtArgs>[]
       user_loans: Prisma.$LoanPayload<ExtArgs>[]
@@ -2675,6 +2821,8 @@ export namespace Prisma {
     updated_tags<T extends User$updated_tagsArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     created_book_tags<T extends User$created_book_tagsArgs<ExtArgs> = {}>(args?: Subset<T, User$created_book_tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     updated_book_tags<T extends User$updated_book_tagsArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_book_tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    created_categories<T extends User$created_categoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$created_categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    updated_categories<T extends User$updated_categoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     created_loans<T extends User$created_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$created_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     updated_loans<T extends User$updated_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user_loans<T extends User$user_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$user_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3368,6 +3516,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BookTagScalarFieldEnum | BookTagScalarFieldEnum[]
+  }
+
+  /**
+   * User.created_categories
+   */
+  export type User$created_categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    where?: CategoryWhereInput
+    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
+    cursor?: CategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
+  }
+
+  /**
+   * User.updated_categories
+   */
+  export type User$updated_categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    where?: CategoryWhereInput
+    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
+    cursor?: CategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
   }
 
   /**
@@ -8320,6 +8516,1215 @@ export namespace Prisma {
 
 
   /**
+   * Model Category
+   */
+
+  export type AggregateCategory = {
+    _count: CategoryCountAggregateOutputType | null
+    _avg: CategoryAvgAggregateOutputType | null
+    _sum: CategorySumAggregateOutputType | null
+    _min: CategoryMinAggregateOutputType | null
+    _max: CategoryMaxAggregateOutputType | null
+  }
+
+  export type CategoryAvgAggregateOutputType = {
+    id: number | null
+    created_by_user_id: number | null
+    updated_by_user_id: number | null
+  }
+
+  export type CategorySumAggregateOutputType = {
+    id: bigint | null
+    created_by_user_id: bigint | null
+    updated_by_user_id: bigint | null
+  }
+
+  export type CategoryMinAggregateOutputType = {
+    id: bigint | null
+    slug: string | null
+    created_at: Date | null
+    created_by_user_id: bigint | null
+    updated_at: Date | null
+    updated_by_user_id: bigint | null
+    name: string | null
+    status: $Enums.StatusEnum | null
+    description: string | null
+  }
+
+  export type CategoryMaxAggregateOutputType = {
+    id: bigint | null
+    slug: string | null
+    created_at: Date | null
+    created_by_user_id: bigint | null
+    updated_at: Date | null
+    updated_by_user_id: bigint | null
+    name: string | null
+    status: $Enums.StatusEnum | null
+    description: string | null
+  }
+
+  export type CategoryCountAggregateOutputType = {
+    id: number
+    slug: number
+    created_at: number
+    created_by_user_id: number
+    updated_at: number
+    updated_by_user_id: number
+    name: number
+    status: number
+    description: number
+    _all: number
+  }
+
+
+  export type CategoryAvgAggregateInputType = {
+    id?: true
+    created_by_user_id?: true
+    updated_by_user_id?: true
+  }
+
+  export type CategorySumAggregateInputType = {
+    id?: true
+    created_by_user_id?: true
+    updated_by_user_id?: true
+  }
+
+  export type CategoryMinAggregateInputType = {
+    id?: true
+    slug?: true
+    created_at?: true
+    created_by_user_id?: true
+    updated_at?: true
+    updated_by_user_id?: true
+    name?: true
+    status?: true
+    description?: true
+  }
+
+  export type CategoryMaxAggregateInputType = {
+    id?: true
+    slug?: true
+    created_at?: true
+    created_by_user_id?: true
+    updated_at?: true
+    updated_by_user_id?: true
+    name?: true
+    status?: true
+    description?: true
+  }
+
+  export type CategoryCountAggregateInputType = {
+    id?: true
+    slug?: true
+    created_at?: true
+    created_by_user_id?: true
+    updated_at?: true
+    updated_by_user_id?: true
+    name?: true
+    status?: true
+    description?: true
+    _all?: true
+  }
+
+  export type CategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Category to aggregate.
+     */
+    where?: CategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categories to fetch.
+     */
+    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Categories
+    **/
+    _count?: true | CategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CategoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CategorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CategoryMaxAggregateInputType
+  }
+
+  export type GetCategoryAggregateType<T extends CategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCategory[P]>
+      : GetScalarType<T[P], AggregateCategory[P]>
+  }
+
+
+
+
+  export type CategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategoryWhereInput
+    orderBy?: CategoryOrderByWithAggregationInput | CategoryOrderByWithAggregationInput[]
+    by: CategoryScalarFieldEnum[] | CategoryScalarFieldEnum
+    having?: CategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CategoryCountAggregateInputType | true
+    _avg?: CategoryAvgAggregateInputType
+    _sum?: CategorySumAggregateInputType
+    _min?: CategoryMinAggregateInputType
+    _max?: CategoryMaxAggregateInputType
+  }
+
+  export type CategoryGroupByOutputType = {
+    id: bigint
+    slug: string
+    created_at: Date
+    created_by_user_id: bigint
+    updated_at: Date | null
+    updated_by_user_id: bigint | null
+    name: string
+    status: $Enums.StatusEnum
+    description: string | null
+    _count: CategoryCountAggregateOutputType | null
+    _avg: CategoryAvgAggregateOutputType | null
+    _sum: CategorySumAggregateOutputType | null
+    _min: CategoryMinAggregateOutputType | null
+    _max: CategoryMaxAggregateOutputType | null
+  }
+
+  type GetCategoryGroupByPayload<T extends CategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], CategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    updated_at?: boolean
+    updated_by_user_id?: boolean
+    name?: boolean
+    status?: boolean
+    description?: boolean
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | Category$updated_by_userArgs<ExtArgs>
+    books?: boolean | Category$booksArgs<ExtArgs>
+    _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["category"]>
+
+  export type CategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    updated_at?: boolean
+    updated_by_user_id?: boolean
+    name?: boolean
+    status?: boolean
+    description?: boolean
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | Category$updated_by_userArgs<ExtArgs>
+  }, ExtArgs["result"]["category"]>
+
+  export type CategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    updated_at?: boolean
+    updated_by_user_id?: boolean
+    name?: boolean
+    status?: boolean
+    description?: boolean
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | Category$updated_by_userArgs<ExtArgs>
+  }, ExtArgs["result"]["category"]>
+
+  export type CategorySelectScalar = {
+    id?: boolean
+    slug?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    updated_at?: boolean
+    updated_by_user_id?: boolean
+    name?: boolean
+    status?: boolean
+    description?: boolean
+  }
+
+  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "name" | "status" | "description", ExtArgs["result"]["category"]>
+  export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | Category$updated_by_userArgs<ExtArgs>
+    books?: boolean | Category$booksArgs<ExtArgs>
+    _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | Category$updated_by_userArgs<ExtArgs>
+  }
+  export type CategoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | Category$updated_by_userArgs<ExtArgs>
+  }
+
+  export type $CategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Category"
+    objects: {
+      created_by_user: Prisma.$UserPayload<ExtArgs>
+      updated_by_user: Prisma.$UserPayload<ExtArgs> | null
+      books: Prisma.$BookPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      slug: string
+      created_at: Date
+      created_by_user_id: bigint
+      updated_at: Date | null
+      updated_by_user_id: bigint | null
+      name: string
+      status: $Enums.StatusEnum
+      description: string | null
+    }, ExtArgs["result"]["category"]>
+    composites: {}
+  }
+
+  type CategoryGetPayload<S extends boolean | null | undefined | CategoryDefaultArgs> = $Result.GetResult<Prisma.$CategoryPayload, S>
+
+  type CategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CategoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CategoryCountAggregateInputType | true
+    }
+
+  export interface CategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Category'], meta: { name: 'Category' } }
+    /**
+     * Find zero or one Category that matches the filter.
+     * @param {CategoryFindUniqueArgs} args - Arguments to find a Category
+     * @example
+     * // Get one Category
+     * const category = await prisma.category.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CategoryFindUniqueArgs>(args: SelectSubset<T, CategoryFindUniqueArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Category that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CategoryFindUniqueOrThrowArgs} args - Arguments to find a Category
+     * @example
+     * // Get one Category
+     * const category = await prisma.category.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, CategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Category that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoryFindFirstArgs} args - Arguments to find a Category
+     * @example
+     * // Get one Category
+     * const category = await prisma.category.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CategoryFindFirstArgs>(args?: SelectSubset<T, CategoryFindFirstArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Category that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoryFindFirstOrThrowArgs} args - Arguments to find a Category
+     * @example
+     * // Get one Category
+     * const category = await prisma.category.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, CategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Categories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Categories
+     * const categories = await prisma.category.findMany()
+     * 
+     * // Get first 10 Categories
+     * const categories = await prisma.category.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const categoryWithIdOnly = await prisma.category.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CategoryFindManyArgs>(args?: SelectSubset<T, CategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Category.
+     * @param {CategoryCreateArgs} args - Arguments to create a Category.
+     * @example
+     * // Create one Category
+     * const Category = await prisma.category.create({
+     *   data: {
+     *     // ... data to create a Category
+     *   }
+     * })
+     * 
+     */
+    create<T extends CategoryCreateArgs>(args: SelectSubset<T, CategoryCreateArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Categories.
+     * @param {CategoryCreateManyArgs} args - Arguments to create many Categories.
+     * @example
+     * // Create many Categories
+     * const category = await prisma.category.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CategoryCreateManyArgs>(args?: SelectSubset<T, CategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Categories and returns the data saved in the database.
+     * @param {CategoryCreateManyAndReturnArgs} args - Arguments to create many Categories.
+     * @example
+     * // Create many Categories
+     * const category = await prisma.category.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Categories and only return the `id`
+     * const categoryWithIdOnly = await prisma.category.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CategoryCreateManyAndReturnArgs>(args?: SelectSubset<T, CategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Category.
+     * @param {CategoryDeleteArgs} args - Arguments to delete one Category.
+     * @example
+     * // Delete one Category
+     * const Category = await prisma.category.delete({
+     *   where: {
+     *     // ... filter to delete one Category
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CategoryDeleteArgs>(args: SelectSubset<T, CategoryDeleteArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Category.
+     * @param {CategoryUpdateArgs} args - Arguments to update one Category.
+     * @example
+     * // Update one Category
+     * const category = await prisma.category.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CategoryUpdateArgs>(args: SelectSubset<T, CategoryUpdateArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Categories.
+     * @param {CategoryDeleteManyArgs} args - Arguments to filter Categories to delete.
+     * @example
+     * // Delete a few Categories
+     * const { count } = await prisma.category.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CategoryDeleteManyArgs>(args?: SelectSubset<T, CategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Categories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Categories
+     * const category = await prisma.category.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CategoryUpdateManyArgs>(args: SelectSubset<T, CategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Categories and returns the data updated in the database.
+     * @param {CategoryUpdateManyAndReturnArgs} args - Arguments to update many Categories.
+     * @example
+     * // Update many Categories
+     * const category = await prisma.category.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Categories and only return the `id`
+     * const categoryWithIdOnly = await prisma.category.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CategoryUpdateManyAndReturnArgs>(args: SelectSubset<T, CategoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Category.
+     * @param {CategoryUpsertArgs} args - Arguments to update or create a Category.
+     * @example
+     * // Update or create a Category
+     * const category = await prisma.category.upsert({
+     *   create: {
+     *     // ... data to create a Category
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Category we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CategoryUpsertArgs>(args: SelectSubset<T, CategoryUpsertArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Categories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoryCountArgs} args - Arguments to filter Categories to count.
+     * @example
+     * // Count the number of Categories
+     * const count = await prisma.category.count({
+     *   where: {
+     *     // ... the filter for the Categories we want to count
+     *   }
+     * })
+    **/
+    count<T extends CategoryCountArgs>(
+      args?: Subset<T, CategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Category.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CategoryAggregateArgs>(args: Subset<T, CategoryAggregateArgs>): Prisma.PrismaPromise<GetCategoryAggregateType<T>>
+
+    /**
+     * Group by Category.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CategoryGroupByArgs['orderBy'] }
+        : { orderBy?: CategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Category model
+   */
+  readonly fields: CategoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Category.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    created_by_user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    updated_by_user<T extends Category$updated_by_userArgs<ExtArgs> = {}>(args?: Subset<T, Category$updated_by_userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    books<T extends Category$booksArgs<ExtArgs> = {}>(args?: Subset<T, Category$booksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Category model
+   */
+  interface CategoryFieldRefs {
+    readonly id: FieldRef<"Category", 'BigInt'>
+    readonly slug: FieldRef<"Category", 'String'>
+    readonly created_at: FieldRef<"Category", 'DateTime'>
+    readonly created_by_user_id: FieldRef<"Category", 'BigInt'>
+    readonly updated_at: FieldRef<"Category", 'DateTime'>
+    readonly updated_by_user_id: FieldRef<"Category", 'BigInt'>
+    readonly name: FieldRef<"Category", 'String'>
+    readonly status: FieldRef<"Category", 'StatusEnum'>
+    readonly description: FieldRef<"Category", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Category findUnique
+   */
+  export type CategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which Category to fetch.
+     */
+    where: CategoryWhereUniqueInput
+  }
+
+  /**
+   * Category findUniqueOrThrow
+   */
+  export type CategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which Category to fetch.
+     */
+    where: CategoryWhereUniqueInput
+  }
+
+  /**
+   * Category findFirst
+   */
+  export type CategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which Category to fetch.
+     */
+    where?: CategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categories to fetch.
+     */
+    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Categories.
+     */
+    cursor?: CategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Categories.
+     */
+    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
+  }
+
+  /**
+   * Category findFirstOrThrow
+   */
+  export type CategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which Category to fetch.
+     */
+    where?: CategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categories to fetch.
+     */
+    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Categories.
+     */
+    cursor?: CategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Categories.
+     */
+    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
+  }
+
+  /**
+   * Category findMany
+   */
+  export type CategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which Categories to fetch.
+     */
+    where?: CategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categories to fetch.
+     */
+    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Categories.
+     */
+    cursor?: CategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categories.
+     */
+    skip?: number
+    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
+  }
+
+  /**
+   * Category create
+   */
+  export type CategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Category.
+     */
+    data: XOR<CategoryCreateInput, CategoryUncheckedCreateInput>
+  }
+
+  /**
+   * Category createMany
+   */
+  export type CategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Categories.
+     */
+    data: CategoryCreateManyInput | CategoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Category createManyAndReturn
+   */
+  export type CategoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many Categories.
+     */
+    data: CategoryCreateManyInput | CategoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Category update
+   */
+  export type CategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Category.
+     */
+    data: XOR<CategoryUpdateInput, CategoryUncheckedUpdateInput>
+    /**
+     * Choose, which Category to update.
+     */
+    where: CategoryWhereUniqueInput
+  }
+
+  /**
+   * Category updateMany
+   */
+  export type CategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Categories.
+     */
+    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which Categories to update
+     */
+    where?: CategoryWhereInput
+    /**
+     * Limit how many Categories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Category updateManyAndReturn
+   */
+  export type CategoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * The data used to update Categories.
+     */
+    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which Categories to update
+     */
+    where?: CategoryWhereInput
+    /**
+     * Limit how many Categories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Category upsert
+   */
+  export type CategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Category to update in case it exists.
+     */
+    where: CategoryWhereUniqueInput
+    /**
+     * In case the Category found by the `where` argument doesn't exist, create a new Category with this data.
+     */
+    create: XOR<CategoryCreateInput, CategoryUncheckedCreateInput>
+    /**
+     * In case the Category was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CategoryUpdateInput, CategoryUncheckedUpdateInput>
+  }
+
+  /**
+   * Category delete
+   */
+  export type CategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    /**
+     * Filter which Category to delete.
+     */
+    where: CategoryWhereUniqueInput
+  }
+
+  /**
+   * Category deleteMany
+   */
+  export type CategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Categories to delete
+     */
+    where?: CategoryWhereInput
+    /**
+     * Limit how many Categories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Category.updated_by_user
+   */
+  export type Category$updated_by_userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Category.books
+   */
+  export type Category$booksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Book
+     */
+    omit?: BookOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookInclude<ExtArgs> | null
+    where?: BookWhereInput
+    orderBy?: BookOrderByWithRelationInput | BookOrderByWithRelationInput[]
+    cursor?: BookWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BookScalarFieldEnum | BookScalarFieldEnum[]
+  }
+
+  /**
+   * Category without action
+   */
+  export type CategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model BookTag
    */
 
@@ -9525,18 +10930,24 @@ export namespace Prisma {
     id: number | null
     created_by_user_id: number | null
     updated_by_user_id: number | null
+    category_id: number | null
     year: number | null
     pages: number | null
     last_month_access_count: number | null
+    all_time_access_count: number | null
+    last_week_access_count: number | null
   }
 
   export type BookSumAggregateOutputType = {
     id: bigint | null
     created_by_user_id: bigint | null
     updated_by_user_id: bigint | null
+    category_id: bigint | null
     year: number | null
     pages: number | null
     last_month_access_count: bigint | null
+    all_time_access_count: bigint | null
+    last_week_access_count: bigint | null
   }
 
   export type BookMinAggregateOutputType = {
@@ -9546,6 +10957,7 @@ export namespace Prisma {
     created_by_user_id: bigint | null
     updated_at: Date | null
     updated_by_user_id: bigint | null
+    category_id: bigint | null
     title: string | null
     subtitle: string | null
     publisher: string | null
@@ -9563,6 +10975,10 @@ export namespace Prisma {
     description: string | null
     last_month_access_count: bigint | null
     last_month_access_count_updated_at: Date | null
+    all_time_access_count: bigint | null
+    all_time_access_count_updated_at: Date | null
+    last_week_access_count: bigint | null
+    last_week_access_count_updated_at: Date | null
   }
 
   export type BookMaxAggregateOutputType = {
@@ -9572,6 +10988,7 @@ export namespace Prisma {
     created_by_user_id: bigint | null
     updated_at: Date | null
     updated_by_user_id: bigint | null
+    category_id: bigint | null
     title: string | null
     subtitle: string | null
     publisher: string | null
@@ -9589,6 +11006,10 @@ export namespace Prisma {
     description: string | null
     last_month_access_count: bigint | null
     last_month_access_count_updated_at: Date | null
+    all_time_access_count: bigint | null
+    all_time_access_count_updated_at: Date | null
+    last_week_access_count: bigint | null
+    last_week_access_count_updated_at: Date | null
   }
 
   export type BookCountAggregateOutputType = {
@@ -9598,6 +11019,7 @@ export namespace Prisma {
     created_by_user_id: number
     updated_at: number
     updated_by_user_id: number
+    category_id: number
     title: number
     subtitle: number
     publisher: number
@@ -9617,6 +11039,10 @@ export namespace Prisma {
     description: number
     last_month_access_count: number
     last_month_access_count_updated_at: number
+    all_time_access_count: number
+    all_time_access_count_updated_at: number
+    last_week_access_count: number
+    last_week_access_count_updated_at: number
     _all: number
   }
 
@@ -9625,18 +11051,24 @@ export namespace Prisma {
     id?: true
     created_by_user_id?: true
     updated_by_user_id?: true
+    category_id?: true
     year?: true
     pages?: true
     last_month_access_count?: true
+    all_time_access_count?: true
+    last_week_access_count?: true
   }
 
   export type BookSumAggregateInputType = {
     id?: true
     created_by_user_id?: true
     updated_by_user_id?: true
+    category_id?: true
     year?: true
     pages?: true
     last_month_access_count?: true
+    all_time_access_count?: true
+    last_week_access_count?: true
   }
 
   export type BookMinAggregateInputType = {
@@ -9646,6 +11078,7 @@ export namespace Prisma {
     created_by_user_id?: true
     updated_at?: true
     updated_by_user_id?: true
+    category_id?: true
     title?: true
     subtitle?: true
     publisher?: true
@@ -9663,6 +11096,10 @@ export namespace Prisma {
     description?: true
     last_month_access_count?: true
     last_month_access_count_updated_at?: true
+    all_time_access_count?: true
+    all_time_access_count_updated_at?: true
+    last_week_access_count?: true
+    last_week_access_count_updated_at?: true
   }
 
   export type BookMaxAggregateInputType = {
@@ -9672,6 +11109,7 @@ export namespace Prisma {
     created_by_user_id?: true
     updated_at?: true
     updated_by_user_id?: true
+    category_id?: true
     title?: true
     subtitle?: true
     publisher?: true
@@ -9689,6 +11127,10 @@ export namespace Prisma {
     description?: true
     last_month_access_count?: true
     last_month_access_count_updated_at?: true
+    all_time_access_count?: true
+    all_time_access_count_updated_at?: true
+    last_week_access_count?: true
+    last_week_access_count_updated_at?: true
   }
 
   export type BookCountAggregateInputType = {
@@ -9698,6 +11140,7 @@ export namespace Prisma {
     created_by_user_id?: true
     updated_at?: true
     updated_by_user_id?: true
+    category_id?: true
     title?: true
     subtitle?: true
     publisher?: true
@@ -9717,6 +11160,10 @@ export namespace Prisma {
     description?: true
     last_month_access_count?: true
     last_month_access_count_updated_at?: true
+    all_time_access_count?: true
+    all_time_access_count_updated_at?: true
+    last_week_access_count?: true
+    last_week_access_count_updated_at?: true
     _all?: true
   }
 
@@ -9813,6 +11260,7 @@ export namespace Prisma {
     created_by_user_id: bigint
     updated_at: Date | null
     updated_by_user_id: bigint | null
+    category_id: bigint | null
     title: string
     subtitle: string | null
     publisher: string | null
@@ -9832,6 +11280,10 @@ export namespace Prisma {
     description: string | null
     last_month_access_count: bigint
     last_month_access_count_updated_at: Date | null
+    all_time_access_count: bigint
+    all_time_access_count_updated_at: Date | null
+    last_week_access_count: bigint
+    last_week_access_count_updated_at: Date | null
     _count: BookCountAggregateOutputType | null
     _avg: BookAvgAggregateOutputType | null
     _sum: BookSumAggregateOutputType | null
@@ -9860,6 +11312,7 @@ export namespace Prisma {
     created_by_user_id?: boolean
     updated_at?: boolean
     updated_by_user_id?: boolean
+    category_id?: boolean
     title?: boolean
     subtitle?: boolean
     publisher?: boolean
@@ -9879,8 +11332,13 @@ export namespace Prisma {
     description?: boolean
     last_month_access_count?: boolean
     last_month_access_count_updated_at?: boolean
+    all_time_access_count?: boolean
+    all_time_access_count_updated_at?: boolean
+    last_week_access_count?: boolean
+    last_week_access_count_updated_at?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
+    category?: boolean | Book$categoryArgs<ExtArgs>
     authors?: boolean | Book$authorsArgs<ExtArgs>
     tags?: boolean | Book$tagsArgs<ExtArgs>
     loans?: boolean | Book$loansArgs<ExtArgs>
@@ -9895,6 +11353,7 @@ export namespace Prisma {
     created_by_user_id?: boolean
     updated_at?: boolean
     updated_by_user_id?: boolean
+    category_id?: boolean
     title?: boolean
     subtitle?: boolean
     publisher?: boolean
@@ -9914,8 +11373,13 @@ export namespace Prisma {
     description?: boolean
     last_month_access_count?: boolean
     last_month_access_count_updated_at?: boolean
+    all_time_access_count?: boolean
+    all_time_access_count_updated_at?: boolean
+    last_week_access_count?: boolean
+    last_week_access_count_updated_at?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
+    category?: boolean | Book$categoryArgs<ExtArgs>
   }, ExtArgs["result"]["book"]>
 
   export type BookSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9925,6 +11389,7 @@ export namespace Prisma {
     created_by_user_id?: boolean
     updated_at?: boolean
     updated_by_user_id?: boolean
+    category_id?: boolean
     title?: boolean
     subtitle?: boolean
     publisher?: boolean
@@ -9944,8 +11409,13 @@ export namespace Prisma {
     description?: boolean
     last_month_access_count?: boolean
     last_month_access_count_updated_at?: boolean
+    all_time_access_count?: boolean
+    all_time_access_count_updated_at?: boolean
+    last_week_access_count?: boolean
+    last_week_access_count_updated_at?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
+    category?: boolean | Book$categoryArgs<ExtArgs>
   }, ExtArgs["result"]["book"]>
 
   export type BookSelectScalar = {
@@ -9955,6 +11425,7 @@ export namespace Prisma {
     created_by_user_id?: boolean
     updated_at?: boolean
     updated_by_user_id?: boolean
+    category_id?: boolean
     title?: boolean
     subtitle?: boolean
     publisher?: boolean
@@ -9974,12 +11445,17 @@ export namespace Prisma {
     description?: boolean
     last_month_access_count?: boolean
     last_month_access_count_updated_at?: boolean
+    all_time_access_count?: boolean
+    all_time_access_count_updated_at?: boolean
+    last_week_access_count?: boolean
+    last_week_access_count_updated_at?: boolean
   }
 
-  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "title" | "subtitle" | "publisher" | "year" | "edition" | "isbn" | "pages" | "summary" | "pdf_url" | "cover_url" | "back_url" | "images_url" | "keywords" | "label" | "shelf" | "status" | "description" | "last_month_access_count" | "last_month_access_count_updated_at", ExtArgs["result"]["book"]>
+  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "category_id" | "title" | "subtitle" | "publisher" | "year" | "edition" | "isbn" | "pages" | "summary" | "pdf_url" | "cover_url" | "back_url" | "images_url" | "keywords" | "label" | "shelf" | "status" | "description" | "last_month_access_count" | "last_month_access_count_updated_at" | "all_time_access_count" | "all_time_access_count_updated_at" | "last_week_access_count" | "last_week_access_count_updated_at", ExtArgs["result"]["book"]>
   export type BookInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
+    category?: boolean | Book$categoryArgs<ExtArgs>
     authors?: boolean | Book$authorsArgs<ExtArgs>
     tags?: boolean | Book$tagsArgs<ExtArgs>
     loans?: boolean | Book$loansArgs<ExtArgs>
@@ -9989,10 +11465,12 @@ export namespace Prisma {
   export type BookIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
+    category?: boolean | Book$categoryArgs<ExtArgs>
   }
   export type BookIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Book$updated_by_userArgs<ExtArgs>
+    category?: boolean | Book$categoryArgs<ExtArgs>
   }
 
   export type $BookPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10000,6 +11478,7 @@ export namespace Prisma {
     objects: {
       created_by_user: Prisma.$UserPayload<ExtArgs>
       updated_by_user: Prisma.$UserPayload<ExtArgs> | null
+      category: Prisma.$CategoryPayload<ExtArgs> | null
       authors: Prisma.$BookAuthorPayload<ExtArgs>[]
       tags: Prisma.$BookTagPayload<ExtArgs>[]
       loans: Prisma.$LoanPayload<ExtArgs>[]
@@ -10012,6 +11491,7 @@ export namespace Prisma {
       created_by_user_id: bigint
       updated_at: Date | null
       updated_by_user_id: bigint | null
+      category_id: bigint | null
       title: string
       subtitle: string | null
       publisher: string | null
@@ -10031,6 +11511,10 @@ export namespace Prisma {
       description: string | null
       last_month_access_count: bigint
       last_month_access_count_updated_at: Date | null
+      all_time_access_count: bigint
+      all_time_access_count_updated_at: Date | null
+      last_week_access_count: bigint
+      last_week_access_count_updated_at: Date | null
     }, ExtArgs["result"]["book"]>
     composites: {}
   }
@@ -10427,6 +11911,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     created_by_user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     updated_by_user<T extends Book$updated_by_userArgs<ExtArgs> = {}>(args?: Subset<T, Book$updated_by_userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    category<T extends Book$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Book$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     authors<T extends Book$authorsArgs<ExtArgs> = {}>(args?: Subset<T, Book$authorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookAuthorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tags<T extends Book$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Book$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     loans<T extends Book$loansArgs<ExtArgs> = {}>(args?: Subset<T, Book$loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -10466,6 +11951,7 @@ export namespace Prisma {
     readonly created_by_user_id: FieldRef<"Book", 'BigInt'>
     readonly updated_at: FieldRef<"Book", 'DateTime'>
     readonly updated_by_user_id: FieldRef<"Book", 'BigInt'>
+    readonly category_id: FieldRef<"Book", 'BigInt'>
     readonly title: FieldRef<"Book", 'String'>
     readonly subtitle: FieldRef<"Book", 'String'>
     readonly publisher: FieldRef<"Book", 'String'>
@@ -10485,6 +11971,10 @@ export namespace Prisma {
     readonly description: FieldRef<"Book", 'String'>
     readonly last_month_access_count: FieldRef<"Book", 'BigInt'>
     readonly last_month_access_count_updated_at: FieldRef<"Book", 'DateTime'>
+    readonly all_time_access_count: FieldRef<"Book", 'BigInt'>
+    readonly all_time_access_count_updated_at: FieldRef<"Book", 'DateTime'>
+    readonly last_week_access_count: FieldRef<"Book", 'BigInt'>
+    readonly last_week_access_count_updated_at: FieldRef<"Book", 'DateTime'>
   }
     
 
@@ -10897,6 +12387,25 @@ export namespace Prisma {
      */
     include?: UserInclude<ExtArgs> | null
     where?: UserWhereInput
+  }
+
+  /**
+   * Book.category
+   */
+  export type Book$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    where?: CategoryWhereInput
   }
 
   /**
@@ -12285,6 +13794,14 @@ export namespace Prisma {
     created_at: Date | null
     created_by_user_id: bigint | null
     book_id: bigint | null
+    ip_address: string | null
+    user_agent: string | null
+    browser_name: string | null
+    browser_version: string | null
+    os_name: string | null
+    os_version: string | null
+    device_name: string | null
+    device_vendor: string | null
     status: $Enums.StatusEnum | null
   }
 
@@ -12293,6 +13810,14 @@ export namespace Prisma {
     created_at: Date | null
     created_by_user_id: bigint | null
     book_id: bigint | null
+    ip_address: string | null
+    user_agent: string | null
+    browser_name: string | null
+    browser_version: string | null
+    os_name: string | null
+    os_version: string | null
+    device_name: string | null
+    device_vendor: string | null
     status: $Enums.StatusEnum | null
   }
 
@@ -12301,6 +13826,14 @@ export namespace Prisma {
     created_at: number
     created_by_user_id: number
     book_id: number
+    ip_address: number
+    user_agent: number
+    browser_name: number
+    browser_version: number
+    os_name: number
+    os_version: number
+    device_name: number
+    device_vendor: number
     status: number
     _all: number
   }
@@ -12323,6 +13856,14 @@ export namespace Prisma {
     created_at?: true
     created_by_user_id?: true
     book_id?: true
+    ip_address?: true
+    user_agent?: true
+    browser_name?: true
+    browser_version?: true
+    os_name?: true
+    os_version?: true
+    device_name?: true
+    device_vendor?: true
     status?: true
   }
 
@@ -12331,6 +13872,14 @@ export namespace Prisma {
     created_at?: true
     created_by_user_id?: true
     book_id?: true
+    ip_address?: true
+    user_agent?: true
+    browser_name?: true
+    browser_version?: true
+    os_name?: true
+    os_version?: true
+    device_name?: true
+    device_vendor?: true
     status?: true
   }
 
@@ -12339,6 +13888,14 @@ export namespace Prisma {
     created_at?: true
     created_by_user_id?: true
     book_id?: true
+    ip_address?: true
+    user_agent?: true
+    browser_name?: true
+    browser_version?: true
+    os_name?: true
+    os_version?: true
+    device_name?: true
+    device_vendor?: true
     status?: true
     _all?: true
   }
@@ -12434,6 +13991,14 @@ export namespace Prisma {
     created_at: Date
     created_by_user_id: bigint | null
     book_id: bigint | null
+    ip_address: string | null
+    user_agent: string | null
+    browser_name: string | null
+    browser_version: string | null
+    os_name: string | null
+    os_version: string | null
+    device_name: string | null
+    device_vendor: string | null
     status: $Enums.StatusEnum
     _count: BookAccessCountAggregateOutputType | null
     _avg: BookAccessAvgAggregateOutputType | null
@@ -12461,6 +14026,14 @@ export namespace Prisma {
     created_at?: boolean
     created_by_user_id?: boolean
     book_id?: boolean
+    ip_address?: boolean
+    user_agent?: boolean
+    browser_name?: boolean
+    browser_version?: boolean
+    os_name?: boolean
+    os_version?: boolean
+    device_name?: boolean
+    device_vendor?: boolean
     status?: boolean
     created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
     book?: boolean | BookAccess$bookArgs<ExtArgs>
@@ -12471,6 +14044,14 @@ export namespace Prisma {
     created_at?: boolean
     created_by_user_id?: boolean
     book_id?: boolean
+    ip_address?: boolean
+    user_agent?: boolean
+    browser_name?: boolean
+    browser_version?: boolean
+    os_name?: boolean
+    os_version?: boolean
+    device_name?: boolean
+    device_vendor?: boolean
     status?: boolean
     created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
     book?: boolean | BookAccess$bookArgs<ExtArgs>
@@ -12481,6 +14062,14 @@ export namespace Prisma {
     created_at?: boolean
     created_by_user_id?: boolean
     book_id?: boolean
+    ip_address?: boolean
+    user_agent?: boolean
+    browser_name?: boolean
+    browser_version?: boolean
+    os_name?: boolean
+    os_version?: boolean
+    device_name?: boolean
+    device_vendor?: boolean
     status?: boolean
     created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
     book?: boolean | BookAccess$bookArgs<ExtArgs>
@@ -12491,10 +14080,18 @@ export namespace Prisma {
     created_at?: boolean
     created_by_user_id?: boolean
     book_id?: boolean
+    ip_address?: boolean
+    user_agent?: boolean
+    browser_name?: boolean
+    browser_version?: boolean
+    os_name?: boolean
+    os_version?: boolean
+    device_name?: boolean
+    device_vendor?: boolean
     status?: boolean
   }
 
-  export type BookAccessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "created_by_user_id" | "book_id" | "status", ExtArgs["result"]["bookAccess"]>
+  export type BookAccessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "created_by_user_id" | "book_id" | "ip_address" | "user_agent" | "browser_name" | "browser_version" | "os_name" | "os_version" | "device_name" | "device_vendor" | "status", ExtArgs["result"]["bookAccess"]>
   export type BookAccessInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | BookAccess$created_by_userArgs<ExtArgs>
     book?: boolean | BookAccess$bookArgs<ExtArgs>
@@ -12519,6 +14116,14 @@ export namespace Prisma {
       created_at: Date
       created_by_user_id: bigint | null
       book_id: bigint | null
+      ip_address: string | null
+      user_agent: string | null
+      browser_name: string | null
+      browser_version: string | null
+      os_name: string | null
+      os_version: string | null
+      device_name: string | null
+      device_vendor: string | null
       status: $Enums.StatusEnum
     }, ExtArgs["result"]["bookAccess"]>
     composites: {}
@@ -12949,6 +14554,14 @@ export namespace Prisma {
     readonly created_at: FieldRef<"BookAccess", 'DateTime'>
     readonly created_by_user_id: FieldRef<"BookAccess", 'BigInt'>
     readonly book_id: FieldRef<"BookAccess", 'BigInt'>
+    readonly ip_address: FieldRef<"BookAccess", 'String'>
+    readonly user_agent: FieldRef<"BookAccess", 'String'>
+    readonly browser_name: FieldRef<"BookAccess", 'String'>
+    readonly browser_version: FieldRef<"BookAccess", 'String'>
+    readonly os_name: FieldRef<"BookAccess", 'String'>
+    readonly os_version: FieldRef<"BookAccess", 'String'>
+    readonly device_name: FieldRef<"BookAccess", 'String'>
+    readonly device_vendor: FieldRef<"BookAccess", 'String'>
     readonly status: FieldRef<"BookAccess", 'StatusEnum'>
   }
     
@@ -13498,6 +15111,21 @@ export namespace Prisma {
   export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
 
 
+  export const CategoryScalarFieldEnum: {
+    id: 'id',
+    slug: 'slug',
+    created_at: 'created_at',
+    created_by_user_id: 'created_by_user_id',
+    updated_at: 'updated_at',
+    updated_by_user_id: 'updated_by_user_id',
+    name: 'name',
+    status: 'status',
+    description: 'description'
+  };
+
+  export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
   export const BookTagScalarFieldEnum: {
     id: 'id',
     created_at: 'created_at',
@@ -13519,6 +15147,7 @@ export namespace Prisma {
     created_by_user_id: 'created_by_user_id',
     updated_at: 'updated_at',
     updated_by_user_id: 'updated_by_user_id',
+    category_id: 'category_id',
     title: 'title',
     subtitle: 'subtitle',
     publisher: 'publisher',
@@ -13537,7 +15166,11 @@ export namespace Prisma {
     status: 'status',
     description: 'description',
     last_month_access_count: 'last_month_access_count',
-    last_month_access_count_updated_at: 'last_month_access_count_updated_at'
+    last_month_access_count_updated_at: 'last_month_access_count_updated_at',
+    all_time_access_count: 'all_time_access_count',
+    all_time_access_count_updated_at: 'all_time_access_count_updated_at',
+    last_week_access_count: 'last_week_access_count',
+    last_week_access_count_updated_at: 'last_week_access_count_updated_at'
   };
 
   export type BookScalarFieldEnum = (typeof BookScalarFieldEnum)[keyof typeof BookScalarFieldEnum]
@@ -13566,6 +15199,14 @@ export namespace Prisma {
     created_at: 'created_at',
     created_by_user_id: 'created_by_user_id',
     book_id: 'book_id',
+    ip_address: 'ip_address',
+    user_agent: 'user_agent',
+    browser_name: 'browser_name',
+    browser_version: 'browser_version',
+    os_name: 'os_name',
+    os_version: 'os_version',
+    device_name: 'device_name',
+    device_vendor: 'device_vendor',
     status: 'status'
   };
 
@@ -13749,6 +15390,8 @@ export namespace Prisma {
     updated_tags?: TagListRelationFilter
     created_book_tags?: BookTagListRelationFilter
     updated_book_tags?: BookTagListRelationFilter
+    created_categories?: CategoryListRelationFilter
+    updated_categories?: CategoryListRelationFilter
     created_loans?: LoanListRelationFilter
     updated_loans?: LoanListRelationFilter
     user_loans?: LoanListRelationFilter
@@ -13778,6 +15421,8 @@ export namespace Prisma {
     updated_tags?: TagOrderByRelationAggregateInput
     created_book_tags?: BookTagOrderByRelationAggregateInput
     updated_book_tags?: BookTagOrderByRelationAggregateInput
+    created_categories?: CategoryOrderByRelationAggregateInput
+    updated_categories?: CategoryOrderByRelationAggregateInput
     created_loans?: LoanOrderByRelationAggregateInput
     updated_loans?: LoanOrderByRelationAggregateInput
     user_loans?: LoanOrderByRelationAggregateInput
@@ -13810,6 +15455,8 @@ export namespace Prisma {
     updated_tags?: TagListRelationFilter
     created_book_tags?: BookTagListRelationFilter
     updated_book_tags?: BookTagListRelationFilter
+    created_categories?: CategoryListRelationFilter
+    updated_categories?: CategoryListRelationFilter
     created_loans?: LoanListRelationFilter
     updated_loans?: LoanListRelationFilter
     user_loans?: LoanListRelationFilter
@@ -14206,6 +15853,89 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"Tag"> | string | null
   }
 
+  export type CategoryWhereInput = {
+    AND?: CategoryWhereInput | CategoryWhereInput[]
+    OR?: CategoryWhereInput[]
+    NOT?: CategoryWhereInput | CategoryWhereInput[]
+    id?: BigIntFilter<"Category"> | bigint | number
+    slug?: StringFilter<"Category"> | string
+    created_at?: DateTimeFilter<"Category"> | Date | string
+    created_by_user_id?: BigIntFilter<"Category"> | bigint | number
+    updated_at?: DateTimeNullableFilter<"Category"> | Date | string | null
+    updated_by_user_id?: BigIntNullableFilter<"Category"> | bigint | number | null
+    name?: StringFilter<"Category"> | string
+    status?: EnumStatusEnumFilter<"Category"> | $Enums.StatusEnum
+    description?: StringNullableFilter<"Category"> | string | null
+    created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    books?: BookListRelationFilter
+  }
+
+  export type CategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrderInput | SortOrder
+    updated_by_user_id?: SortOrderInput | SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    description?: SortOrderInput | SortOrder
+    created_by_user?: UserOrderByWithRelationInput
+    updated_by_user?: UserOrderByWithRelationInput
+    books?: BookOrderByRelationAggregateInput
+  }
+
+  export type CategoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    slug?: string
+    AND?: CategoryWhereInput | CategoryWhereInput[]
+    OR?: CategoryWhereInput[]
+    NOT?: CategoryWhereInput | CategoryWhereInput[]
+    created_at?: DateTimeFilter<"Category"> | Date | string
+    created_by_user_id?: BigIntFilter<"Category"> | bigint | number
+    updated_at?: DateTimeNullableFilter<"Category"> | Date | string | null
+    updated_by_user_id?: BigIntNullableFilter<"Category"> | bigint | number | null
+    name?: StringFilter<"Category"> | string
+    status?: EnumStatusEnumFilter<"Category"> | $Enums.StatusEnum
+    description?: StringNullableFilter<"Category"> | string | null
+    created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    books?: BookListRelationFilter
+  }, "id" | "id" | "slug">
+
+  export type CategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrderInput | SortOrder
+    updated_by_user_id?: SortOrderInput | SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    description?: SortOrderInput | SortOrder
+    _count?: CategoryCountOrderByAggregateInput
+    _avg?: CategoryAvgOrderByAggregateInput
+    _max?: CategoryMaxOrderByAggregateInput
+    _min?: CategoryMinOrderByAggregateInput
+    _sum?: CategorySumOrderByAggregateInput
+  }
+
+  export type CategoryScalarWhereWithAggregatesInput = {
+    AND?: CategoryScalarWhereWithAggregatesInput | CategoryScalarWhereWithAggregatesInput[]
+    OR?: CategoryScalarWhereWithAggregatesInput[]
+    NOT?: CategoryScalarWhereWithAggregatesInput | CategoryScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"Category"> | bigint | number
+    slug?: StringWithAggregatesFilter<"Category"> | string
+    created_at?: DateTimeWithAggregatesFilter<"Category"> | Date | string
+    created_by_user_id?: BigIntWithAggregatesFilter<"Category"> | bigint | number
+    updated_at?: DateTimeNullableWithAggregatesFilter<"Category"> | Date | string | null
+    updated_by_user_id?: BigIntNullableWithAggregatesFilter<"Category"> | bigint | number | null
+    name?: StringWithAggregatesFilter<"Category"> | string
+    status?: EnumStatusEnumWithAggregatesFilter<"Category"> | $Enums.StatusEnum
+    description?: StringNullableWithAggregatesFilter<"Category"> | string | null
+  }
+
   export type BookTagWhereInput = {
     AND?: BookTagWhereInput | BookTagWhereInput[]
     OR?: BookTagWhereInput[]
@@ -14297,6 +16027,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntFilter<"Book"> | bigint | number
     updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
     updated_by_user_id?: BigIntNullableFilter<"Book"> | bigint | number | null
+    category_id?: BigIntNullableFilter<"Book"> | bigint | number | null
     title?: StringFilter<"Book"> | string
     subtitle?: StringNullableFilter<"Book"> | string | null
     publisher?: StringNullableFilter<"Book"> | string | null
@@ -14316,8 +16047,13 @@ export namespace Prisma {
     description?: StringNullableFilter<"Book"> | string | null
     last_month_access_count?: BigIntFilter<"Book"> | bigint | number
     last_month_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
+    all_time_access_count?: BigIntFilter<"Book"> | bigint | number
+    all_time_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
+    last_week_access_count?: BigIntFilter<"Book"> | bigint | number
+    last_week_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
     created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
     authors?: BookAuthorListRelationFilter
     tags?: BookTagListRelationFilter
     loans?: LoanListRelationFilter
@@ -14331,6 +16067,7 @@ export namespace Prisma {
     created_by_user_id?: SortOrder
     updated_at?: SortOrderInput | SortOrder
     updated_by_user_id?: SortOrderInput | SortOrder
+    category_id?: SortOrderInput | SortOrder
     title?: SortOrder
     subtitle?: SortOrderInput | SortOrder
     publisher?: SortOrderInput | SortOrder
@@ -14350,8 +16087,13 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     last_month_access_count?: SortOrder
     last_month_access_count_updated_at?: SortOrderInput | SortOrder
+    all_time_access_count?: SortOrder
+    all_time_access_count_updated_at?: SortOrderInput | SortOrder
+    last_week_access_count?: SortOrder
+    last_week_access_count_updated_at?: SortOrderInput | SortOrder
     created_by_user?: UserOrderByWithRelationInput
     updated_by_user?: UserOrderByWithRelationInput
+    category?: CategoryOrderByWithRelationInput
     authors?: BookAuthorOrderByRelationAggregateInput
     tags?: BookTagOrderByRelationAggregateInput
     loans?: LoanOrderByRelationAggregateInput
@@ -14368,6 +16110,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntFilter<"Book"> | bigint | number
     updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
     updated_by_user_id?: BigIntNullableFilter<"Book"> | bigint | number | null
+    category_id?: BigIntNullableFilter<"Book"> | bigint | number | null
     title?: StringFilter<"Book"> | string
     subtitle?: StringNullableFilter<"Book"> | string | null
     publisher?: StringNullableFilter<"Book"> | string | null
@@ -14387,8 +16130,13 @@ export namespace Prisma {
     description?: StringNullableFilter<"Book"> | string | null
     last_month_access_count?: BigIntFilter<"Book"> | bigint | number
     last_month_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
+    all_time_access_count?: BigIntFilter<"Book"> | bigint | number
+    all_time_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
+    last_week_access_count?: BigIntFilter<"Book"> | bigint | number
+    last_week_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
     created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
     authors?: BookAuthorListRelationFilter
     tags?: BookTagListRelationFilter
     loans?: LoanListRelationFilter
@@ -14402,6 +16150,7 @@ export namespace Prisma {
     created_by_user_id?: SortOrder
     updated_at?: SortOrderInput | SortOrder
     updated_by_user_id?: SortOrderInput | SortOrder
+    category_id?: SortOrderInput | SortOrder
     title?: SortOrder
     subtitle?: SortOrderInput | SortOrder
     publisher?: SortOrderInput | SortOrder
@@ -14421,6 +16170,10 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     last_month_access_count?: SortOrder
     last_month_access_count_updated_at?: SortOrderInput | SortOrder
+    all_time_access_count?: SortOrder
+    all_time_access_count_updated_at?: SortOrderInput | SortOrder
+    last_week_access_count?: SortOrder
+    last_week_access_count_updated_at?: SortOrderInput | SortOrder
     _count?: BookCountOrderByAggregateInput
     _avg?: BookAvgOrderByAggregateInput
     _max?: BookMaxOrderByAggregateInput
@@ -14438,6 +16191,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntWithAggregatesFilter<"Book"> | bigint | number
     updated_at?: DateTimeNullableWithAggregatesFilter<"Book"> | Date | string | null
     updated_by_user_id?: BigIntNullableWithAggregatesFilter<"Book"> | bigint | number | null
+    category_id?: BigIntNullableWithAggregatesFilter<"Book"> | bigint | number | null
     title?: StringWithAggregatesFilter<"Book"> | string
     subtitle?: StringNullableWithAggregatesFilter<"Book"> | string | null
     publisher?: StringNullableWithAggregatesFilter<"Book"> | string | null
@@ -14457,6 +16211,10 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"Book"> | string | null
     last_month_access_count?: BigIntWithAggregatesFilter<"Book"> | bigint | number
     last_month_access_count_updated_at?: DateTimeNullableWithAggregatesFilter<"Book"> | Date | string | null
+    all_time_access_count?: BigIntWithAggregatesFilter<"Book"> | bigint | number
+    all_time_access_count_updated_at?: DateTimeNullableWithAggregatesFilter<"Book"> | Date | string | null
+    last_week_access_count?: BigIntWithAggregatesFilter<"Book"> | bigint | number
+    last_week_access_count_updated_at?: DateTimeNullableWithAggregatesFilter<"Book"> | Date | string | null
   }
 
   export type LoanWhereInput = {
@@ -14568,6 +16326,14 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"BookAccess"> | Date | string
     created_by_user_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
     book_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
+    ip_address?: StringNullableFilter<"BookAccess"> | string | null
+    user_agent?: StringNullableFilter<"BookAccess"> | string | null
+    browser_name?: StringNullableFilter<"BookAccess"> | string | null
+    browser_version?: StringNullableFilter<"BookAccess"> | string | null
+    os_name?: StringNullableFilter<"BookAccess"> | string | null
+    os_version?: StringNullableFilter<"BookAccess"> | string | null
+    device_name?: StringNullableFilter<"BookAccess"> | string | null
+    device_vendor?: StringNullableFilter<"BookAccess"> | string | null
     status?: EnumStatusEnumFilter<"BookAccess"> | $Enums.StatusEnum
     created_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     book?: XOR<BookNullableScalarRelationFilter, BookWhereInput> | null
@@ -14578,6 +16344,14 @@ export namespace Prisma {
     created_at?: SortOrder
     created_by_user_id?: SortOrderInput | SortOrder
     book_id?: SortOrderInput | SortOrder
+    ip_address?: SortOrderInput | SortOrder
+    user_agent?: SortOrderInput | SortOrder
+    browser_name?: SortOrderInput | SortOrder
+    browser_version?: SortOrderInput | SortOrder
+    os_name?: SortOrderInput | SortOrder
+    os_version?: SortOrderInput | SortOrder
+    device_name?: SortOrderInput | SortOrder
+    device_vendor?: SortOrderInput | SortOrder
     status?: SortOrder
     created_by_user?: UserOrderByWithRelationInput
     book?: BookOrderByWithRelationInput
@@ -14591,6 +16365,14 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"BookAccess"> | Date | string
     created_by_user_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
     book_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
+    ip_address?: StringNullableFilter<"BookAccess"> | string | null
+    user_agent?: StringNullableFilter<"BookAccess"> | string | null
+    browser_name?: StringNullableFilter<"BookAccess"> | string | null
+    browser_version?: StringNullableFilter<"BookAccess"> | string | null
+    os_name?: StringNullableFilter<"BookAccess"> | string | null
+    os_version?: StringNullableFilter<"BookAccess"> | string | null
+    device_name?: StringNullableFilter<"BookAccess"> | string | null
+    device_vendor?: StringNullableFilter<"BookAccess"> | string | null
     status?: EnumStatusEnumFilter<"BookAccess"> | $Enums.StatusEnum
     created_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     book?: XOR<BookNullableScalarRelationFilter, BookWhereInput> | null
@@ -14601,6 +16383,14 @@ export namespace Prisma {
     created_at?: SortOrder
     created_by_user_id?: SortOrderInput | SortOrder
     book_id?: SortOrderInput | SortOrder
+    ip_address?: SortOrderInput | SortOrder
+    user_agent?: SortOrderInput | SortOrder
+    browser_name?: SortOrderInput | SortOrder
+    browser_version?: SortOrderInput | SortOrder
+    os_name?: SortOrderInput | SortOrder
+    os_version?: SortOrderInput | SortOrder
+    device_name?: SortOrderInput | SortOrder
+    device_vendor?: SortOrderInput | SortOrder
     status?: SortOrder
     _count?: BookAccessCountOrderByAggregateInput
     _avg?: BookAccessAvgOrderByAggregateInput
@@ -14617,6 +16407,14 @@ export namespace Prisma {
     created_at?: DateTimeWithAggregatesFilter<"BookAccess"> | Date | string
     created_by_user_id?: BigIntNullableWithAggregatesFilter<"BookAccess"> | bigint | number | null
     book_id?: BigIntNullableWithAggregatesFilter<"BookAccess"> | bigint | number | null
+    ip_address?: StringNullableWithAggregatesFilter<"BookAccess"> | string | null
+    user_agent?: StringNullableWithAggregatesFilter<"BookAccess"> | string | null
+    browser_name?: StringNullableWithAggregatesFilter<"BookAccess"> | string | null
+    browser_version?: StringNullableWithAggregatesFilter<"BookAccess"> | string | null
+    os_name?: StringNullableWithAggregatesFilter<"BookAccess"> | string | null
+    os_version?: StringNullableWithAggregatesFilter<"BookAccess"> | string | null
+    device_name?: StringNullableWithAggregatesFilter<"BookAccess"> | string | null
+    device_vendor?: StringNullableWithAggregatesFilter<"BookAccess"> | string | null
     status?: EnumStatusEnumWithAggregatesFilter<"BookAccess"> | $Enums.StatusEnum
   }
 
@@ -14643,6 +16441,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -14672,6 +16472,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -14701,6 +16503,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -14730,6 +16534,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -15148,6 +16954,92 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type CategoryCreateInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_categoriesInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_categoriesInput
+    books?: BookCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryUncheckedCreateInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+    books?: BookUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_categoriesNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_categoriesNestedInput
+    books?: BookUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    books?: BookUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryCreateManyInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+  }
+
+  export type CategoryUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CategoryUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type BookTagCreateInput = {
     id?: bigint | number
     created_at?: Date | string
@@ -15245,8 +17137,13 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
+    category?: CategoryCreateNestedOneWithoutBooksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
@@ -15260,6 +17157,7 @@ export namespace Prisma {
     created_by_user_id: bigint | number
     updated_at?: Date | string | null
     updated_by_user_id?: bigint | number | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -15279,6 +17177,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
@@ -15309,8 +17211,13 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
+    category?: CategoryUpdateOneWithoutBooksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
@@ -15324,6 +17231,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15343,6 +17251,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
@@ -15356,6 +17268,7 @@ export namespace Prisma {
     created_by_user_id: bigint | number
     updated_at?: Date | string | null
     updated_by_user_id?: bigint | number | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -15375,6 +17288,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
   }
 
   export type BookUpdateManyMutationInput = {
@@ -15401,6 +17318,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type BookUncheckedUpdateManyInput = {
@@ -15410,6 +17331,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15429,6 +17351,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type LoanCreateInput = {
@@ -15535,6 +17461,14 @@ export namespace Prisma {
   export type BookAccessCreateInput = {
     id?: bigint | number
     created_at?: Date | string
+    ip_address?: string | null
+    user_agent?: string | null
+    browser_name?: string | null
+    browser_version?: string | null
+    os_name?: string | null
+    os_version?: string | null
+    device_name?: string | null
+    device_vendor?: string | null
     status?: $Enums.StatusEnum
     created_by_user?: UserCreateNestedOneWithoutBook_accessesInput
     book?: BookCreateNestedOneWithoutBook_accessesInput
@@ -15545,12 +17479,28 @@ export namespace Prisma {
     created_at?: Date | string
     created_by_user_id?: bigint | number | null
     book_id?: bigint | number | null
+    ip_address?: string | null
+    user_agent?: string | null
+    browser_name?: string | null
+    browser_version?: string | null
+    os_name?: string | null
+    os_version?: string | null
+    device_name?: string | null
+    device_vendor?: string | null
     status?: $Enums.StatusEnum
   }
 
   export type BookAccessUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     created_by_user?: UserUpdateOneWithoutBook_accessesNestedInput
     book?: BookUpdateOneWithoutBook_accessesNestedInput
@@ -15561,6 +17511,14 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     book_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 
@@ -15569,12 +17527,28 @@ export namespace Prisma {
     created_at?: Date | string
     created_by_user_id?: bigint | number | null
     book_id?: bigint | number | null
+    ip_address?: string | null
+    user_agent?: string | null
+    browser_name?: string | null
+    browser_version?: string | null
+    os_name?: string | null
+    os_version?: string | null
+    device_name?: string | null
+    device_vendor?: string | null
     status?: $Enums.StatusEnum
   }
 
   export type BookAccessUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 
@@ -15583,6 +17557,14 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     book_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 
@@ -15680,6 +17662,12 @@ export namespace Prisma {
     none?: BookTagWhereInput
   }
 
+  export type CategoryListRelationFilter = {
+    every?: CategoryWhereInput
+    some?: CategoryWhereInput
+    none?: CategoryWhereInput
+  }
+
   export type LoanListRelationFilter = {
     every?: LoanWhereInput
     some?: LoanWhereInput
@@ -15718,6 +17706,10 @@ export namespace Prisma {
   }
 
   export type BookTagOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CategoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16184,6 +18176,54 @@ export namespace Prisma {
     updated_by_user_id?: SortOrder
   }
 
+  export type CategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrder
+    updated_by_user_id?: SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    description?: SortOrder
+  }
+
+  export type CategoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_by_user_id?: SortOrder
+  }
+
+  export type CategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrder
+    updated_by_user_id?: SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    description?: SortOrder
+  }
+
+  export type CategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrder
+    updated_by_user_id?: SortOrder
+    name?: SortOrder
+    status?: SortOrder
+    description?: SortOrder
+  }
+
+  export type CategorySumOrderByAggregateInput = {
+    id?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_by_user_id?: SortOrder
+  }
+
   export type TagScalarRelationFilter = {
     is?: TagWhereInput
     isNot?: TagWhereInput
@@ -16257,6 +18297,11 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type CategoryNullableScalarRelationFilter = {
+    is?: CategoryWhereInput | null
+    isNot?: CategoryWhereInput | null
+  }
+
   export type BookCountOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
@@ -16264,6 +18309,7 @@ export namespace Prisma {
     created_by_user_id?: SortOrder
     updated_at?: SortOrder
     updated_by_user_id?: SortOrder
+    category_id?: SortOrder
     title?: SortOrder
     subtitle?: SortOrder
     publisher?: SortOrder
@@ -16283,15 +18329,22 @@ export namespace Prisma {
     description?: SortOrder
     last_month_access_count?: SortOrder
     last_month_access_count_updated_at?: SortOrder
+    all_time_access_count?: SortOrder
+    all_time_access_count_updated_at?: SortOrder
+    last_week_access_count?: SortOrder
+    last_week_access_count_updated_at?: SortOrder
   }
 
   export type BookAvgOrderByAggregateInput = {
     id?: SortOrder
     created_by_user_id?: SortOrder
     updated_by_user_id?: SortOrder
+    category_id?: SortOrder
     year?: SortOrder
     pages?: SortOrder
     last_month_access_count?: SortOrder
+    all_time_access_count?: SortOrder
+    last_week_access_count?: SortOrder
   }
 
   export type BookMaxOrderByAggregateInput = {
@@ -16301,6 +18354,7 @@ export namespace Prisma {
     created_by_user_id?: SortOrder
     updated_at?: SortOrder
     updated_by_user_id?: SortOrder
+    category_id?: SortOrder
     title?: SortOrder
     subtitle?: SortOrder
     publisher?: SortOrder
@@ -16318,6 +18372,10 @@ export namespace Prisma {
     description?: SortOrder
     last_month_access_count?: SortOrder
     last_month_access_count_updated_at?: SortOrder
+    all_time_access_count?: SortOrder
+    all_time_access_count_updated_at?: SortOrder
+    last_week_access_count?: SortOrder
+    last_week_access_count_updated_at?: SortOrder
   }
 
   export type BookMinOrderByAggregateInput = {
@@ -16327,6 +18385,7 @@ export namespace Prisma {
     created_by_user_id?: SortOrder
     updated_at?: SortOrder
     updated_by_user_id?: SortOrder
+    category_id?: SortOrder
     title?: SortOrder
     subtitle?: SortOrder
     publisher?: SortOrder
@@ -16344,15 +18403,22 @@ export namespace Prisma {
     description?: SortOrder
     last_month_access_count?: SortOrder
     last_month_access_count_updated_at?: SortOrder
+    all_time_access_count?: SortOrder
+    all_time_access_count_updated_at?: SortOrder
+    last_week_access_count?: SortOrder
+    last_week_access_count_updated_at?: SortOrder
   }
 
   export type BookSumOrderByAggregateInput = {
     id?: SortOrder
     created_by_user_id?: SortOrder
     updated_by_user_id?: SortOrder
+    category_id?: SortOrder
     year?: SortOrder
     pages?: SortOrder
     last_month_access_count?: SortOrder
+    all_time_access_count?: SortOrder
+    last_week_access_count?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -16442,6 +18508,14 @@ export namespace Prisma {
     created_at?: SortOrder
     created_by_user_id?: SortOrder
     book_id?: SortOrder
+    ip_address?: SortOrder
+    user_agent?: SortOrder
+    browser_name?: SortOrder
+    browser_version?: SortOrder
+    os_name?: SortOrder
+    os_version?: SortOrder
+    device_name?: SortOrder
+    device_vendor?: SortOrder
     status?: SortOrder
   }
 
@@ -16456,6 +18530,14 @@ export namespace Prisma {
     created_at?: SortOrder
     created_by_user_id?: SortOrder
     book_id?: SortOrder
+    ip_address?: SortOrder
+    user_agent?: SortOrder
+    browser_name?: SortOrder
+    browser_version?: SortOrder
+    os_name?: SortOrder
+    os_version?: SortOrder
+    device_name?: SortOrder
+    device_vendor?: SortOrder
     status?: SortOrder
   }
 
@@ -16464,6 +18546,14 @@ export namespace Prisma {
     created_at?: SortOrder
     created_by_user_id?: SortOrder
     book_id?: SortOrder
+    ip_address?: SortOrder
+    user_agent?: SortOrder
+    browser_name?: SortOrder
+    browser_version?: SortOrder
+    os_name?: SortOrder
+    os_version?: SortOrder
+    device_name?: SortOrder
+    device_vendor?: SortOrder
     status?: SortOrder
   }
 
@@ -16548,6 +18638,20 @@ export namespace Prisma {
     connectOrCreate?: BookTagCreateOrConnectWithoutUpdated_by_userInput | BookTagCreateOrConnectWithoutUpdated_by_userInput[]
     createMany?: BookTagCreateManyUpdated_by_userInputEnvelope
     connect?: BookTagWhereUniqueInput | BookTagWhereUniqueInput[]
+  }
+
+  export type CategoryCreateNestedManyWithoutCreated_by_userInput = {
+    create?: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput> | CategoryCreateWithoutCreated_by_userInput[] | CategoryUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutCreated_by_userInput | CategoryCreateOrConnectWithoutCreated_by_userInput[]
+    createMany?: CategoryCreateManyCreated_by_userInputEnvelope
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+  }
+
+  export type CategoryCreateNestedManyWithoutUpdated_by_userInput = {
+    create?: XOR<CategoryCreateWithoutUpdated_by_userInput, CategoryUncheckedCreateWithoutUpdated_by_userInput> | CategoryCreateWithoutUpdated_by_userInput[] | CategoryUncheckedCreateWithoutUpdated_by_userInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutUpdated_by_userInput | CategoryCreateOrConnectWithoutUpdated_by_userInput[]
+    createMany?: CategoryCreateManyUpdated_by_userInputEnvelope
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
   }
 
   export type LoanCreateNestedManyWithoutCreated_by_userInput = {
@@ -16653,6 +18757,20 @@ export namespace Prisma {
     connectOrCreate?: BookTagCreateOrConnectWithoutUpdated_by_userInput | BookTagCreateOrConnectWithoutUpdated_by_userInput[]
     createMany?: BookTagCreateManyUpdated_by_userInputEnvelope
     connect?: BookTagWhereUniqueInput | BookTagWhereUniqueInput[]
+  }
+
+  export type CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput = {
+    create?: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput> | CategoryCreateWithoutCreated_by_userInput[] | CategoryUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutCreated_by_userInput | CategoryCreateOrConnectWithoutCreated_by_userInput[]
+    createMany?: CategoryCreateManyCreated_by_userInputEnvelope
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+  }
+
+  export type CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput = {
+    create?: XOR<CategoryCreateWithoutUpdated_by_userInput, CategoryUncheckedCreateWithoutUpdated_by_userInput> | CategoryCreateWithoutUpdated_by_userInput[] | CategoryUncheckedCreateWithoutUpdated_by_userInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutUpdated_by_userInput | CategoryCreateOrConnectWithoutUpdated_by_userInput[]
+    createMany?: CategoryCreateManyUpdated_by_userInputEnvelope
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
   }
 
   export type LoanUncheckedCreateNestedManyWithoutCreated_by_userInput = {
@@ -16865,6 +18983,34 @@ export namespace Prisma {
     deleteMany?: BookTagScalarWhereInput | BookTagScalarWhereInput[]
   }
 
+  export type CategoryUpdateManyWithoutCreated_by_userNestedInput = {
+    create?: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput> | CategoryCreateWithoutCreated_by_userInput[] | CategoryUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutCreated_by_userInput | CategoryCreateOrConnectWithoutCreated_by_userInput[]
+    upsert?: CategoryUpsertWithWhereUniqueWithoutCreated_by_userInput | CategoryUpsertWithWhereUniqueWithoutCreated_by_userInput[]
+    createMany?: CategoryCreateManyCreated_by_userInputEnvelope
+    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    update?: CategoryUpdateWithWhereUniqueWithoutCreated_by_userInput | CategoryUpdateWithWhereUniqueWithoutCreated_by_userInput[]
+    updateMany?: CategoryUpdateManyWithWhereWithoutCreated_by_userInput | CategoryUpdateManyWithWhereWithoutCreated_by_userInput[]
+    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+  }
+
+  export type CategoryUpdateManyWithoutUpdated_by_userNestedInput = {
+    create?: XOR<CategoryCreateWithoutUpdated_by_userInput, CategoryUncheckedCreateWithoutUpdated_by_userInput> | CategoryCreateWithoutUpdated_by_userInput[] | CategoryUncheckedCreateWithoutUpdated_by_userInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutUpdated_by_userInput | CategoryCreateOrConnectWithoutUpdated_by_userInput[]
+    upsert?: CategoryUpsertWithWhereUniqueWithoutUpdated_by_userInput | CategoryUpsertWithWhereUniqueWithoutUpdated_by_userInput[]
+    createMany?: CategoryCreateManyUpdated_by_userInputEnvelope
+    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    update?: CategoryUpdateWithWhereUniqueWithoutUpdated_by_userInput | CategoryUpdateWithWhereUniqueWithoutUpdated_by_userInput[]
+    updateMany?: CategoryUpdateManyWithWhereWithoutUpdated_by_userInput | CategoryUpdateManyWithWhereWithoutUpdated_by_userInput[]
+    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+  }
+
   export type LoanUpdateManyWithoutCreated_by_userNestedInput = {
     create?: XOR<LoanCreateWithoutCreated_by_userInput, LoanUncheckedCreateWithoutCreated_by_userInput> | LoanCreateWithoutCreated_by_userInput[] | LoanUncheckedCreateWithoutCreated_by_userInput[]
     connectOrCreate?: LoanCreateOrConnectWithoutCreated_by_userInput | LoanCreateOrConnectWithoutCreated_by_userInput[]
@@ -17073,6 +19219,34 @@ export namespace Prisma {
     update?: BookTagUpdateWithWhereUniqueWithoutUpdated_by_userInput | BookTagUpdateWithWhereUniqueWithoutUpdated_by_userInput[]
     updateMany?: BookTagUpdateManyWithWhereWithoutUpdated_by_userInput | BookTagUpdateManyWithWhereWithoutUpdated_by_userInput[]
     deleteMany?: BookTagScalarWhereInput | BookTagScalarWhereInput[]
+  }
+
+  export type CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput = {
+    create?: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput> | CategoryCreateWithoutCreated_by_userInput[] | CategoryUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutCreated_by_userInput | CategoryCreateOrConnectWithoutCreated_by_userInput[]
+    upsert?: CategoryUpsertWithWhereUniqueWithoutCreated_by_userInput | CategoryUpsertWithWhereUniqueWithoutCreated_by_userInput[]
+    createMany?: CategoryCreateManyCreated_by_userInputEnvelope
+    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    update?: CategoryUpdateWithWhereUniqueWithoutCreated_by_userInput | CategoryUpdateWithWhereUniqueWithoutCreated_by_userInput[]
+    updateMany?: CategoryUpdateManyWithWhereWithoutCreated_by_userInput | CategoryUpdateManyWithWhereWithoutCreated_by_userInput[]
+    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+  }
+
+  export type CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput = {
+    create?: XOR<CategoryCreateWithoutUpdated_by_userInput, CategoryUncheckedCreateWithoutUpdated_by_userInput> | CategoryCreateWithoutUpdated_by_userInput[] | CategoryUncheckedCreateWithoutUpdated_by_userInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutUpdated_by_userInput | CategoryCreateOrConnectWithoutUpdated_by_userInput[]
+    upsert?: CategoryUpsertWithWhereUniqueWithoutUpdated_by_userInput | CategoryUpsertWithWhereUniqueWithoutUpdated_by_userInput[]
+    createMany?: CategoryCreateManyUpdated_by_userInputEnvelope
+    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    update?: CategoryUpdateWithWhereUniqueWithoutUpdated_by_userInput | CategoryUpdateWithWhereUniqueWithoutUpdated_by_userInput[]
+    updateMany?: CategoryUpdateManyWithWhereWithoutUpdated_by_userInput | CategoryUpdateManyWithWhereWithoutUpdated_by_userInput[]
+    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
   }
 
   export type LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput = {
@@ -17367,6 +19541,78 @@ export namespace Prisma {
     deleteMany?: BookTagScalarWhereInput | BookTagScalarWhereInput[]
   }
 
+  export type UserCreateNestedOneWithoutCreated_categoriesInput = {
+    create?: XOR<UserCreateWithoutCreated_categoriesInput, UserUncheckedCreateWithoutCreated_categoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreated_categoriesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutUpdated_categoriesInput = {
+    create?: XOR<UserCreateWithoutUpdated_categoriesInput, UserUncheckedCreateWithoutUpdated_categoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUpdated_categoriesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BookCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<BookCreateWithoutCategoryInput, BookUncheckedCreateWithoutCategoryInput> | BookCreateWithoutCategoryInput[] | BookUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: BookCreateOrConnectWithoutCategoryInput | BookCreateOrConnectWithoutCategoryInput[]
+    createMany?: BookCreateManyCategoryInputEnvelope
+    connect?: BookWhereUniqueInput | BookWhereUniqueInput[]
+  }
+
+  export type BookUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<BookCreateWithoutCategoryInput, BookUncheckedCreateWithoutCategoryInput> | BookCreateWithoutCategoryInput[] | BookUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: BookCreateOrConnectWithoutCategoryInput | BookCreateOrConnectWithoutCategoryInput[]
+    createMany?: BookCreateManyCategoryInputEnvelope
+    connect?: BookWhereUniqueInput | BookWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutCreated_categoriesNestedInput = {
+    create?: XOR<UserCreateWithoutCreated_categoriesInput, UserUncheckedCreateWithoutCreated_categoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreated_categoriesInput
+    upsert?: UserUpsertWithoutCreated_categoriesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreated_categoriesInput, UserUpdateWithoutCreated_categoriesInput>, UserUncheckedUpdateWithoutCreated_categoriesInput>
+  }
+
+  export type UserUpdateOneWithoutUpdated_categoriesNestedInput = {
+    create?: XOR<UserCreateWithoutUpdated_categoriesInput, UserUncheckedCreateWithoutUpdated_categoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUpdated_categoriesInput
+    upsert?: UserUpsertWithoutUpdated_categoriesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUpdated_categoriesInput, UserUpdateWithoutUpdated_categoriesInput>, UserUncheckedUpdateWithoutUpdated_categoriesInput>
+  }
+
+  export type BookUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<BookCreateWithoutCategoryInput, BookUncheckedCreateWithoutCategoryInput> | BookCreateWithoutCategoryInput[] | BookUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: BookCreateOrConnectWithoutCategoryInput | BookCreateOrConnectWithoutCategoryInput[]
+    upsert?: BookUpsertWithWhereUniqueWithoutCategoryInput | BookUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: BookCreateManyCategoryInputEnvelope
+    set?: BookWhereUniqueInput | BookWhereUniqueInput[]
+    disconnect?: BookWhereUniqueInput | BookWhereUniqueInput[]
+    delete?: BookWhereUniqueInput | BookWhereUniqueInput[]
+    connect?: BookWhereUniqueInput | BookWhereUniqueInput[]
+    update?: BookUpdateWithWhereUniqueWithoutCategoryInput | BookUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: BookUpdateManyWithWhereWithoutCategoryInput | BookUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: BookScalarWhereInput | BookScalarWhereInput[]
+  }
+
+  export type BookUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<BookCreateWithoutCategoryInput, BookUncheckedCreateWithoutCategoryInput> | BookCreateWithoutCategoryInput[] | BookUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: BookCreateOrConnectWithoutCategoryInput | BookCreateOrConnectWithoutCategoryInput[]
+    upsert?: BookUpsertWithWhereUniqueWithoutCategoryInput | BookUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: BookCreateManyCategoryInputEnvelope
+    set?: BookWhereUniqueInput | BookWhereUniqueInput[]
+    disconnect?: BookWhereUniqueInput | BookWhereUniqueInput[]
+    delete?: BookWhereUniqueInput | BookWhereUniqueInput[]
+    connect?: BookWhereUniqueInput | BookWhereUniqueInput[]
+    update?: BookUpdateWithWhereUniqueWithoutCategoryInput | BookUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: BookUpdateManyWithWhereWithoutCategoryInput | BookUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: BookScalarWhereInput | BookScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutCreated_book_tagsInput = {
     create?: XOR<UserCreateWithoutCreated_book_tagsInput, UserUncheckedCreateWithoutCreated_book_tagsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCreated_book_tagsInput
@@ -17443,6 +19689,12 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutUpdated_booksInput, UserUncheckedCreateWithoutUpdated_booksInput>
     connectOrCreate?: UserCreateOrConnectWithoutUpdated_booksInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type CategoryCreateNestedOneWithoutBooksInput = {
+    create?: XOR<CategoryCreateWithoutBooksInput, CategoryUncheckedCreateWithoutBooksInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutBooksInput
+    connect?: CategoryWhereUniqueInput
   }
 
   export type BookAuthorCreateNestedManyWithoutBookInput = {
@@ -17535,6 +19787,16 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUpdated_booksInput, UserUpdateWithoutUpdated_booksInput>, UserUncheckedUpdateWithoutUpdated_booksInput>
+  }
+
+  export type CategoryUpdateOneWithoutBooksNestedInput = {
+    create?: XOR<CategoryCreateWithoutBooksInput, CategoryUncheckedCreateWithoutBooksInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutBooksInput
+    upsert?: CategoryUpsertWithoutBooksInput
+    disconnect?: CategoryWhereInput | boolean
+    delete?: CategoryWhereInput | boolean
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutBooksInput, CategoryUpdateWithoutBooksInput>, CategoryUncheckedUpdateWithoutBooksInput>
   }
 
   export type BookAuthorUpdateManyWithoutBookNestedInput = {
@@ -18167,7 +20429,12 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
+    category?: CategoryCreateNestedOneWithoutBooksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
@@ -18180,6 +20447,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string | null
     updated_by_user_id?: bigint | number | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -18199,6 +20467,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
@@ -18239,7 +20511,12 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
+    category?: CategoryCreateNestedOneWithoutBooksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
@@ -18252,6 +20529,7 @@ export namespace Prisma {
     created_at?: Date | string
     created_by_user_id: bigint | number
     updated_at?: Date | string | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -18271,6 +20549,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
@@ -18479,6 +20761,74 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CategoryCreateWithoutCreated_by_userInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_categoriesInput
+    books?: BookCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryUncheckedCreateWithoutCreated_by_userInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+    books?: BookUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryCreateOrConnectWithoutCreated_by_userInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput>
+  }
+
+  export type CategoryCreateManyCreated_by_userInputEnvelope = {
+    data: CategoryCreateManyCreated_by_userInput | CategoryCreateManyCreated_by_userInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CategoryCreateWithoutUpdated_by_userInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_categoriesInput
+    books?: BookCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryUncheckedCreateWithoutUpdated_by_userInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+    books?: BookUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryCreateOrConnectWithoutUpdated_by_userInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutUpdated_by_userInput, CategoryUncheckedCreateWithoutUpdated_by_userInput>
+  }
+
+  export type CategoryCreateManyUpdated_by_userInputEnvelope = {
+    data: CategoryCreateManyUpdated_by_userInput | CategoryCreateManyUpdated_by_userInput[]
+    skipDuplicates?: boolean
+  }
+
   export type LoanCreateWithoutCreated_by_userInput = {
     id?: bigint | number
     slug?: string
@@ -18596,6 +20946,14 @@ export namespace Prisma {
   export type BookAccessCreateWithoutCreated_by_userInput = {
     id?: bigint | number
     created_at?: Date | string
+    ip_address?: string | null
+    user_agent?: string | null
+    browser_name?: string | null
+    browser_version?: string | null
+    os_name?: string | null
+    os_version?: string | null
+    device_name?: string | null
+    device_vendor?: string | null
     status?: $Enums.StatusEnum
     book?: BookCreateNestedOneWithoutBook_accessesInput
   }
@@ -18604,6 +20962,14 @@ export namespace Prisma {
     id?: bigint | number
     created_at?: Date | string
     book_id?: bigint | number | null
+    ip_address?: string | null
+    user_agent?: string | null
+    browser_name?: string | null
+    browser_version?: string | null
+    os_name?: string | null
+    os_version?: string | null
+    device_name?: string | null
+    device_vendor?: string | null
     status?: $Enums.StatusEnum
   }
 
@@ -18726,6 +21092,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntFilter<"Book"> | bigint | number
     updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
     updated_by_user_id?: BigIntNullableFilter<"Book"> | bigint | number | null
+    category_id?: BigIntNullableFilter<"Book"> | bigint | number | null
     title?: StringFilter<"Book"> | string
     subtitle?: StringNullableFilter<"Book"> | string | null
     publisher?: StringNullableFilter<"Book"> | string | null
@@ -18745,6 +21112,10 @@ export namespace Prisma {
     description?: StringNullableFilter<"Book"> | string | null
     last_month_access_count?: BigIntFilter<"Book"> | bigint | number
     last_month_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
+    all_time_access_count?: BigIntFilter<"Book"> | bigint | number
+    all_time_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
+    last_week_access_count?: BigIntFilter<"Book"> | bigint | number
+    last_week_access_count_updated_at?: DateTimeNullableFilter<"Book"> | Date | string | null
   }
 
   export type BookUpsertWithWhereUniqueWithoutUpdated_by_userInput = {
@@ -18903,6 +21274,53 @@ export namespace Prisma {
     data: XOR<BookTagUpdateManyMutationInput, BookTagUncheckedUpdateManyWithoutUpdated_by_userInput>
   }
 
+  export type CategoryUpsertWithWhereUniqueWithoutCreated_by_userInput = {
+    where: CategoryWhereUniqueInput
+    update: XOR<CategoryUpdateWithoutCreated_by_userInput, CategoryUncheckedUpdateWithoutCreated_by_userInput>
+    create: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput>
+  }
+
+  export type CategoryUpdateWithWhereUniqueWithoutCreated_by_userInput = {
+    where: CategoryWhereUniqueInput
+    data: XOR<CategoryUpdateWithoutCreated_by_userInput, CategoryUncheckedUpdateWithoutCreated_by_userInput>
+  }
+
+  export type CategoryUpdateManyWithWhereWithoutCreated_by_userInput = {
+    where: CategoryScalarWhereInput
+    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyWithoutCreated_by_userInput>
+  }
+
+  export type CategoryScalarWhereInput = {
+    AND?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    OR?: CategoryScalarWhereInput[]
+    NOT?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    id?: BigIntFilter<"Category"> | bigint | number
+    slug?: StringFilter<"Category"> | string
+    created_at?: DateTimeFilter<"Category"> | Date | string
+    created_by_user_id?: BigIntFilter<"Category"> | bigint | number
+    updated_at?: DateTimeNullableFilter<"Category"> | Date | string | null
+    updated_by_user_id?: BigIntNullableFilter<"Category"> | bigint | number | null
+    name?: StringFilter<"Category"> | string
+    status?: EnumStatusEnumFilter<"Category"> | $Enums.StatusEnum
+    description?: StringNullableFilter<"Category"> | string | null
+  }
+
+  export type CategoryUpsertWithWhereUniqueWithoutUpdated_by_userInput = {
+    where: CategoryWhereUniqueInput
+    update: XOR<CategoryUpdateWithoutUpdated_by_userInput, CategoryUncheckedUpdateWithoutUpdated_by_userInput>
+    create: XOR<CategoryCreateWithoutUpdated_by_userInput, CategoryUncheckedCreateWithoutUpdated_by_userInput>
+  }
+
+  export type CategoryUpdateWithWhereUniqueWithoutUpdated_by_userInput = {
+    where: CategoryWhereUniqueInput
+    data: XOR<CategoryUpdateWithoutUpdated_by_userInput, CategoryUncheckedUpdateWithoutUpdated_by_userInput>
+  }
+
+  export type CategoryUpdateManyWithWhereWithoutUpdated_by_userInput = {
+    where: CategoryScalarWhereInput
+    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyWithoutUpdated_by_userInput>
+  }
+
   export type LoanUpsertWithWhereUniqueWithoutCreated_by_userInput = {
     where: LoanWhereUniqueInput
     update: XOR<LoanUpdateWithoutCreated_by_userInput, LoanUncheckedUpdateWithoutCreated_by_userInput>
@@ -18993,6 +21411,14 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"BookAccess"> | Date | string
     created_by_user_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
     book_id?: BigIntNullableFilter<"BookAccess"> | bigint | number | null
+    ip_address?: StringNullableFilter<"BookAccess"> | string | null
+    user_agent?: StringNullableFilter<"BookAccess"> | string | null
+    browser_name?: StringNullableFilter<"BookAccess"> | string | null
+    browser_version?: StringNullableFilter<"BookAccess"> | string | null
+    os_name?: StringNullableFilter<"BookAccess"> | string | null
+    os_version?: StringNullableFilter<"BookAccess"> | string | null
+    device_name?: StringNullableFilter<"BookAccess"> | string | null
+    device_vendor?: StringNullableFilter<"BookAccess"> | string | null
     status?: EnumStatusEnumFilter<"BookAccess"> | $Enums.StatusEnum
   }
 
@@ -19018,6 +21444,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -19046,6 +21474,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -19090,6 +21520,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -19118,6 +21550,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -19146,6 +21580,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -19174,6 +21610,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -19207,6 +21645,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -19235,6 +21675,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -19311,6 +21753,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -19339,6 +21783,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -19378,6 +21824,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -19406,6 +21854,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -19450,6 +21900,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -19478,6 +21930,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -19511,6 +21965,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -19539,6 +21995,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -19607,8 +22065,13 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
+    category?: CategoryCreateNestedOneWithoutBooksInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
     book_accesses?: BookAccessCreateNestedManyWithoutBookInput
@@ -19621,6 +22084,7 @@ export namespace Prisma {
     created_by_user_id: bigint | number
     updated_at?: Date | string | null
     updated_by_user_id?: bigint | number | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -19640,6 +22104,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
     book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
@@ -19683,6 +22151,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -19711,6 +22181,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -19750,6 +22222,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -19778,6 +22252,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -19858,8 +22334,13 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
+    category?: CategoryUpdateOneWithoutBooksNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
     book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
@@ -19872,6 +22353,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19891,6 +22373,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
     book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
@@ -19918,6 +22404,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -19946,6 +22434,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -19979,6 +22469,8 @@ export namespace Prisma {
     created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -20007,6 +22499,8 @@ export namespace Prisma {
     created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -20081,6 +22575,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -20109,6 +22605,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -20148,6 +22646,8 @@ export namespace Prisma {
     created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -20176,6 +22676,8 @@ export namespace Prisma {
     created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -20196,6 +22698,376 @@ export namespace Prisma {
   export type BookTagUpdateManyWithWhereWithoutTagInput = {
     where: BookTagScalarWhereInput
     data: XOR<BookTagUpdateManyMutationInput, BookTagUncheckedUpdateManyWithoutTagInput>
+  }
+
+  export type UserCreateWithoutCreated_categoriesInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password: string
+    email: string
+    role: $Enums.UserRole
+    auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
+    created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: BookAuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_book_authors?: BookAuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
+    created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
+    updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
+    user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
+  }
+
+  export type UserUncheckedCreateWithoutCreated_categoriesInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password: string
+    email: string
+    role: $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
+    created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: BookAuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_authors?: BookAuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+  }
+
+  export type UserCreateOrConnectWithoutCreated_categoriesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreated_categoriesInput, UserUncheckedCreateWithoutCreated_categoriesInput>
+  }
+
+  export type UserCreateWithoutUpdated_categoriesInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password: string
+    email: string
+    role: $Enums.UserRole
+    auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
+    created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: BookAuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_book_authors?: BookAuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
+    updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
+    user_loans?: LoanCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
+  }
+
+  export type UserUncheckedCreateWithoutUpdated_categoriesInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password: string
+    email: string
+    role: $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
+    created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: BookAuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_authors?: BookAuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+  }
+
+  export type UserCreateOrConnectWithoutUpdated_categoriesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUpdated_categoriesInput, UserUncheckedCreateWithoutUpdated_categoriesInput>
+  }
+
+  export type BookCreateWithoutCategoryInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    title: string
+    subtitle?: string | null
+    publisher?: string | null
+    year?: number | null
+    edition?: string | null
+    isbn?: string | null
+    pages?: number | null
+    summary?: string | null
+    pdf_url?: string | null
+    cover_url?: string | null
+    back_url?: string | null
+    images_url?: BookCreateimages_urlInput | string[]
+    keywords?: BookCreatekeywordsInput | string[]
+    label?: string | null
+    shelf?: string | null
+    status?: $Enums.StatusEnum
+    description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_booksInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
+    authors?: BookAuthorCreateNestedManyWithoutBookInput
+    tags?: BookTagCreateNestedManyWithoutBookInput
+    loans?: LoanCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessCreateNestedManyWithoutBookInput
+  }
+
+  export type BookUncheckedCreateWithoutCategoryInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    title: string
+    subtitle?: string | null
+    publisher?: string | null
+    year?: number | null
+    edition?: string | null
+    isbn?: string | null
+    pages?: number | null
+    summary?: string | null
+    pdf_url?: string | null
+    cover_url?: string | null
+    back_url?: string | null
+    images_url?: BookCreateimages_urlInput | string[]
+    keywords?: BookCreatekeywordsInput | string[]
+    label?: string | null
+    shelf?: string | null
+    status?: $Enums.StatusEnum
+    description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
+    authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
+    tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
+    loans?: LoanUncheckedCreateNestedManyWithoutBookInput
+    book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
+  }
+
+  export type BookCreateOrConnectWithoutCategoryInput = {
+    where: BookWhereUniqueInput
+    create: XOR<BookCreateWithoutCategoryInput, BookUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type BookCreateManyCategoryInputEnvelope = {
+    data: BookCreateManyCategoryInput | BookCreateManyCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutCreated_categoriesInput = {
+    update: XOR<UserUpdateWithoutCreated_categoriesInput, UserUncheckedUpdateWithoutCreated_categoriesInput>
+    create: XOR<UserCreateWithoutCreated_categoriesInput, UserUncheckedCreateWithoutCreated_categoriesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreated_categoriesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreated_categoriesInput, UserUncheckedUpdateWithoutCreated_categoriesInput>
+  }
+
+  export type UserUpdateWithoutCreated_categoriesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: BookAuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_authors?: BookAuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
+    created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
+    user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreated_categoriesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: BookAuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_authors?: BookAuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+  }
+
+  export type UserUpsertWithoutUpdated_categoriesInput = {
+    update: XOR<UserUpdateWithoutUpdated_categoriesInput, UserUncheckedUpdateWithoutUpdated_categoriesInput>
+    create: XOR<UserCreateWithoutUpdated_categoriesInput, UserUncheckedCreateWithoutUpdated_categoriesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUpdated_categoriesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUpdated_categoriesInput, UserUncheckedUpdateWithoutUpdated_categoriesInput>
+  }
+
+  export type UserUpdateWithoutUpdated_categoriesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: BookAuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_authors?: BookAuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
+    user_loans?: LoanUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUpdated_categoriesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: BookAuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_authors?: BookAuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+  }
+
+  export type BookUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: BookWhereUniqueInput
+    update: XOR<BookUpdateWithoutCategoryInput, BookUncheckedUpdateWithoutCategoryInput>
+    create: XOR<BookCreateWithoutCategoryInput, BookUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type BookUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: BookWhereUniqueInput
+    data: XOR<BookUpdateWithoutCategoryInput, BookUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type BookUpdateManyWithWhereWithoutCategoryInput = {
+    where: BookScalarWhereInput
+    data: XOR<BookUpdateManyMutationInput, BookUncheckedUpdateManyWithoutCategoryInput>
   }
 
   export type UserCreateWithoutCreated_book_tagsInput = {
@@ -20220,6 +23092,8 @@ export namespace Prisma {
     created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -20248,6 +23122,8 @@ export namespace Prisma {
     created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -20281,6 +23157,8 @@ export namespace Prisma {
     created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -20309,6 +23187,8 @@ export namespace Prisma {
     created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -20373,8 +23253,13 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
+    category?: CategoryCreateNestedOneWithoutBooksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
     book_accesses?: BookAccessCreateNestedManyWithoutBookInput
@@ -20387,6 +23272,7 @@ export namespace Prisma {
     created_by_user_id: bigint | number
     updated_at?: Date | string | null
     updated_by_user_id?: bigint | number | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -20406,6 +23292,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
     book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
@@ -20449,6 +23339,8 @@ export namespace Prisma {
     created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -20477,6 +23369,8 @@ export namespace Prisma {
     created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -20516,6 +23410,8 @@ export namespace Prisma {
     created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -20544,6 +23440,8 @@ export namespace Prisma {
     created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -20620,8 +23518,13 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
+    category?: CategoryUpdateOneWithoutBooksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
     book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
@@ -20634,6 +23537,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20653,6 +23557,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
     book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
@@ -20680,6 +23588,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -20708,6 +23618,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -20741,6 +23653,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -20769,6 +23683,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -20778,6 +23694,35 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutUpdated_booksInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutUpdated_booksInput, UserUncheckedCreateWithoutUpdated_booksInput>
+  }
+
+  export type CategoryCreateWithoutBooksInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_categoriesInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_categoriesInput
+  }
+
+  export type CategoryUncheckedCreateWithoutBooksInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+  }
+
+  export type CategoryCreateOrConnectWithoutBooksInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutBooksInput, CategoryUncheckedCreateWithoutBooksInput>
   }
 
   export type BookAuthorCreateWithoutBookInput = {
@@ -20883,6 +23828,14 @@ export namespace Prisma {
   export type BookAccessCreateWithoutBookInput = {
     id?: bigint | number
     created_at?: Date | string
+    ip_address?: string | null
+    user_agent?: string | null
+    browser_name?: string | null
+    browser_version?: string | null
+    os_name?: string | null
+    os_version?: string | null
+    device_name?: string | null
+    device_vendor?: string | null
     status?: $Enums.StatusEnum
     created_by_user?: UserCreateNestedOneWithoutBook_accessesInput
   }
@@ -20891,6 +23844,14 @@ export namespace Prisma {
     id?: bigint | number
     created_at?: Date | string
     created_by_user_id?: bigint | number | null
+    ip_address?: string | null
+    user_agent?: string | null
+    browser_name?: string | null
+    browser_version?: string | null
+    os_name?: string | null
+    os_version?: string | null
+    device_name?: string | null
+    device_vendor?: string | null
     status?: $Enums.StatusEnum
   }
 
@@ -20937,6 +23898,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -20965,6 +23928,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -21004,6 +23969,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -21032,10 +23999,47 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
     book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+  }
+
+  export type CategoryUpsertWithoutBooksInput = {
+    update: XOR<CategoryUpdateWithoutBooksInput, CategoryUncheckedUpdateWithoutBooksInput>
+    create: XOR<CategoryCreateWithoutBooksInput, CategoryUncheckedCreateWithoutBooksInput>
+    where?: CategoryWhereInput
+  }
+
+  export type CategoryUpdateToOneWithWhereWithoutBooksInput = {
+    where?: CategoryWhereInput
+    data: XOR<CategoryUpdateWithoutBooksInput, CategoryUncheckedUpdateWithoutBooksInput>
+  }
+
+  export type CategoryUpdateWithoutBooksInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_categoriesNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_categoriesNestedInput
+  }
+
+  export type CategoryUncheckedUpdateWithoutBooksInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookAuthorUpsertWithWhereUniqueWithoutBookInput = {
@@ -21125,6 +24129,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
     book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
@@ -21153,6 +24159,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
     book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -21186,6 +24194,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
     book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
@@ -21214,6 +24224,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
     book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -21248,8 +24260,13 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
+    category?: CategoryCreateNestedOneWithoutBooksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     book_accesses?: BookAccessCreateNestedManyWithoutBookInput
@@ -21262,6 +24279,7 @@ export namespace Prisma {
     created_by_user_id: bigint | number
     updated_at?: Date | string | null
     updated_by_user_id?: bigint | number | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -21281,6 +24299,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     book_accesses?: BookAccessUncheckedCreateNestedManyWithoutBookInput
@@ -21314,6 +24336,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     book_accesses?: BookAccessCreateNestedManyWithoutCreated_by_userInput
@@ -21342,6 +24366,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     book_accesses?: BookAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -21386,6 +24412,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
     book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
@@ -21414,6 +24442,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
     book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -21453,6 +24483,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
     book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
@@ -21481,6 +24513,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
     book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -21521,8 +24555,13 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
+    category?: CategoryUpdateOneWithoutBooksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
@@ -21535,6 +24574,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21554,6 +24594,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
@@ -21593,6 +24637,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     book_accesses?: BookAccessUpdateManyWithoutCreated_by_userNestedInput
@@ -21621,6 +24667,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     book_accesses?: BookAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -21649,6 +24697,8 @@ export namespace Prisma {
     updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanCreateNestedManyWithoutUserInput
@@ -21677,6 +24727,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_loans?: LoanUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_loans?: LoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     user_loans?: LoanUncheckedCreateNestedManyWithoutUserInput
@@ -21711,8 +24763,13 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_booksInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_booksInput
+    category?: CategoryCreateNestedOneWithoutBooksInput
     authors?: BookAuthorCreateNestedManyWithoutBookInput
     tags?: BookTagCreateNestedManyWithoutBookInput
     loans?: LoanCreateNestedManyWithoutBookInput
@@ -21725,6 +24782,7 @@ export namespace Prisma {
     created_by_user_id: bigint | number
     updated_at?: Date | string | null
     updated_by_user_id?: bigint | number | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -21744,6 +24802,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
     authors?: BookAuthorUncheckedCreateNestedManyWithoutBookInput
     tags?: BookTagUncheckedCreateNestedManyWithoutBookInput
     loans?: LoanUncheckedCreateNestedManyWithoutBookInput
@@ -21788,6 +24850,8 @@ export namespace Prisma {
     updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUpdateManyWithoutUserNestedInput
@@ -21816,6 +24880,8 @@ export namespace Prisma {
     updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_loans?: LoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_loans?: LoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     user_loans?: LoanUncheckedUpdateManyWithoutUserNestedInput
@@ -21856,8 +24922,13 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
+    category?: CategoryUpdateOneWithoutBooksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
@@ -21870,6 +24941,7 @@ export namespace Prisma {
     created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21889,6 +24961,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
@@ -21940,6 +25016,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string | null
     updated_by_user_id?: bigint | number | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -21959,6 +25036,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
   }
 
   export type BookCreateManyUpdated_by_userInput = {
@@ -21967,6 +25048,7 @@ export namespace Prisma {
     created_at?: Date | string
     created_by_user_id: bigint | number
     updated_at?: Date | string | null
+    category_id?: bigint | number | null
     title: string
     subtitle?: string | null
     publisher?: string | null
@@ -21986,6 +25068,10 @@ export namespace Prisma {
     description?: string | null
     last_month_access_count?: bigint | number
     last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
   }
 
   export type BookAuthorCreateManyCreated_by_userInput = {
@@ -22052,6 +25138,28 @@ export namespace Prisma {
     book_id: bigint | number
   }
 
+  export type CategoryCreateManyCreated_by_userInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+  }
+
+  export type CategoryCreateManyUpdated_by_userInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    name: string
+    status?: $Enums.StatusEnum
+    description?: string | null
+  }
+
   export type LoanCreateManyCreated_by_userInput = {
     id?: bigint | number
     slug?: string
@@ -22098,6 +25206,14 @@ export namespace Prisma {
     id?: bigint | number
     created_at?: Date | string
     book_id?: bigint | number | null
+    ip_address?: string | null
+    user_agent?: string | null
+    browser_name?: string | null
+    browser_version?: string | null
+    os_name?: string | null
+    os_version?: string | null
+    device_name?: string | null
+    device_vendor?: string | null
     status?: $Enums.StatusEnum
   }
 
@@ -22249,7 +25365,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
+    category?: CategoryUpdateOneWithoutBooksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
@@ -22262,6 +25383,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22281,6 +25403,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
@@ -22293,6 +25419,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22312,6 +25439,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type BookUpdateWithoutUpdated_by_userInput = {
@@ -22338,7 +25469,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
+    category?: CategoryUpdateOneWithoutBooksNestedInput
     authors?: BookAuthorUpdateManyWithoutBookNestedInput
     tags?: BookTagUpdateManyWithoutBookNestedInput
     loans?: LoanUpdateManyWithoutBookNestedInput
@@ -22351,6 +25487,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22370,6 +25507,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
     tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
     loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
@@ -22382,6 +25523,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     title?: StringFieldUpdateOperationsInput | string
     subtitle?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22401,6 +25543,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type BookAuthorUpdateWithoutCreated_by_userInput = {
@@ -22599,6 +25745,76 @@ export namespace Prisma {
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type CategoryUpdateWithoutCreated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by_user?: UserUpdateOneWithoutUpdated_categoriesNestedInput
+    books?: BookUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateWithoutCreated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    books?: BookUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateManyWithoutCreated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CategoryUpdateWithoutUpdated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_categoriesNestedInput
+    books?: BookUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateWithoutUpdated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    books?: BookUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateManyWithoutUpdated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type LoanUpdateWithoutCreated_by_userInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     slug?: StringFieldUpdateOperationsInput | string
@@ -22728,6 +25944,14 @@ export namespace Prisma {
   export type BookAccessUpdateWithoutCreated_by_userInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     book?: BookUpdateOneWithoutBook_accessesNestedInput
   }
@@ -22736,6 +25960,14 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     book_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 
@@ -22743,6 +25975,14 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     book_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 
@@ -22830,6 +26070,142 @@ export namespace Prisma {
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type BookCreateManyCategoryInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    title: string
+    subtitle?: string | null
+    publisher?: string | null
+    year?: number | null
+    edition?: string | null
+    isbn?: string | null
+    pages?: number | null
+    summary?: string | null
+    pdf_url?: string | null
+    cover_url?: string | null
+    back_url?: string | null
+    images_url?: BookCreateimages_urlInput | string[]
+    keywords?: BookCreatekeywordsInput | string[]
+    label?: string | null
+    shelf?: string | null
+    status?: $Enums.StatusEnum
+    description?: string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
+  }
+
+  export type BookUpdateWithoutCategoryInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    publisher?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    edition?: NullableStringFieldUpdateOperationsInput | string | null
+    isbn?: NullableStringFieldUpdateOperationsInput | string | null
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
+    images_url?: BookUpdateimages_urlInput | string[]
+    keywords?: BookUpdatekeywordsInput | string[]
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    shelf?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_booksNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_booksNestedInput
+    authors?: BookAuthorUpdateManyWithoutBookNestedInput
+    tags?: BookTagUpdateManyWithoutBookNestedInput
+    loans?: LoanUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUpdateManyWithoutBookNestedInput
+  }
+
+  export type BookUncheckedUpdateWithoutCategoryInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    publisher?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    edition?: NullableStringFieldUpdateOperationsInput | string | null
+    isbn?: NullableStringFieldUpdateOperationsInput | string | null
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
+    images_url?: BookUpdateimages_urlInput | string[]
+    keywords?: BookUpdatekeywordsInput | string[]
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    shelf?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    authors?: BookAuthorUncheckedUpdateManyWithoutBookNestedInput
+    tags?: BookTagUncheckedUpdateManyWithoutBookNestedInput
+    loans?: LoanUncheckedUpdateManyWithoutBookNestedInput
+    book_accesses?: BookAccessUncheckedUpdateManyWithoutBookNestedInput
+  }
+
+  export type BookUncheckedUpdateManyWithoutCategoryInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    subtitle?: NullableStringFieldUpdateOperationsInput | string | null
+    publisher?: NullableStringFieldUpdateOperationsInput | string | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    edition?: NullableStringFieldUpdateOperationsInput | string | null
+    isbn?: NullableStringFieldUpdateOperationsInput | string | null
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
+    images_url?: BookUpdateimages_urlInput | string[]
+    keywords?: BookUpdatekeywordsInput | string[]
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    shelf?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type BookAuthorCreateManyBookInput = {
     id?: bigint | number
     created_at?: Date | string
@@ -22869,6 +26245,14 @@ export namespace Prisma {
     id?: bigint | number
     created_at?: Date | string
     created_by_user_id?: bigint | number | null
+    ip_address?: string | null
+    user_agent?: string | null
+    browser_name?: string | null
+    browser_version?: string | null
+    os_name?: string | null
+    os_version?: string | null
+    device_name?: string | null
+    device_vendor?: string | null
     status?: $Enums.StatusEnum
   }
 
@@ -22980,6 +26364,14 @@ export namespace Prisma {
   export type BookAccessUpdateWithoutBookInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     created_by_user?: UserUpdateOneWithoutBook_accessesNestedInput
   }
@@ -22988,6 +26380,14 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 
@@ -22995,6 +26395,14 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_name?: NullableStringFieldUpdateOperationsInput | string | null
+    browser_version?: NullableStringFieldUpdateOperationsInput | string | null
+    os_name?: NullableStringFieldUpdateOperationsInput | string | null
+    os_version?: NullableStringFieldUpdateOperationsInput | string | null
+    device_name?: NullableStringFieldUpdateOperationsInput | string | null
+    device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 

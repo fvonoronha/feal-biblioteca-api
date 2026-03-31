@@ -4,6 +4,7 @@ module.exports = {
         const authors = filter?.authors || [];
         const tags = filter?.tags || [];
         const publishers = filter?.publishers || [];
+        const categories = filter?.category_id || [];
 
         const where = {
             status: "A",
@@ -16,6 +17,7 @@ module.exports = {
                     { publisher: { contains: search, mode: "insensitive" } },
                     { summary: { contains: search, mode: "insensitive" } },
                     { keywords: { has: search } },
+                    { category: { name: { contains: search, mode: "insensitive" } } },
                     {
                         authors: {
                             some: {
@@ -44,6 +46,10 @@ module.exports = {
                         author_id: { in: authors }
                     }
                 }
+            }),
+
+            ...(categories.length > 0 && {
+                category_id: { in: categories }
             }),
 
             ...(tags.length > 0 && {

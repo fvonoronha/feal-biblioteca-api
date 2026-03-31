@@ -53,6 +53,8 @@ model User {
   updated_tags         Tag[]           @relation(name: "Tag_User_updated_by_user_id")
   created_book_tags    BookTag[]       @relation(name: "BookTag_User_created_by_user_id")
   updated_book_tags    BookTag[]       @relation(name: "BookTag_User_updated_by_user_id")
+  created_categories   Category[]      @relation(name: "Category_User_created_by_user_id")
+  updated_categories   Category[]      @relation(name: "Category_User_updated_by_user_id")
   created_loans        Loan[]          @relation(name: "Loan_User_created_by_user_id")
   updated_loans        Loan[]          @relation(name: "Loan_User_updated_by_user_id")
   user_loans           Loan[]          @relation(name: "Loan_User_user_id")
@@ -160,6 +162,26 @@ model Tag {
   @@map("tag")
 }
 
+model Category {
+  id                 BigInt     @id() @unique() @default(autoincrement())
+  slug               String     @unique() @default(uuid())
+  created_at         DateTime   @default(now()) @db.Timestamptz(6)
+  created_by_user_id BigInt
+  updated_at         DateTime?  @db.Timestamptz(6)
+  updated_by_user_id BigInt?
+  name               String
+  status             StatusEnum @default(A)
+  description        String?
+
+  created_by_user User   @relation(fields: [created_by_user_id], references: [id], name: "Category_User_created_by_user_id")
+  updated_by_user User?  @relation(fields: [updated_by_user_id], references: [id], name: "Category_User_updated_by_user_id")
+  books           Book[] @relation(name: "Book_Category_category_id")
+
+  @@index([status])
+  @@index([name])
+  @@map("category")
+}
+
 model BookTag {
   id                 BigInt     @id() @unique() @default(autoincrement())
   created_at         DateTime   @default(now()) @db.Timestamptz(6)
@@ -189,6 +211,7 @@ model Book {
   created_by_user_id                 BigInt
   updated_at                         DateTime?  @db.Timestamptz(6)
   updated_by_user_id                 BigInt?
+  category_id                        BigInt?
   title                              String
   subtitle                           String?
   publisher                          String?
@@ -208,9 +231,14 @@ model Book {
   description                        String?
   last_month_access_count            BigInt     @default(0)
   last_month_access_count_updated_at DateTime?  @db.Timestamptz(6)
+  all_time_access_count              BigInt     @default(0)
+  all_time_access_count_updated_at   DateTime?  @db.Timestamptz(6)
+  last_week_access_count             BigInt     @default(0)
+  last_week_access_count_updated_at  DateTime?  @db.Timestamptz(6)
 
-  created_by_user User  @relation(fields: [created_by_user_id], references: [id], name: "Book_User_created_by_user_id")
-  updated_by_user User? @relation(fields: [updated_by_user_id], references: [id], name: "Book_User_updated_by_user_id")
+  created_by_user User      @relation(fields: [created_by_user_id], references: [id], name: "Book_User_created_by_user_id")
+  updated_by_user User?     @relation(fields: [updated_by_user_id], references: [id], name: "Book_User_updated_by_user_id")
+  category        Category? @relation(fields: [category_id], references: [id], name: "Book_Category_category_id")
 
   authors       BookAuthor[] @relation(name: "BookAuthor_Book_book_id")
   tags          BookTag[]    @relation(name: "BookTag_Book_book_id")
@@ -230,6 +258,8 @@ model Book {
   @@index([shelf])
   @@index([keywords])
   @@index([last_month_access_count])
+  @@index([all_time_access_count])
+  @@index([last_week_access_count])
   @@map("book")
 }
 
@@ -264,6 +294,14 @@ model BookAccess {
   created_at         DateTime   @default(now()) @db.Timestamptz(6)
   created_by_user_id BigInt?
   book_id            BigInt?
+  ip_address         String?
+  user_agent         String?
+  browser_name       String?
+  browser_version    String?
+  os_name            String?
+  os_version         String?
+  device_name        String?
+  device_vendor      String?
   status             StatusEnum @default(A)
 
   created_by_user User? @relation(fields: [created_by_user_id], references: [id], name: "BookAccess_User_created_by_user_id")
