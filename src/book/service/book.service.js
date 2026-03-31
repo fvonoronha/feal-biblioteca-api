@@ -205,10 +205,16 @@ module.exports = {
                     shelf: true,
                     description: true,
                     keywords: true,
-
-                    // Adicionado: Contador de acessos geral
-                    _count: {
-                        select: { book_accesses: true }
+                    all_time_access_count: true,
+                    last_month_access_count: true,
+                    last_week_access_count: true,
+                    category: {
+                        select: {
+                            id: true,
+                            slug: true,
+                            name: true,
+                            description: true
+                        }
                     },
 
                     loans: {
@@ -328,6 +334,17 @@ module.exports = {
                 shelf: true,
                 description: true,
                 keywords: true,
+                all_time_access_count: true,
+                last_month_access_count: true,
+                last_week_access_count: true,
+                category: {
+                    select: {
+                        id: true,
+                        slug: true,
+                        name: true,
+                        description: true
+                    }
+                },
 
                 loans: {
                     select: {
@@ -434,7 +451,7 @@ module.exports = {
         }
     },
 
-    async getPublicBook(id, slug, userId) {
+    async getPublicBook(id, slug, userId, userAgent, ipAddress) {
         try {
             let filter = {};
             if (id) {
@@ -471,9 +488,16 @@ module.exports = {
                     shelf: true,
                     description: true,
                     keywords: true,
-
-                    _count: {
-                        select: { book_accesses: true }
+                    all_time_access_count: true,
+                    last_month_access_count: true,
+                    last_week_access_count: true,
+                    category: {
+                        select: {
+                            id: true,
+                            slug: true,
+                            name: true,
+                            description: true
+                        }
                     },
 
                     loans: {
@@ -537,7 +561,15 @@ module.exports = {
                 .create({
                     data: {
                         book_id: book.id,
-                        created_by_user_id: userId ? BigInt(userId) : null
+                        created_by_user_id: userId ? BigInt(userId) : null,
+                        ip_address: ipAddress,
+                        user_agent: userAgent.ua,
+                        browser_name: userAgent?.browser?.name || "",
+                        browser_version: userAgent?.browser?.version || "",
+                        os_name: userAgent?.os?.name || "",
+                        os_version: userAgent?.os?.version || "",
+                        device_name: userAgent?.device?.model || "",
+                        device_vendor: userAgent?.device?.vendor || ""
                     }
                 })
                 .catch((err) => console.error("Falha ao registrar log de acesso:", err));
@@ -602,8 +634,12 @@ module.exports = {
     /// Throwws error
     async updateMonthlyAccessCounter() {
         const trintaDiasAtras = new Date();
-        trintaDiasAtras.setDate(trintaDiasAtras.getDate() - 30); // Últimos 30 dias
-        const dateISO = trintaDiasAtras.toISOString();
+        trintaDiasAtras.setDate(trintaDiasAtras.getDate() - 30);
+        const trintaDiasAtrasISO = trintaDiasAtras.toISOString();
+
+        const seteDiasAtras = new Date();
+        seteDiasAtras.setDate(seteDiasAtras.getDate() - 30);
+        const seteDiasAtrasISO = seteDiasAtras.toISOString();
 
         await db.$executeRawUnsafe(`
                         UPDATE book
@@ -612,7 +648,20 @@ module.exports = {
                             SELECT COUNT(*)
                             FROM book_access
                             WHERE book_access.book_id = book.id
-                              AND book_access.created_at >= '${dateISO}'
+                              AND book_access.created_at >= '${trintaDiasAtrasISO}'
+                        ),
+                        last_week_access_count_updated_at = NOW(), 
+                        last_week_access_count = (
+                            SELECT COUNT(*)
+                            FROM book_access
+                            WHERE book_access.book_id = book.id
+                              AND book_access.created_at >= '${seteDiasAtrasISO}'
+                        ),
+                        all_time_access_count_updated_at = NOW(), 
+                        all_time_access_count = (
+                            SELECT COUNT(*)
+                            FROM book_access
+                            WHERE book_access.book_id = book.id
                         )
                         WHERE status = 'A';
                     `);

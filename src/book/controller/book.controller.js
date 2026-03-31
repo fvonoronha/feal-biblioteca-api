@@ -3,6 +3,7 @@ const FEEDBACK = require("../../utils/feedback.service").getFeedbacks();
 const { validateSchema } = require("../../utils/validation.service");
 const bookService = require("../service/book.service");
 const { createBookSchema, updateBookSchema } = require("../../utils/schema/Book");
+const UAParser = require("ua-parser-js");
 
 module.exports = {
     async createBook(req, res, next) {
@@ -70,7 +71,17 @@ module.exports = {
     },
 
     async getPublicBook(req, res, next) {
-        const book = await bookService.getPublicBook(req.params.bookId, req.params.bookSlug, req.response.params.user);
+        const ua = req.headers["user-agent"];
+        const parser = new UAParser(ua);
+        const info = parser.getResult();
+
+        const book = await bookService.getPublicBook(
+            req.params.bookId,
+            req.params.bookSlug,
+            req.response.params.user,
+            info,
+            req.headers["x-forwarded-for"]?.split(",").pop().trim() || req.socket.remoteAddress // ToDo: Fazer uma função utilitária para extrair o IP do request, considerando proxies e load balancers
+        );
 
         if (book.error) {
             req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
