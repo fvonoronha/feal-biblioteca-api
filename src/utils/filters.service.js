@@ -11,6 +11,7 @@ module.exports = {
 
             ...(search && {
                 OR: [
+                    { label: { contains: search, mode: "insensitive" } },
                     { title: { contains: search, mode: "insensitive" } },
                     { subtitle: { contains: search, mode: "insensitive" } },
                     { description: { contains: search, mode: "insensitive" } },
