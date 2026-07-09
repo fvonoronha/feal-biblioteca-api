@@ -1,0 +1,23 @@
+info:
+  name: Quick search
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{URL}}/public/quick-search"
+  body:
+    type: json
+    data: |-
+      {
+       "search":"casa"
+      }
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -41,7 +41,7 @@ module.exports = {
                 skip: paginationObj.limit * (paginationObj.page - 1),
                 take: paginationObj.limit,
                 where: {
-                    ...filter
+                    ...(filter || {})
                 },
                 select: {
                     id: true,
@@ -99,7 +99,7 @@ module.exports = {
         }
     },
 
-    async listPublicAuthors(filter, pagination) {
+    async listPublicAuthors(filter, pagination, trim) {
         try {
             const paginationObj = parsePagination(pagination);
             const booksWhere = getBookFiltersWhereClause(filter);
@@ -110,8 +110,8 @@ module.exports = {
                 books: {
                     some: {
                         status: "A",
-                        book: { status: "A" }
-                        //book: booksWhere // Acessa o objeto livro através da pivot
+                        book: { status: "A" },
+                        book: trim ? booksWhere : undefined // Acessa o objeto livro através da pivot
                     }
                 }
             };
@@ -139,11 +139,106 @@ module.exports = {
                 orderBy: { name: "asc" }
             });
 
+            const filtered = authorsList
+                .filter((a) => a._count.books > 0)
+                .sort((a, b) => b._count.books - a._count.books);
+
             const total = await db.author.count({ where });
-            const totalPages = Math.ceil(total / paginationObj.limit);
+            const totalPages = Math.ceil(trim ? filtered.length : total / paginationObj.limit);
 
             return {
-                elements: authorsList,
+                elements: trim
+                    ? filtered.slice(
+                          paginationObj.limit * (paginationObj.page - 1),
+                          paginationObj.limit * paginationObj.page
+                      )
+                    : authorsList,
+                pagination: {
+                    page: paginationObj.page,
+                    limit: paginationObj.limit,
+                    total_elements: total,
+                    total_pages: totalPages,
+                    has_next: paginationObj.page < totalPages,
+                    has_previous: paginationObj.page > 1
+                }
+            };
+        } catch (err) {
+            return parseError(err);
+        }
+    },
+
+    async explorePublicAuthors(filter, pagination) {
+        try {
+            const paginationObj = parsePagination(pagination);
+            const booksWhere = getBookFiltersWhereClause(filter);
+
+            const where = {
+                status: "A",
+                // Filtra autores que tenham "algum" livro que bata com o where de livros
+                slug: {
+                    in: [
+                        "kardec",
+                        "andreluiz",
+                        "chico-xavier",
+                        "divaldo",
+                        "emmanuel",
+                        "guillon",
+                        "irmao-x",
+                        "joannadeangelis",
+                        "leon-denis",
+                        "richardsimonetti",
+                        "vera-lucia",
+                        "yvonnepereira"
+                    ]
+                },
+                books: {
+                    some: {
+                        status: "A",
+                        book: { status: "A" }
+                        //book: booksWhere // Acessa o objeto livro através da pivot
+                    }
+                }
+            };
+
+            const authorsList = await db.author.findMany({
+                // skip: paginationObj.limit * (paginationObj.page - 1),
+                // take: paginationObj.limit,
+                where,
+                select: {
+                    id: true,
+                    slug: true,
+                    name: true,
+                    status: true,
+                    description: true,
+                    avatar_url: true,
+                    is_spirit: true,
+                    _count: {
+                        select: {
+                            books: {
+                                where: { status: "A", book: booksWhere }
+                            }
+                        }
+                    }
+                },
+                orderBy: {
+                    name: "asc"
+                }
+            });
+
+            // ToDo: Ordenar por quantidade de livros, mas não funciona com o orderBy do Prisma, então ordena manualmente
+            const filtered = authorsList
+                .filter((a) => a._count.books > 10)
+                .sort((a, b) => b._count.books - a._count.books);
+            // .slice(paginationObj.limit * (paginationObj.page - 1), paginationObj.limit * paginationObj.page);
+
+            const total = await db.author.count({ where });
+            const totalPages = Math.ceil(filtered.length / paginationObj.limit);
+
+            return {
+                elements: filtered.slice(
+                    paginationObj.limit * (paginationObj.page - 1),
+                    paginationObj.limit * paginationObj.page
+                ),
                 pagination: {
                     page: paginationObj.page,
                     limit: paginationObj.limit,

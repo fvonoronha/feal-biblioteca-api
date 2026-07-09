@@ -8,4 +8,6 @@ const { listPublicCategories } = require("../controller/category.controller");
 
 method.post(`/public/categories`, init, isAuthOrNot, listPublicCategories, end);
 
+method.post(`/public/explore-categories`, init, isAuthOrNot, listPublicCategories, end);
+
 module.exports = method;
