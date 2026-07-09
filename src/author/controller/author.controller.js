@@ -56,7 +56,47 @@ module.exports = {
     },
 
     async listPublicAuthors(req, res, next) {
-        const author = await authorService.listPublicAuthors(req.body.filter, req.body.pagination);
+        const author = await authorService.listPublicAuthors(
+            req.body.filter,
+            req.body.pagination,
+            req.body.trim || req.body.filter.trim
+        );
+
+        if (author.error) {
+            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
+            req.response.body.author = { error: author.error };
+            return end(req, res);
+        }
+
+        req.response.meta.feedback = FEEDBACK.READ;
+        req.response.body.author = author;
+        return next();
+    },
+
+    async filterAuthors(req, res, next) {
+        const author = await authorService.listPublicAuthors(req.body.filter, {
+            limit: 5,
+            page: 1
+        });
+
+        if (author.error) {
+            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
+            req.response.body.author = { error: author.error };
+            return end(req, res);
+        }
+
+        req.response.meta.feedback = FEEDBACK.READ;
+        req.response.body.author = author;
+        return next();
+    },
+
+    async explorePublicAuthors(req, res, next) {
+        const author = await authorService.explorePublicAuthors(
+            { ...req.body.filter },
+            {
+                ...req.body.pagination
+            }
+        );
 
         if (author.error) {
             req.response.meta.feedback = FEEDBACK.BAD_REQUEST;

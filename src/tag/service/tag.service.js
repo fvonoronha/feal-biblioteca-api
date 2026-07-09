@@ -146,5 +146,67 @@ module.exports = {
         } catch (err) {
             return parseError(err);
         }
+    },
+
+    // Operações de Consumo
+    async explorePublicTags(filter, pagination) {
+        try {
+            const paginationObj = parsePagination(pagination);
+            const booksWhere = getBookFiltersWhereClause(filter);
+
+            const where = {
+                status: "A",
+                books: {
+                    some: {
+                        status: "A",
+                        book: { status: "A" }
+                    }
+                }
+            };
+
+            const tagsList = await db.tag.findMany({
+                // skip: paginationObj.limit * (paginationObj.page - 1),
+                // take: paginationObj.limit,
+                where,
+                select: {
+                    id: true,
+                    slug: true,
+                    name: true,
+                    status: true,
+                    description: true,
+                    _count: {
+                        select: {
+                            books: {
+                                where: { status: "A", book: booksWhere }
+                            }
+                        }
+                    }
+                },
+                orderBy: { name: "asc" }
+            });
+
+            const filtered = tagsList.filter((a) => a._count.books > 0).sort((a, b) => b._count.books - a._count.books);
+            // .slice(paginationObj.limit * (paginationObj.page - 1), paginationObj.limit * paginationObj.page);
+
+            const total = await db.tag.count({ where });
+            const totalPages = Math.ceil(filtered.length / paginationObj.limit);
+
+            return {
+                elements: filtered.slice(
+                    paginationObj.limit * (paginationObj.page - 1),
+                    paginationObj.limit * paginationObj.page
+                ),
+                pagination: {
+                    page: paginationObj.page,
+                    limit: paginationObj.limit,
+                    total_elements: total,
+                    total_pages: totalPages,
+                    has_next: paginationObj.page < totalPages,
+                    has_previous: paginationObj.page > 1
+                }
+            };
+        } catch (err) {
+            return parseError(err);
+        }
     }
 };

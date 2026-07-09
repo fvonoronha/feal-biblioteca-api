@@ -67,5 +67,19 @@ module.exports = {
         req.response.meta.feedback = FEEDBACK.READ;
         req.response.body.tag = tag;
         return next();
+    },
+
+    async explorePublicTags(req, res, next) {
+        const tag = await tagService.explorePublicTags(req.body.filter, req.body.pagination);
+
+        if (tag.error) {
+            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
+            req.response.body.tag = { error: tag.error };
+            return end(req, res);
+        }
+
+        req.response.meta.feedback = FEEDBACK.READ;
+        req.response.body.tag = tag;
+        return next();
     }
 };
