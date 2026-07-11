@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../../prisma/generated/client");
+const { PrismaClient, Prisma } = require("../../prisma/generated/client");
 const prisma = new PrismaClient();
 
 const formatDbError = (error) => {
@@ -55,6 +55,7 @@ const formatDbError = (error) => {
 };
 
 module.exports = {
+    Prisma: Prisma,
     db: prisma,
     parseError: formatDbError
 };

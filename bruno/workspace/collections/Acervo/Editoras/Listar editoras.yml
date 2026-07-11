@@ -1,19 +1,14 @@
 info:
-  name: Cadastrar novo autor
+  name: Listar editoras
   type: http
-  seq: 2
+  seq: 1
 
 http:
   method: POST
-  url: "{{URL}}/author"
+  url: "{{URL}}/publishers"
   body:
     type: json
-    data: |-
-      {
-        "name":"Emmanuel",
-        "slug":"emmanel",
-        "is_spirit":true
-      }
+    data: ""
   auth:
     type: bearer
     token: "{{AUTH_TOKEN}}"

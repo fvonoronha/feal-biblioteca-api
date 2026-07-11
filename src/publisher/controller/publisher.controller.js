@@ -1,21 +1,21 @@
 const { end } = require("../../utils/request.service");
 const FEEDBACK = require("../../utils/feedback.service").getFeedbacks();
 const { validateSchema } = require("../../utils/validation.service");
-const categoryService = require("../service/category.service");
+const publisherService = require("../service/publisher.service");
 const { createTagSchema, updateTagSchema } = require("../../utils/schema/Tag");
 
 module.exports = {
-    async listCategories(req, res, next) {
-        const category = await categoryService.listCategories(req.body.filter, req.body.pagination);
+    async listPublishers(req, res, next) {
+        const publisher = await publisherService.listPublishers(req.body.filter, req.body.pagination);
 
-        if (category.error) {
+        if (publisher.error) {
             req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.category = { error: category.error };
+            req.response.body.publisher = { error: publisher.error };
             return end(req, res);
         }
 
         req.response.meta.feedback = FEEDBACK.READ;
-        req.response.body.category = category;
+        req.response.body.publisher = publisher;
         return next();
     }
 };

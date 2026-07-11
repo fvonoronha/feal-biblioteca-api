@@ -4,10 +4,10 @@ const { isAdmin } = require("../../utils/permission.service");
 const { slug } = require("../../utils/urlParams.service");
 
 const { isAuth, isAuthOrNot } = require("../../auth/controller/auth.controller");
-const { listPublicCategories } = require("../controller/category.controller");
+const { listCategories } = require("../controller/category.controller");
 
-method.post(`/public/categories`, init, isAuthOrNot, listPublicCategories, end);
+method.post(`/categories`, init, isAuthOrNot, listCategories, end);
 
-method.post(`/public/explore-categories`, init, isAuthOrNot, listPublicCategories, end);
+method.post(`/categories-to-explore`, init, isAuthOrNot, listCategories, end);
 
 module.exports = method;

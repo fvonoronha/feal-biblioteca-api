@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{URL}}/public/explore-categories"
+  url: "{{URL}}/categories-to-explore"
   body:
     type: json
     data: "{}"

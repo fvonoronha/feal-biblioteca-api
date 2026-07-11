@@ -5,10 +5,13 @@ info:
 
 http:
   method: POST
-  url: "{{URL}}/public/tags"
+  url: "{{URL}}/tags"
   body:
     type: json
-    data: ""
+    data: |-
+      {
+
+      }
   auth:
     type: bearer
     token: "{{AUTH_TOKEN}}"

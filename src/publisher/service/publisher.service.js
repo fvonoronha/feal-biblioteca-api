@@ -6,23 +6,25 @@ const { db, parseError } = require("../../utils/db.service");
 const { getBookFiltersWhereClause } = require("../../utils/filters.service");
 
 module.exports = {
-    async listTags(filter, pagination) {
+    async listPublishers(filter, pagination) {
         try {
             const paginationObj = parsePagination(pagination);
 
             // ToDo: Tratar filtros
 
-            const tags = await db.$queryRaw`
+            const publishers = await db.$queryRaw`
                 SELECT 
-                    t.id,
-                    t.slug,
-                    t.name,
-                    t.search_name,
-                    t.description,
-                    (SELECT count(*) FROM book _b LEFT JOIN book_tag _bt ON _bt.book_id = _b.id WHERE _bt.tag_id = t.id) as books_count,
-                    (SELECT count(*) over() FROM book _b LEFT JOIN book_tag _bt ON _bt.book_id = _b.id  LEFT JOIN volume _v ON _v.book_id = _b.id WHERE _bt.tag_id = t.id GROUP BY _v.id LIMIT 1) as volumes_count
-                FROM tag t
-                ORDER BY ${paginationObj.orderQuery} books_count DESC nulls last
+                    p.id,
+                    p.slug,
+                    p.name,
+                    p.search_name,
+                    p.abbreviation,
+                    p.description,
+                    p.avatar_url,
+                    (SELECT count(*) FROM volume _v WHERE _v.publisher_id = p.id) as volumes_count,
+                    (SELECT count(*) over() FROM volume _v LEFT JOIN book _b ON _v.book_id = _b.id  WHERE _v.publisher_id = p.id GROUP BY _b.id LIMIT 1) as books_count
+                FROM publisher p
+                ORDER BY ${paginationObj.orderQuery} p.search_name asc nulls last
                 LIMIT ${paginationObj.limitQuery} OFFSET ${paginationObj.offsetQuery}`;
 
             const countResult = await db.$queryRaw`SELECT COUNT(*) as total FROM category`;
@@ -30,7 +32,7 @@ module.exports = {
             const totalPages = Math.ceil(total / paginationObj.limit);
 
             return {
-                elements: tags,
+                elements: publishers,
                 pagination: {
                     page: paginationObj.page,
                     limit: paginationObj.limit,

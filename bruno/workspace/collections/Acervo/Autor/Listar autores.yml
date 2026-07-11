@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{URL}}/public/authors"
+  url: "{{URL}}/authors"
   body:
     type: json
     data: |-
@@ -14,7 +14,11 @@ http:
           "is_spirit":false
         },
         "pagination":{
-          "limit":10
+          "limit":10,
+          "sort":{
+            "by": "search_name",
+            "order":"asc"
+          }
         }
       }
   auth:

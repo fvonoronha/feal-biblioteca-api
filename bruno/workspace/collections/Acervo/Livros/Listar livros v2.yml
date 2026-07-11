@@ -1,18 +1,23 @@
 info:
-  name: Listar Editoras
+  name: Listar livros v2
   type: http
-  seq: 3
+  seq: 2
 
 http:
   method: POST
-  url: "{{URL}}/public/publishers"
+  url: "{{URL}}/public/search-books"
   body:
     type: json
     data: |-
       {
+        "filter":{
+          "search":"ave, cristo!"
+        },
+        
+        
         "pagination":{
-          "limit":"4",
-          "page":"2",
+          "limit":"10",
+          "page":"1",
           "orderBy":{
             "id":"desc"
           }

@@ -4,10 +4,10 @@ const { isAdmin } = require("../../utils/permission.service");
 const { slug } = require("../../utils/urlParams.service");
 
 const { isAuth, isAuthOrNot } = require("../../auth/controller/auth.controller");
-const { listTags } = require("../controller/tag.controller");
+const { listPublishers } = require("../controller/publisher.controller");
 
-method.post(`/tags`, init, isAuthOrNot, listTags, end);
+method.post(`/publishers`, init, isAuthOrNot, listPublishers, end);
 
-method.post(`/tags-to-explore`, init, isAuthOrNot, listTags, end);
+method.post(`/publishers-to-explore`, init, isAuthOrNot, listPublishers, end);
 
 module.exports = method;

@@ -7,46 +7,31 @@ const { getBookFiltersWhereClause } = require("../../utils/filters.service");
 
 module.exports = {
     // Operações de Consumo
-    async listPublicCategories(filter, pagination) {
+    async listCategories(filter, pagination) {
         try {
             const paginationObj = parsePagination(pagination);
-            const booksWhere = getBookFiltersWhereClause(filter);
 
-            const where = {
-                status: "A",
-                books: {
-                    some: {
-                        status: "A"
-                    }
-                }
-            };
+            // ToDo: Tratar filtros
 
-            const categoryList = await db.category.findMany({
-                skip: paginationObj.limit * (paginationObj.page - 1),
-                take: paginationObj.limit,
-                where,
-                select: {
-                    id: true,
-                    slug: true,
-                    name: true,
-                    status: true,
-                    description: true,
-                    _count: {
-                        select: {
-                            books: {
-                                where: booksWhere
-                            }
-                        }
-                    }
-                },
-                orderBy: { name: "asc" }
-            });
+            const categories = await db.$queryRaw`
+                SELECT 
+                    c.id,
+                    c.slug,
+                    c.name,
+                    c.search_name,
+                    c.description,
+                    (SELECT count(*) FROM book _b WHERE _b.category_id = c.id) as books_count,
+                    (SELECT count(*) over() FROM book _b LEFT JOIN volume _v ON _v.book_id = _b.id WHERE _b.category_id = c.id GROUP BY _v.id LIMIT 1) as volumes_count
+                FROM category c
+                ORDER BY ${paginationObj.orderQuery} c.name asc nulls last
+                LIMIT ${paginationObj.limitQuery} OFFSET ${paginationObj.offsetQuery}`;
 
-            const total = await db.category.count({ where });
+            const countResult = await db.$queryRaw`SELECT COUNT(*) as total FROM category`;
+            const total = Number(countResult[0].total);
             const totalPages = Math.ceil(total / paginationObj.limit);
 
             return {
-                elements: categoryList,
+                elements: categories,
                 pagination: {
                     page: paginationObj.page,
                     limit: paginationObj.limit,
@@ -57,6 +42,7 @@ module.exports = {
                 }
             };
         } catch (err) {
+            console.log(err);
             return parseError(err);
         }
     }

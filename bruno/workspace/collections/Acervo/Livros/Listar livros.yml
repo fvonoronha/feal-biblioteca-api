@@ -10,6 +10,11 @@ http:
     type: json
     data: |-
       {
+        "filter":{
+          "search":"ave, cristo!"
+        },
+        
+        
         "pagination":{
           "limit":"4",
           "page":"2",

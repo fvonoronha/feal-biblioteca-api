@@ -1,6 +1,8 @@
 const DEFAULT_PAGINATION_LIMIT = 10;
 const DEFAULT_PAGINATION_PAGE = 1;
 
+const { Prisma } = require("./db.service");
+
 module.exports = {
     parsePagination(pagination = {}) {
         const obj = {};
@@ -9,19 +11,31 @@ module.exports = {
                 ? parseInt(pagination.limit)
                 : DEFAULT_PAGINATION_LIMIT
             : DEFAULT_PAGINATION_LIMIT;
+
+        obj.limitQuery = Prisma.sql`${Prisma.raw(obj.limit)}`;
+
         obj.page = Object.prototype.hasOwnProperty.call(pagination, "page")
             ? pagination.page > 0
                 ? parseInt(pagination.page)
                 : DEFAULT_PAGINATION_PAGE
             : DEFAULT_PAGINATION_PAGE;
 
+        obj.offset = obj.limit * (obj.page - 1);
+
+        obj.offsetQuery = Prisma.sql`${Prisma.raw(obj.offset)}`;
+
         // ToDo: Validar orderBy e orderDirection
-        if (Object.prototype.hasOwnProperty.call(pagination, "orderBy")) {
-            obj.orderBy = pagination.orderBy;
-            obj.orderDirection =
-                pagination.orderDirection && ["asc", "desc"].includes(pagination.orderDirection.toLowerCase())
-                    ? pagination.orderDirection.toLowerCase()
-                    : "asc";
+        if (Object.prototype.hasOwnProperty.call(pagination, "sort") && pagination.sort?.by && pagination.sort?.order) {
+            obj.order = true;
+            obj.orderBy = pagination.sort?.by;
+            obj.orderDirection = ["asc", "desc"].includes(pagination.sort?.order.toLowerCase())
+                ? pagination.sort?.order.toLowerCase()
+                : "asc";
+            // ToDo: Essa vírgula no final é uma péssima prática
+            obj.orderQuery = Prisma.sql`${Prisma.raw(obj.orderBy)} ${Prisma.raw(obj.orderDirection)},`;
+        } else {
+            obj.order = false;
+            obj.orderQuery = Prisma.empty;
         }
         return obj;
     },
