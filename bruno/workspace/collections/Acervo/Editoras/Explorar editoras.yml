@@ -1,14 +1,19 @@
 info:
-  name: Listar autores
+  name: Explorar editoras
   type: http
   seq: 2
 
 http:
   method: POST
-  url: "{{URL}}/authors"
+  url: "{{URL}}/publishers-to-explore"
   body:
     type: json
-    data: ""
+    data: |-
+      {
+        "pagination":{
+          "limit": 1000
+        }
+      }
   auth:
     type: bearer
     token: "{{AUTH_TOKEN}}"

@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{URL}}/public/explore-authors"
+  url: "{{URL}}/authors-to-explore"
   body:
     type: json
     data: |-

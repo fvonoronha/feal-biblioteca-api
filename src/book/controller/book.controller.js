@@ -29,7 +29,6 @@ module.exports = {
     },
 
     async listBooks(req, res, next) {
-        
         const book = await bookService.listBooks(req.body.filter, req.body.pagination);
 
         if (book.error) {
@@ -59,6 +58,20 @@ module.exports = {
 
     async listPublicBooks(req, res, next) {
         const book = await bookService.listPublicBooks(req.body.filter, req.body.pagination);
+
+        if (book.error) {
+            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
+            req.response.body.book = { error: book.error };
+            return end(req, res);
+        }
+
+        req.response.meta.feedback = FEEDBACK.READ;
+        req.response.body.book = book;
+        return next();
+    },
+
+    async searchBooks(req, res, next) {
+        const book = await bookService.searchBooks(req.body.filter, req.body.pagination);
 
         if (book.error) {
             req.response.meta.feedback = FEEDBACK.BAD_REQUEST;

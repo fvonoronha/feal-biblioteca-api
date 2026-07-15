@@ -1,28 +1,60 @@
 const DEFAULT_PAGINATION_LIMIT = 10;
 const DEFAULT_PAGINATION_PAGE = 1;
 
+const { Prisma } = require("./db.service");
+
 module.exports = {
-    parsePagination(pagination = {}) {
+    parsePagination(pagination = {}, options = {}) {
         const obj = {};
         obj.limit = Object.prototype.hasOwnProperty.call(pagination, "limit")
             ? pagination.limit >= 0
                 ? parseInt(pagination.limit)
                 : DEFAULT_PAGINATION_LIMIT
             : DEFAULT_PAGINATION_LIMIT;
+
+        obj.limitQuery = Prisma.sql`${Prisma.raw(obj.limit)}`;
+
         obj.page = Object.prototype.hasOwnProperty.call(pagination, "page")
             ? pagination.page > 0
                 ? parseInt(pagination.page)
                 : DEFAULT_PAGINATION_PAGE
             : DEFAULT_PAGINATION_PAGE;
 
-        // ToDo: Validar orderBy e orderDirection
-        if (Object.prototype.hasOwnProperty.call(pagination, "orderBy")) {
-            obj.orderBy = pagination.orderBy;
-            obj.orderDirection =
-                pagination.orderDirection && ["asc", "desc"].includes(pagination.orderDirection.toLowerCase())
-                    ? pagination.orderDirection.toLowerCase()
-                    : "asc";
+        obj.offset = obj.limit * (obj.page - 1);
+
+        obj.offsetQuery = Prisma.sql`${Prisma.raw(obj.offset)}`;
+
+        if (options?.sortFields && pagination?.sort) {
+            // 1. Normaliza: se for um objeto simples, coloca dentro de um array
+            const sortArray = Array.isArray(pagination.sort) ? pagination.sort : [pagination.sort];
+
+            // 2. Filtra para garantir que só vamos processar objetos de ordenação válidos
+            const validSorts = sortArray.filter((s) => s?.by && s?.order && options.sortFields.hasOwnProperty(s.by));
+
+            if (validSorts.length > 0) {
+                obj.orderBy = true;
+
+                // 3. Mapeia cada objeto válido para a sua string SQL correspondente
+                const orderChunks = validSorts.map((s) => {
+                    const orderBy = options.sortFields[s.by];
+                    const orderDirection = ["asc", "desc"].includes(String(s.order).toLowerCase())
+                        ? String(s.order).toLowerCase()
+                        : "asc";
+
+                    return `${orderBy} ${orderDirection} nulls last`;
+                });
+
+                // 4. O .join(", ") resolve a vírgula perfeitamente em 1 ou múltiplos itens
+                obj.orderQuery = Prisma.sql`${Prisma.raw(orderChunks.join(", "))}`;
+            } else {
+                obj.orderBy = false;
+                obj.orderQuery = Prisma.empty;
+            }
+        } else {
+            obj.orderBy = false;
+            obj.orderQuery = Prisma.empty;
         }
+
         return obj;
     },
 

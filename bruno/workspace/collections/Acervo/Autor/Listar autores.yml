@@ -5,16 +5,29 @@ info:
 
 http:
   method: POST
-  url: "{{URL}}/public/authors"
+  url: "{{URL}}/authors"
   body:
     type: json
     data: |-
       {
         "filter":{
-          "is_spirit":false
+          "search":"chico",
+          "author":[],
+          "publisher":[],
+          "tag":[],
+          "category":[]
         },
         "pagination":{
-          "limit":10
+          "limit":1000000,
+          "page":1,
+          
+          "sort":[{
+            "by":"search_score",
+            "order": "desc"
+          },{
+            "by":"volumes_count",
+            "order": "desc"
+          }]
         }
       }
   auth:

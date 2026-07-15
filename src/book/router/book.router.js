@@ -12,7 +12,8 @@ const {
     filterBooks,
     getPublicBook,
     listRelatedBooks,
-    listPublicPublishers
+    listPublicPublishers,
+    searchBooks
 } = require("../controller/book.controller");
 
 const { filterAuthors } = require("../../author/controller/author.controller");
@@ -25,7 +26,7 @@ method.get(`/book/${slug("bookSlug")}`, init, isAuth, isAdmin, getBook, end);
 
 method.post(`/public/books`, init, isAuthOrNot, listPublicBooks, end);
 
-method.post(`/public/quick-search`, init, isAuthOrNot, filterAuthors, filterBooks, end);
+method.post(`/public/search-books`, init, isAuthOrNot, searchBooks, end);
 
 method.get(`/public/book/${slug("bookSlug")}`, init, isAuthOrNot, getPublicBook, end);
 

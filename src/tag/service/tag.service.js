@@ -1,139 +1,86 @@
 const { parsePagination } = require("../../utils/pagination.service");
 const { getSlug } = require("../../utils/id.service");
 const { encrypt2, decrypt2 } = require("../../utils/cryptography.service");
-const { db, parseError } = require("../../utils/db.service");
+const { treatVolumeFilters } = require("../../utils/filters.service");
+const { db, Prisma, parseError } = require("../../utils/db.service");
 
 const { getBookFiltersWhereClause } = require("../../utils/filters.service");
 
 module.exports = {
-    // Operaçoes de Gerenciamento
-    async createTag(tag, req) {
-        try {
-            const newTag = await db.tag.create({
-                data: {
-                    ...tag,
-                    slug: tag.slug || getSlug(),
-                    created_at: new Date(),
-                    created_by_user_id: req.response.params.user.id
-                },
-                select: {
-                    id: true,
-                    slug: true,
-                    name: true,
-                    status: true,
-                    description: true
-                }
-            });
-
-            return newTag;
-        } catch (err) {
-            return parseError(err);
-        }
-    },
-
     async listTags(filter, pagination) {
         try {
-            const paginationObj = parsePagination(pagination);
-
-            const tags = await db.tag.findMany({
-                skip: paginationObj.limit * (paginationObj.page - 1),
-                take: paginationObj.limit,
-                where: {
-                    ...filter
-                },
-                select: {
-                    id: true,
-                    slug: true,
-                    name: true,
-                    status: true,
-                    description: true
+            const paginationObj = parsePagination(pagination, {
+                sortFields: {
+                    name: "__t.search_name",
+                    volumes_count: "volumes_count",
+                    books_count: "books_count"
                 }
             });
 
-            return { elements: tags };
-        } catch (err) {
-            return parseError(err);
-        }
-    },
+            const orderQuery = paginationObj.orderBy
+                ? Prisma.sql`${paginationObj.orderQuery}, volumes_count desc nulls last `
+                : Prisma.sql`volumes_count desc nulls last`;
 
-    async getTag(id, slug) {
-        try {
-            let filter = {};
-            if (id) {
-                filter.id = id;
-            } else if (slug) {
-                filter.slug = slug;
-            } else {
-                throw {
-                    code: "P2025",
-                    message: "Tag inválida"
-                };
-            }
-            const tag = await db.tag.findFirst({
-                where: {
-                    ...filter
-                },
-                select: {
-                    id: true,
-                    slug: true,
-                    name: true,
-                    status: true,
-                    description: true
-                }
-            });
-            if (!tag)
-                throw {
-                    code: "P2025",
-                    message: "Tag inválida"
-                };
-            return tag;
-        } catch (err) {
-            return parseError(err);
-        }
-    },
+            const whereQuery = treatVolumeFilters(filter).query;
 
-    // Operações de Consumo
-    async listPublicTags(filter, pagination) {
-        try {
-            const paginationObj = parsePagination(pagination);
-            const booksWhere = getBookFiltersWhereClause(filter);
+            const tags = await db.$queryRaw`
+                SELECT 
+                    __t.id,
+                    __t.slug,
+                    __t.name,
+                    __t.search_name,
+                    __t.description,
+                    (
+                    SELECT count(distinct b.id)
+                    FROM volume v
+                        LEFT JOIN publisher p ON p.id = v.publisher_id
+                        LEFT JOIN book b ON b.id = v.book_id
+                        LEFT JOIN book_tag bt ON bt.book_id = b.id
+                        LEFT JOIN category c ON c.id = b.category_id
+                    WHERE bt.tag_id = __t.id ${whereQuery}
+                ) as books_count,
+                    (
+                    SELECT count(distinct v.id)
+                    FROM volume v
+                        LEFT JOIN publisher p ON p.id = v.publisher_id
+                        LEFT JOIN book b ON b.id = v.book_id
+                        LEFT JOIN book_tag bt ON bt.book_id = b.id
+                        LEFT JOIN category c ON c.id = b.category_id
+                    WHERE bt.tag_id = __t.id ${whereQuery}
+                ) as volumes_count
+                FROM tag __t
+                WHERE __t.status='A'
+                AND EXISTS (
+                    SELECT 1
+                    FROM volume v
+                        LEFT JOIN publisher p ON p.id = v.publisher_id
+                        LEFT JOIN book b ON b.id = v.book_id
+                        LEFT JOIN book_tag bt ON bt.book_id = b.id
+                        LEFT JOIN category c ON c.id = b.category_id
+                    WHERE bt.tag_id = __t.id ${whereQuery}
+                )
+                ORDER BY ${orderQuery}
+                LIMIT ${paginationObj.limitQuery} OFFSET ${paginationObj.offsetQuery}`;
 
-            const where = {
-                status: "A",
-                books: {
-                    some: {
-                        status: "A",
-                        book: { status: "A" }
-                    }
-                }
-            };
-
-            const tagsList = await db.tag.findMany({
-                skip: paginationObj.limit * (paginationObj.page - 1),
-                take: paginationObj.limit,
-                where,
-                select: {
-                    id: true,
-                    slug: true,
-                    name: true,
-                    status: true,
-                    description: true,
-                    _count: {
-                        select: {
-                            books: {
-                                where: { status: "A", book: booksWhere }
-                            }
-                        }
-                    }
-                },
-                orderBy: { name: "asc" }
-            });
-
-            const total = await db.tag.count({ where });
+            const countResult = await db.$queryRaw`
+                SELECT COUNT(DISTINCT __t.id) as total 
+                    FROM tag __t 
+                    WHERE __t.status='A' 
+                    AND EXISTS (
+                        SELECT 1 
+                        FROM volume v
+                            LEFT JOIN publisher p ON p.id = v.publisher_id
+                            LEFT JOIN book b ON b.id = v.book_id
+                            LEFT JOIN book_tag bt ON bt.book_id = b.id
+                            LEFT JOIN category c ON c.id = b.category_id
+                        WHERE bt.tag_id = __t.id ${whereQuery}
+                    )
+                `;
+            const total = Number(countResult[0].total);
             const totalPages = Math.ceil(total / paginationObj.limit);
 
             return {
-                elements: tagsList,
+                elements: tags,
                 pagination: {
                     page: paginationObj.page,
                     limit: paginationObj.limit,
@@ -144,68 +91,7 @@ module.exports = {
                 }
             };
         } catch (err) {
-            return parseError(err);
-        }
-    },
-
-    // Operações de Consumo
-    async explorePublicTags(filter, pagination) {
-        try {
-            const paginationObj = parsePagination(pagination);
-            const booksWhere = getBookFiltersWhereClause(filter);
-
-            const where = {
-                status: "A",
-                books: {
-                    some: {
-                        status: "A",
-                        book: { status: "A" }
-                    }
-                }
-            };
-
-            const tagsList = await db.tag.findMany({
-                // skip: paginationObj.limit * (paginationObj.page - 1),
-                // take: paginationObj.limit,
-                where,
-                select: {
-                    id: true,
-                    slug: true,
-                    name: true,
-                    status: true,
-                    description: true,
-                    _count: {
-                        select: {
-                            books: {
-                                where: { status: "A", book: booksWhere }
-                            }
-                        }
-                    }
-                },
-                orderBy: { name: "asc" }
-            });
-
-            const filtered = tagsList.filter((a) => a._count.books > 0).sort((a, b) => b._count.books - a._count.books);
-            // .slice(paginationObj.limit * (paginationObj.page - 1), paginationObj.limit * paginationObj.page);
-
-            const total = await db.tag.count({ where });
-            const totalPages = Math.ceil(filtered.length / paginationObj.limit);
-
-            return {
-                elements: filtered.slice(
-                    paginationObj.limit * (paginationObj.page - 1),
-                    paginationObj.limit * paginationObj.page
-                ),
-                pagination: {
-                    page: paginationObj.page,
-                    limit: paginationObj.limit,
-                    total_elements: total,
-                    total_pages: totalPages,
-                    has_next: paginationObj.page < totalPages,
-                    has_previous: paginationObj.page > 1
-                }
-            };
-        } catch (err) {
+            console.log(err);
             return parseError(err);
         }
     }
