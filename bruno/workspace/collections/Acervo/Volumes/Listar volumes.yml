@@ -8,7 +8,23 @@ http:
   url: "{{URL}}/volumes"
   body:
     type: json
-    data: ""
+    data: |-
+      {
+        "filterX":{
+          "search":"chico",
+          "author":[],
+          "category":["1000006"]
+        },
+        
+        "pagination":{
+          "limit":24,
+          "page": 1,
+          "sort":{
+            "by":"label",
+            "order":"desc"
+          }
+        }
+      }
   auth:
     type: bearer
     token: "{{AUTH_TOKEN}}"

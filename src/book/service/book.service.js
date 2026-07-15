@@ -308,7 +308,7 @@ module.exports = {
             )`);
             }
 
-            console.log("cleanSearch: ", cleanSearch);
+        
 
             // const whereSql = db.raw(whereClauses.join(" AND "));
 
@@ -387,7 +387,6 @@ module.exports = {
                 }
             };
         } catch (err) {
-            console.log("Err: ", err);
             return parseError(err);
         }
     },

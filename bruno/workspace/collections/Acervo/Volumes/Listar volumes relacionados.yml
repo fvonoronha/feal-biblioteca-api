@@ -1,33 +1,28 @@
 info:
-  name: Listar autores
+  name: Listar volumes relacionados
   type: http
-  seq: 1
+  seq: 3
 
 http:
   method: POST
-  url: "{{URL}}/authors"
+  url: "{{URL}}/volume/1000007/related-volumes"
   body:
     type: json
     data: |-
       {
-        "filter":{
+        "filterX":{
           "search":"chico",
           "author":[],
-          "publisher":[],
-          "tag":[],
-          "category":[]
+          "category":["1000006"]
         },
+        
         "pagination":{
-          "limit":1000000,
-          "page":1,
-          
-          "sort":[{
+          "limit":12,
+          "page": 1,
+          "sort":{
             "by":"search_score",
-            "order": "desc"
-          },{
-            "by":"volumes_count",
-            "order": "desc"
-          }]
+            "order":"desc"
+          }
         }
       }
   auth:

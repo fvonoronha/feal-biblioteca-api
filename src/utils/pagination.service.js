@@ -4,7 +4,7 @@ const DEFAULT_PAGINATION_PAGE = 1;
 const { Prisma } = require("./db.service");
 
 module.exports = {
-    parsePagination(pagination = {}) {
+    parsePagination(pagination = {}, options = {}) {
         const obj = {};
         obj.limit = Object.prototype.hasOwnProperty.call(pagination, "limit")
             ? pagination.limit >= 0
@@ -24,19 +24,37 @@ module.exports = {
 
         obj.offsetQuery = Prisma.sql`${Prisma.raw(obj.offset)}`;
 
-        // ToDo: Validar orderBy e orderDirection
-        if (Object.prototype.hasOwnProperty.call(pagination, "sort") && pagination.sort?.by && pagination.sort?.order) {
-            obj.order = true;
-            obj.orderBy = pagination.sort?.by;
-            obj.orderDirection = ["asc", "desc"].includes(pagination.sort?.order.toLowerCase())
-                ? pagination.sort?.order.toLowerCase()
-                : "asc";
-            // ToDo: Essa vírgula no final é uma péssima prática
-            obj.orderQuery = Prisma.sql`${Prisma.raw(obj.orderBy)} ${Prisma.raw(obj.orderDirection)},`;
+        if (options?.sortFields && pagination?.sort) {
+            // 1. Normaliza: se for um objeto simples, coloca dentro de um array
+            const sortArray = Array.isArray(pagination.sort) ? pagination.sort : [pagination.sort];
+
+            // 2. Filtra para garantir que só vamos processar objetos de ordenação válidos
+            const validSorts = sortArray.filter((s) => s?.by && s?.order && options.sortFields.hasOwnProperty(s.by));
+
+            if (validSorts.length > 0) {
+                obj.orderBy = true;
+
+                // 3. Mapeia cada objeto válido para a sua string SQL correspondente
+                const orderChunks = validSorts.map((s) => {
+                    const orderBy = options.sortFields[s.by];
+                    const orderDirection = ["asc", "desc"].includes(String(s.order).toLowerCase())
+                        ? String(s.order).toLowerCase()
+                        : "asc";
+
+                    return `${orderBy} ${orderDirection} nulls last`;
+                });
+
+                // 4. O .join(", ") resolve a vírgula perfeitamente em 1 ou múltiplos itens
+                obj.orderQuery = Prisma.sql`${Prisma.raw(orderChunks.join(", "))}`;
+            } else {
+                obj.orderBy = false;
+                obj.orderQuery = Prisma.empty;
+            }
         } else {
-            obj.order = false;
+            obj.orderBy = false;
             obj.orderQuery = Prisma.empty;
         }
+
         return obj;
     },
 

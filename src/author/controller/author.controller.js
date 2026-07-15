@@ -20,7 +20,7 @@ module.exports = {
     },
 
     async listAuthorsToExplore(req, res, next) {
-        const author = await authorService.listAuthorsToExplore(req.body.filter, req.body.pagination);
+        const author = await authorService.listAuthors({ ...req.body.filter, explore: true }, req.body.pagination);
 
         if (author.error) {
             req.response.meta.feedback = FEEDBACK.BAD_REQUEST;

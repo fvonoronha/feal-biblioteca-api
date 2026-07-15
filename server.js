@@ -27,5 +27,5 @@ httpServer.listen(env.PORT, () => {
 
     // ToDo: fazer um service para interfacear os cronJobs
     const cronService = require("./src/utils/cron.service");
-    cronService.setupCronJobs();
+    // cronService.setupCronJobs();
 });
