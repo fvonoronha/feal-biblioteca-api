@@ -68,6 +68,11 @@ export type Volume = $Result.DefaultSelection<Prisma.$VolumePayload>
  * 
  */
 export type VolumeAccess = $Result.DefaultSelection<Prisma.$VolumeAccessPayload>
+/**
+ * Model VolumeLoan
+ * 
+ */
+export type VolumeLoan = $Result.DefaultSelection<Prisma.$VolumeLoanPayload>
 
 /**
  * Enums
@@ -92,6 +97,7 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
 export const StatusEnum: {
+  P: 'P',
   A: 'A',
   I: 'I',
   E: 'E',
@@ -342,6 +348,16 @@ export class PrismaClient<
     * ```
     */
   get volumeAccess(): Prisma.VolumeAccessDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.volumeLoan`: Exposes CRUD operations for the **VolumeLoan** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VolumeLoans
+    * const volumeLoans = await prisma.volumeLoan.findMany()
+    * ```
+    */
+  get volumeLoan(): Prisma.VolumeLoanDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -793,7 +809,8 @@ export namespace Prisma {
     Publisher: 'Publisher',
     Book: 'Book',
     Volume: 'Volume',
-    VolumeAccess: 'VolumeAccess'
+    VolumeAccess: 'VolumeAccess',
+    VolumeLoan: 'VolumeLoan'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -812,7 +829,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userAuthToken" | "author" | "volumeAuthor" | "tag" | "bookTag" | "category" | "publisher" | "book" | "volume" | "volumeAccess"
+      modelProps: "user" | "userAuthToken" | "author" | "volumeAuthor" | "tag" | "bookTag" | "category" | "publisher" | "book" | "volume" | "volumeAccess" | "volumeLoan"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1630,6 +1647,80 @@ export namespace Prisma {
           }
         }
       }
+      VolumeLoan: {
+        payload: Prisma.$VolumeLoanPayload<ExtArgs>
+        fields: Prisma.VolumeLoanFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VolumeLoanFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VolumeLoanFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload>
+          }
+          findFirst: {
+            args: Prisma.VolumeLoanFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VolumeLoanFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload>
+          }
+          findMany: {
+            args: Prisma.VolumeLoanFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload>[]
+          }
+          create: {
+            args: Prisma.VolumeLoanCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload>
+          }
+          createMany: {
+            args: Prisma.VolumeLoanCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VolumeLoanCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload>[]
+          }
+          delete: {
+            args: Prisma.VolumeLoanDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload>
+          }
+          update: {
+            args: Prisma.VolumeLoanUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload>
+          }
+          deleteMany: {
+            args: Prisma.VolumeLoanDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VolumeLoanUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VolumeLoanUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload>[]
+          }
+          upsert: {
+            args: Prisma.VolumeLoanUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VolumeLoanPayload>
+          }
+          aggregate: {
+            args: Prisma.VolumeLoanAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVolumeLoan>
+          }
+          groupBy: {
+            args: Prisma.VolumeLoanGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VolumeLoanGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VolumeLoanCountArgs<ExtArgs>
+            result: $Utils.Optional<VolumeLoanCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1737,6 +1828,7 @@ export namespace Prisma {
     book?: BookOmit
     volume?: VolumeOmit
     volumeAccess?: VolumeAccessOmit
+    volumeLoan?: VolumeLoanOmit
   }
 
   /* Types for Logging */
@@ -1832,9 +1924,12 @@ export namespace Prisma {
     updated_publishers: number
     created_book_tags: number
     updated_book_tags: number
+    created_volume_loans: number
+    updated_volume_loans: number
     created_categories: number
     updated_categories: number
     volume_accesses: number
+    volume_loans: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1853,9 +1948,12 @@ export namespace Prisma {
     updated_publishers?: boolean | UserCountOutputTypeCountUpdated_publishersArgs
     created_book_tags?: boolean | UserCountOutputTypeCountCreated_book_tagsArgs
     updated_book_tags?: boolean | UserCountOutputTypeCountUpdated_book_tagsArgs
+    created_volume_loans?: boolean | UserCountOutputTypeCountCreated_volume_loansArgs
+    updated_volume_loans?: boolean | UserCountOutputTypeCountUpdated_volume_loansArgs
     created_categories?: boolean | UserCountOutputTypeCountCreated_categoriesArgs
     updated_categories?: boolean | UserCountOutputTypeCountUpdated_categoriesArgs
     volume_accesses?: boolean | UserCountOutputTypeCountVolume_accessesArgs
+    volume_loans?: boolean | UserCountOutputTypeCountVolume_loansArgs
   }
 
   // Custom InputTypes
@@ -1977,6 +2075,20 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountCreated_volume_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VolumeLoanWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUpdated_volume_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VolumeLoanWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountCreated_categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CategoryWhereInput
   }
@@ -1993,6 +2105,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountVolume_accessesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VolumeAccessWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountVolume_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VolumeLoanWhereInput
   }
 
 
@@ -2158,11 +2277,13 @@ export namespace Prisma {
   export type VolumeCountOutputType = {
     authors: number
     accesses: number
+    loans: number
   }
 
   export type VolumeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     authors?: boolean | VolumeCountOutputTypeCountAuthorsArgs
     accesses?: boolean | VolumeCountOutputTypeCountAccessesArgs
+    loans?: boolean | VolumeCountOutputTypeCountLoansArgs
   }
 
   // Custom InputTypes
@@ -2188,6 +2309,13 @@ export namespace Prisma {
    */
   export type VolumeCountOutputTypeCountAccessesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VolumeAccessWhereInput
+  }
+
+  /**
+   * VolumeCountOutputType without action
+   */
+  export type VolumeCountOutputTypeCountLoansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VolumeLoanWhereInput
   }
 
 
@@ -2226,6 +2354,7 @@ export namespace Prisma {
     status: $Enums.StatusEnum | null
     password: string | null
     email: string | null
+    phone: string | null
     role: $Enums.UserRole | null
   }
 
@@ -2240,6 +2369,7 @@ export namespace Prisma {
     status: $Enums.StatusEnum | null
     password: string | null
     email: string | null
+    phone: string | null
     role: $Enums.UserRole | null
   }
 
@@ -2254,6 +2384,7 @@ export namespace Prisma {
     status: number
     password: number
     email: number
+    phone: number
     role: number
     _all: number
   }
@@ -2278,6 +2409,7 @@ export namespace Prisma {
     status?: true
     password?: true
     email?: true
+    phone?: true
     role?: true
   }
 
@@ -2292,6 +2424,7 @@ export namespace Prisma {
     status?: true
     password?: true
     email?: true
+    phone?: true
     role?: true
   }
 
@@ -2306,6 +2439,7 @@ export namespace Prisma {
     status?: true
     password?: true
     email?: true
+    phone?: true
     role?: true
     _all?: true
   }
@@ -2405,8 +2539,9 @@ export namespace Prisma {
     sex: $Enums.SexEnum | null
     login: string
     status: $Enums.StatusEnum
-    password: string
-    email: string
+    password: string | null
+    email: string | null
+    phone: string | null
     role: $Enums.UserRole
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -2440,6 +2575,7 @@ export namespace Prisma {
     status?: boolean
     password?: boolean
     email?: boolean
+    phone?: boolean
     role?: boolean
     auth_tokens?: boolean | User$auth_tokensArgs<ExtArgs>
     created_authors?: boolean | User$created_authorsArgs<ExtArgs>
@@ -2456,9 +2592,12 @@ export namespace Prisma {
     updated_publishers?: boolean | User$updated_publishersArgs<ExtArgs>
     created_book_tags?: boolean | User$created_book_tagsArgs<ExtArgs>
     updated_book_tags?: boolean | User$updated_book_tagsArgs<ExtArgs>
+    created_volume_loans?: boolean | User$created_volume_loansArgs<ExtArgs>
+    updated_volume_loans?: boolean | User$updated_volume_loansArgs<ExtArgs>
     created_categories?: boolean | User$created_categoriesArgs<ExtArgs>
     updated_categories?: boolean | User$updated_categoriesArgs<ExtArgs>
     volume_accesses?: boolean | User$volume_accessesArgs<ExtArgs>
+    volume_loans?: boolean | User$volume_loansArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2473,6 +2612,7 @@ export namespace Prisma {
     status?: boolean
     password?: boolean
     email?: boolean
+    phone?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2487,6 +2627,7 @@ export namespace Prisma {
     status?: boolean
     password?: boolean
     email?: boolean
+    phone?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2501,10 +2642,11 @@ export namespace Prisma {
     status?: boolean
     password?: boolean
     email?: boolean
+    phone?: boolean
     role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "name" | "display_name" | "sex" | "login" | "status" | "password" | "email" | "role", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "name" | "display_name" | "sex" | "login" | "status" | "password" | "email" | "phone" | "role", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     auth_tokens?: boolean | User$auth_tokensArgs<ExtArgs>
     created_authors?: boolean | User$created_authorsArgs<ExtArgs>
@@ -2521,9 +2663,12 @@ export namespace Prisma {
     updated_publishers?: boolean | User$updated_publishersArgs<ExtArgs>
     created_book_tags?: boolean | User$created_book_tagsArgs<ExtArgs>
     updated_book_tags?: boolean | User$updated_book_tagsArgs<ExtArgs>
+    created_volume_loans?: boolean | User$created_volume_loansArgs<ExtArgs>
+    updated_volume_loans?: boolean | User$updated_volume_loansArgs<ExtArgs>
     created_categories?: boolean | User$created_categoriesArgs<ExtArgs>
     updated_categories?: boolean | User$updated_categoriesArgs<ExtArgs>
     volume_accesses?: boolean | User$volume_accessesArgs<ExtArgs>
+    volume_loans?: boolean | User$volume_loansArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2547,9 +2692,12 @@ export namespace Prisma {
       updated_publishers: Prisma.$PublisherPayload<ExtArgs>[]
       created_book_tags: Prisma.$BookTagPayload<ExtArgs>[]
       updated_book_tags: Prisma.$BookTagPayload<ExtArgs>[]
+      created_volume_loans: Prisma.$VolumeLoanPayload<ExtArgs>[]
+      updated_volume_loans: Prisma.$VolumeLoanPayload<ExtArgs>[]
       created_categories: Prisma.$CategoryPayload<ExtArgs>[]
       updated_categories: Prisma.$CategoryPayload<ExtArgs>[]
       volume_accesses: Prisma.$VolumeAccessPayload<ExtArgs>[]
+      volume_loans: Prisma.$VolumeLoanPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -2560,8 +2708,9 @@ export namespace Prisma {
       sex: $Enums.SexEnum | null
       login: string
       status: $Enums.StatusEnum
-      password: string
-      email: string
+      password: string | null
+      email: string | null
+      phone: string | null
       role: $Enums.UserRole
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -2972,9 +3121,12 @@ export namespace Prisma {
     updated_publishers<T extends User$updated_publishersArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_publishersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublisherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     created_book_tags<T extends User$created_book_tagsArgs<ExtArgs> = {}>(args?: Subset<T, User$created_book_tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     updated_book_tags<T extends User$updated_book_tagsArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_book_tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    created_volume_loans<T extends User$created_volume_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$created_volume_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    updated_volume_loans<T extends User$updated_volume_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_volume_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     created_categories<T extends User$created_categoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$created_categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     updated_categories<T extends User$updated_categoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     volume_accesses<T extends User$volume_accessesArgs<ExtArgs> = {}>(args?: Subset<T, User$volume_accessesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    volume_loans<T extends User$volume_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$volume_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3014,6 +3166,7 @@ export namespace Prisma {
     readonly status: FieldRef<"User", 'StatusEnum'>
     readonly password: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly phone: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
   }
     
@@ -3763,6 +3916,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.created_volume_loans
+   */
+  export type User$created_volume_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    where?: VolumeLoanWhereInput
+    orderBy?: VolumeLoanOrderByWithRelationInput | VolumeLoanOrderByWithRelationInput[]
+    cursor?: VolumeLoanWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VolumeLoanScalarFieldEnum | VolumeLoanScalarFieldEnum[]
+  }
+
+  /**
+   * User.updated_volume_loans
+   */
+  export type User$updated_volume_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    where?: VolumeLoanWhereInput
+    orderBy?: VolumeLoanOrderByWithRelationInput | VolumeLoanOrderByWithRelationInput[]
+    cursor?: VolumeLoanWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VolumeLoanScalarFieldEnum | VolumeLoanScalarFieldEnum[]
+  }
+
+  /**
    * User.created_categories
    */
   export type User$created_categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3832,6 +4033,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VolumeAccessScalarFieldEnum | VolumeAccessScalarFieldEnum[]
+  }
+
+  /**
+   * User.volume_loans
+   */
+  export type User$volume_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    where?: VolumeLoanWhereInput
+    orderBy?: VolumeLoanOrderByWithRelationInput | VolumeLoanOrderByWithRelationInput[]
+    cursor?: VolumeLoanWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VolumeLoanScalarFieldEnum | VolumeLoanScalarFieldEnum[]
   }
 
   /**
@@ -14205,6 +14430,7 @@ export namespace Prisma {
     publisher?: boolean | Volume$publisherArgs<ExtArgs>
     authors?: boolean | Volume$authorsArgs<ExtArgs>
     accesses?: boolean | Volume$accessesArgs<ExtArgs>
+    loans?: boolean | Volume$loansArgs<ExtArgs>
     _count?: boolean | VolumeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["volume"]>
 
@@ -14314,6 +14540,7 @@ export namespace Prisma {
     publisher?: boolean | Volume$publisherArgs<ExtArgs>
     authors?: boolean | Volume$authorsArgs<ExtArgs>
     accesses?: boolean | Volume$accessesArgs<ExtArgs>
+    loans?: boolean | Volume$loansArgs<ExtArgs>
     _count?: boolean | VolumeCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VolumeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14335,6 +14562,7 @@ export namespace Prisma {
       publisher: Prisma.$PublisherPayload<ExtArgs> | null
       authors: Prisma.$VolumeAuthorPayload<ExtArgs>[]
       accesses: Prisma.$VolumeAccessPayload<ExtArgs>[]
+      loans: Prisma.$VolumeLoanPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -14764,6 +14992,7 @@ export namespace Prisma {
     publisher<T extends Volume$publisherArgs<ExtArgs> = {}>(args?: Subset<T, Volume$publisherArgs<ExtArgs>>): Prisma__PublisherClient<$Result.GetResult<Prisma.$PublisherPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     authors<T extends Volume$authorsArgs<ExtArgs> = {}>(args?: Subset<T, Volume$authorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeAuthorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     accesses<T extends Volume$accessesArgs<ExtArgs> = {}>(args?: Subset<T, Volume$accessesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    loans<T extends Volume$loansArgs<ExtArgs> = {}>(args?: Subset<T, Volume$loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15300,6 +15529,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VolumeAccessScalarFieldEnum | VolumeAccessScalarFieldEnum[]
+  }
+
+  /**
+   * Volume.loans
+   */
+  export type Volume$loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    where?: VolumeLoanWhereInput
+    orderBy?: VolumeLoanOrderByWithRelationInput | VolumeLoanOrderByWithRelationInput[]
+    cursor?: VolumeLoanWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VolumeLoanScalarFieldEnum | VolumeLoanScalarFieldEnum[]
   }
 
   /**
@@ -16572,6 +16825,1248 @@ export namespace Prisma {
 
 
   /**
+   * Model VolumeLoan
+   */
+
+  export type AggregateVolumeLoan = {
+    _count: VolumeLoanCountAggregateOutputType | null
+    _avg: VolumeLoanAvgAggregateOutputType | null
+    _sum: VolumeLoanSumAggregateOutputType | null
+    _min: VolumeLoanMinAggregateOutputType | null
+    _max: VolumeLoanMaxAggregateOutputType | null
+  }
+
+  export type VolumeLoanAvgAggregateOutputType = {
+    id: number | null
+    created_by_user_id: number | null
+    updated_by_user_id: number | null
+    volume_id: number | null
+    user_id: number | null
+  }
+
+  export type VolumeLoanSumAggregateOutputType = {
+    id: bigint | null
+    created_by_user_id: bigint | null
+    updated_by_user_id: bigint | null
+    volume_id: bigint | null
+    user_id: bigint | null
+  }
+
+  export type VolumeLoanMinAggregateOutputType = {
+    id: bigint | null
+    created_at: Date | null
+    created_by_user_id: bigint | null
+    updated_at: Date | null
+    updated_by_user_id: bigint | null
+    status: $Enums.StatusEnum | null
+    volume_id: bigint | null
+    user_id: bigint | null
+    loan_date: Date | null
+    due_date: Date | null
+    return_date: Date | null
+    description: string | null
+  }
+
+  export type VolumeLoanMaxAggregateOutputType = {
+    id: bigint | null
+    created_at: Date | null
+    created_by_user_id: bigint | null
+    updated_at: Date | null
+    updated_by_user_id: bigint | null
+    status: $Enums.StatusEnum | null
+    volume_id: bigint | null
+    user_id: bigint | null
+    loan_date: Date | null
+    due_date: Date | null
+    return_date: Date | null
+    description: string | null
+  }
+
+  export type VolumeLoanCountAggregateOutputType = {
+    id: number
+    created_at: number
+    created_by_user_id: number
+    updated_at: number
+    updated_by_user_id: number
+    status: number
+    volume_id: number
+    user_id: number
+    loan_date: number
+    due_date: number
+    return_date: number
+    description: number
+    _all: number
+  }
+
+
+  export type VolumeLoanAvgAggregateInputType = {
+    id?: true
+    created_by_user_id?: true
+    updated_by_user_id?: true
+    volume_id?: true
+    user_id?: true
+  }
+
+  export type VolumeLoanSumAggregateInputType = {
+    id?: true
+    created_by_user_id?: true
+    updated_by_user_id?: true
+    volume_id?: true
+    user_id?: true
+  }
+
+  export type VolumeLoanMinAggregateInputType = {
+    id?: true
+    created_at?: true
+    created_by_user_id?: true
+    updated_at?: true
+    updated_by_user_id?: true
+    status?: true
+    volume_id?: true
+    user_id?: true
+    loan_date?: true
+    due_date?: true
+    return_date?: true
+    description?: true
+  }
+
+  export type VolumeLoanMaxAggregateInputType = {
+    id?: true
+    created_at?: true
+    created_by_user_id?: true
+    updated_at?: true
+    updated_by_user_id?: true
+    status?: true
+    volume_id?: true
+    user_id?: true
+    loan_date?: true
+    due_date?: true
+    return_date?: true
+    description?: true
+  }
+
+  export type VolumeLoanCountAggregateInputType = {
+    id?: true
+    created_at?: true
+    created_by_user_id?: true
+    updated_at?: true
+    updated_by_user_id?: true
+    status?: true
+    volume_id?: true
+    user_id?: true
+    loan_date?: true
+    due_date?: true
+    return_date?: true
+    description?: true
+    _all?: true
+  }
+
+  export type VolumeLoanAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VolumeLoan to aggregate.
+     */
+    where?: VolumeLoanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VolumeLoans to fetch.
+     */
+    orderBy?: VolumeLoanOrderByWithRelationInput | VolumeLoanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VolumeLoanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VolumeLoans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VolumeLoans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VolumeLoans
+    **/
+    _count?: true | VolumeLoanCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VolumeLoanAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VolumeLoanSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VolumeLoanMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VolumeLoanMaxAggregateInputType
+  }
+
+  export type GetVolumeLoanAggregateType<T extends VolumeLoanAggregateArgs> = {
+        [P in keyof T & keyof AggregateVolumeLoan]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVolumeLoan[P]>
+      : GetScalarType<T[P], AggregateVolumeLoan[P]>
+  }
+
+
+
+
+  export type VolumeLoanGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VolumeLoanWhereInput
+    orderBy?: VolumeLoanOrderByWithAggregationInput | VolumeLoanOrderByWithAggregationInput[]
+    by: VolumeLoanScalarFieldEnum[] | VolumeLoanScalarFieldEnum
+    having?: VolumeLoanScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VolumeLoanCountAggregateInputType | true
+    _avg?: VolumeLoanAvgAggregateInputType
+    _sum?: VolumeLoanSumAggregateInputType
+    _min?: VolumeLoanMinAggregateInputType
+    _max?: VolumeLoanMaxAggregateInputType
+  }
+
+  export type VolumeLoanGroupByOutputType = {
+    id: bigint
+    created_at: Date
+    created_by_user_id: bigint
+    updated_at: Date | null
+    updated_by_user_id: bigint | null
+    status: $Enums.StatusEnum
+    volume_id: bigint
+    user_id: bigint
+    loan_date: Date
+    due_date: Date
+    return_date: Date | null
+    description: string | null
+    _count: VolumeLoanCountAggregateOutputType | null
+    _avg: VolumeLoanAvgAggregateOutputType | null
+    _sum: VolumeLoanSumAggregateOutputType | null
+    _min: VolumeLoanMinAggregateOutputType | null
+    _max: VolumeLoanMaxAggregateOutputType | null
+  }
+
+  type GetVolumeLoanGroupByPayload<T extends VolumeLoanGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VolumeLoanGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VolumeLoanGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VolumeLoanGroupByOutputType[P]>
+            : GetScalarType<T[P], VolumeLoanGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VolumeLoanSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    updated_at?: boolean
+    updated_by_user_id?: boolean
+    status?: boolean
+    volume_id?: boolean
+    user_id?: boolean
+    loan_date?: boolean
+    due_date?: boolean
+    return_date?: boolean
+    description?: boolean
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    volume?: boolean | VolumeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["volumeLoan"]>
+
+  export type VolumeLoanSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    updated_at?: boolean
+    updated_by_user_id?: boolean
+    status?: boolean
+    volume_id?: boolean
+    user_id?: boolean
+    loan_date?: boolean
+    due_date?: boolean
+    return_date?: boolean
+    description?: boolean
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    volume?: boolean | VolumeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["volumeLoan"]>
+
+  export type VolumeLoanSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    updated_at?: boolean
+    updated_by_user_id?: boolean
+    status?: boolean
+    volume_id?: boolean
+    user_id?: boolean
+    loan_date?: boolean
+    due_date?: boolean
+    return_date?: boolean
+    description?: boolean
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    volume?: boolean | VolumeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["volumeLoan"]>
+
+  export type VolumeLoanSelectScalar = {
+    id?: boolean
+    created_at?: boolean
+    created_by_user_id?: boolean
+    updated_at?: boolean
+    updated_by_user_id?: boolean
+    status?: boolean
+    volume_id?: boolean
+    user_id?: boolean
+    loan_date?: boolean
+    due_date?: boolean
+    return_date?: boolean
+    description?: boolean
+  }
+
+  export type VolumeLoanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "status" | "volume_id" | "user_id" | "loan_date" | "due_date" | "return_date" | "description", ExtArgs["result"]["volumeLoan"]>
+  export type VolumeLoanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    volume?: boolean | VolumeDefaultArgs<ExtArgs>
+  }
+  export type VolumeLoanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    volume?: boolean | VolumeDefaultArgs<ExtArgs>
+  }
+  export type VolumeLoanIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    created_by_user?: boolean | UserDefaultArgs<ExtArgs>
+    updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    volume?: boolean | VolumeDefaultArgs<ExtArgs>
+  }
+
+  export type $VolumeLoanPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VolumeLoan"
+    objects: {
+      created_by_user: Prisma.$UserPayload<ExtArgs>
+      updated_by_user: Prisma.$UserPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
+      volume: Prisma.$VolumePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      created_at: Date
+      created_by_user_id: bigint
+      updated_at: Date | null
+      updated_by_user_id: bigint | null
+      status: $Enums.StatusEnum
+      volume_id: bigint
+      user_id: bigint
+      loan_date: Date
+      due_date: Date
+      return_date: Date | null
+      description: string | null
+    }, ExtArgs["result"]["volumeLoan"]>
+    composites: {}
+  }
+
+  type VolumeLoanGetPayload<S extends boolean | null | undefined | VolumeLoanDefaultArgs> = $Result.GetResult<Prisma.$VolumeLoanPayload, S>
+
+  type VolumeLoanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VolumeLoanFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VolumeLoanCountAggregateInputType | true
+    }
+
+  export interface VolumeLoanDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VolumeLoan'], meta: { name: 'VolumeLoan' } }
+    /**
+     * Find zero or one VolumeLoan that matches the filter.
+     * @param {VolumeLoanFindUniqueArgs} args - Arguments to find a VolumeLoan
+     * @example
+     * // Get one VolumeLoan
+     * const volumeLoan = await prisma.volumeLoan.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VolumeLoanFindUniqueArgs>(args: SelectSubset<T, VolumeLoanFindUniqueArgs<ExtArgs>>): Prisma__VolumeLoanClient<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VolumeLoan that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VolumeLoanFindUniqueOrThrowArgs} args - Arguments to find a VolumeLoan
+     * @example
+     * // Get one VolumeLoan
+     * const volumeLoan = await prisma.volumeLoan.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VolumeLoanFindUniqueOrThrowArgs>(args: SelectSubset<T, VolumeLoanFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VolumeLoanClient<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VolumeLoan that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolumeLoanFindFirstArgs} args - Arguments to find a VolumeLoan
+     * @example
+     * // Get one VolumeLoan
+     * const volumeLoan = await prisma.volumeLoan.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VolumeLoanFindFirstArgs>(args?: SelectSubset<T, VolumeLoanFindFirstArgs<ExtArgs>>): Prisma__VolumeLoanClient<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VolumeLoan that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolumeLoanFindFirstOrThrowArgs} args - Arguments to find a VolumeLoan
+     * @example
+     * // Get one VolumeLoan
+     * const volumeLoan = await prisma.volumeLoan.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VolumeLoanFindFirstOrThrowArgs>(args?: SelectSubset<T, VolumeLoanFindFirstOrThrowArgs<ExtArgs>>): Prisma__VolumeLoanClient<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VolumeLoans that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolumeLoanFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VolumeLoans
+     * const volumeLoans = await prisma.volumeLoan.findMany()
+     * 
+     * // Get first 10 VolumeLoans
+     * const volumeLoans = await prisma.volumeLoan.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const volumeLoanWithIdOnly = await prisma.volumeLoan.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VolumeLoanFindManyArgs>(args?: SelectSubset<T, VolumeLoanFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VolumeLoan.
+     * @param {VolumeLoanCreateArgs} args - Arguments to create a VolumeLoan.
+     * @example
+     * // Create one VolumeLoan
+     * const VolumeLoan = await prisma.volumeLoan.create({
+     *   data: {
+     *     // ... data to create a VolumeLoan
+     *   }
+     * })
+     * 
+     */
+    create<T extends VolumeLoanCreateArgs>(args: SelectSubset<T, VolumeLoanCreateArgs<ExtArgs>>): Prisma__VolumeLoanClient<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VolumeLoans.
+     * @param {VolumeLoanCreateManyArgs} args - Arguments to create many VolumeLoans.
+     * @example
+     * // Create many VolumeLoans
+     * const volumeLoan = await prisma.volumeLoan.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VolumeLoanCreateManyArgs>(args?: SelectSubset<T, VolumeLoanCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VolumeLoans and returns the data saved in the database.
+     * @param {VolumeLoanCreateManyAndReturnArgs} args - Arguments to create many VolumeLoans.
+     * @example
+     * // Create many VolumeLoans
+     * const volumeLoan = await prisma.volumeLoan.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VolumeLoans and only return the `id`
+     * const volumeLoanWithIdOnly = await prisma.volumeLoan.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VolumeLoanCreateManyAndReturnArgs>(args?: SelectSubset<T, VolumeLoanCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a VolumeLoan.
+     * @param {VolumeLoanDeleteArgs} args - Arguments to delete one VolumeLoan.
+     * @example
+     * // Delete one VolumeLoan
+     * const VolumeLoan = await prisma.volumeLoan.delete({
+     *   where: {
+     *     // ... filter to delete one VolumeLoan
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VolumeLoanDeleteArgs>(args: SelectSubset<T, VolumeLoanDeleteArgs<ExtArgs>>): Prisma__VolumeLoanClient<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VolumeLoan.
+     * @param {VolumeLoanUpdateArgs} args - Arguments to update one VolumeLoan.
+     * @example
+     * // Update one VolumeLoan
+     * const volumeLoan = await prisma.volumeLoan.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VolumeLoanUpdateArgs>(args: SelectSubset<T, VolumeLoanUpdateArgs<ExtArgs>>): Prisma__VolumeLoanClient<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VolumeLoans.
+     * @param {VolumeLoanDeleteManyArgs} args - Arguments to filter VolumeLoans to delete.
+     * @example
+     * // Delete a few VolumeLoans
+     * const { count } = await prisma.volumeLoan.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VolumeLoanDeleteManyArgs>(args?: SelectSubset<T, VolumeLoanDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VolumeLoans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolumeLoanUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VolumeLoans
+     * const volumeLoan = await prisma.volumeLoan.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VolumeLoanUpdateManyArgs>(args: SelectSubset<T, VolumeLoanUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VolumeLoans and returns the data updated in the database.
+     * @param {VolumeLoanUpdateManyAndReturnArgs} args - Arguments to update many VolumeLoans.
+     * @example
+     * // Update many VolumeLoans
+     * const volumeLoan = await prisma.volumeLoan.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more VolumeLoans and only return the `id`
+     * const volumeLoanWithIdOnly = await prisma.volumeLoan.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VolumeLoanUpdateManyAndReturnArgs>(args: SelectSubset<T, VolumeLoanUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one VolumeLoan.
+     * @param {VolumeLoanUpsertArgs} args - Arguments to update or create a VolumeLoan.
+     * @example
+     * // Update or create a VolumeLoan
+     * const volumeLoan = await prisma.volumeLoan.upsert({
+     *   create: {
+     *     // ... data to create a VolumeLoan
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VolumeLoan we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VolumeLoanUpsertArgs>(args: SelectSubset<T, VolumeLoanUpsertArgs<ExtArgs>>): Prisma__VolumeLoanClient<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VolumeLoans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolumeLoanCountArgs} args - Arguments to filter VolumeLoans to count.
+     * @example
+     * // Count the number of VolumeLoans
+     * const count = await prisma.volumeLoan.count({
+     *   where: {
+     *     // ... the filter for the VolumeLoans we want to count
+     *   }
+     * })
+    **/
+    count<T extends VolumeLoanCountArgs>(
+      args?: Subset<T, VolumeLoanCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VolumeLoanCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VolumeLoan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolumeLoanAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VolumeLoanAggregateArgs>(args: Subset<T, VolumeLoanAggregateArgs>): Prisma.PrismaPromise<GetVolumeLoanAggregateType<T>>
+
+    /**
+     * Group by VolumeLoan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VolumeLoanGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VolumeLoanGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VolumeLoanGroupByArgs['orderBy'] }
+        : { orderBy?: VolumeLoanGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VolumeLoanGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVolumeLoanGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VolumeLoan model
+   */
+  readonly fields: VolumeLoanFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VolumeLoan.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VolumeLoanClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    created_by_user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    updated_by_user<T extends VolumeLoan$updated_by_userArgs<ExtArgs> = {}>(args?: Subset<T, VolumeLoan$updated_by_userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    volume<T extends VolumeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VolumeDefaultArgs<ExtArgs>>): Prisma__VolumeClient<$Result.GetResult<Prisma.$VolumePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VolumeLoan model
+   */
+  interface VolumeLoanFieldRefs {
+    readonly id: FieldRef<"VolumeLoan", 'BigInt'>
+    readonly created_at: FieldRef<"VolumeLoan", 'DateTime'>
+    readonly created_by_user_id: FieldRef<"VolumeLoan", 'BigInt'>
+    readonly updated_at: FieldRef<"VolumeLoan", 'DateTime'>
+    readonly updated_by_user_id: FieldRef<"VolumeLoan", 'BigInt'>
+    readonly status: FieldRef<"VolumeLoan", 'StatusEnum'>
+    readonly volume_id: FieldRef<"VolumeLoan", 'BigInt'>
+    readonly user_id: FieldRef<"VolumeLoan", 'BigInt'>
+    readonly loan_date: FieldRef<"VolumeLoan", 'DateTime'>
+    readonly due_date: FieldRef<"VolumeLoan", 'DateTime'>
+    readonly return_date: FieldRef<"VolumeLoan", 'DateTime'>
+    readonly description: FieldRef<"VolumeLoan", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VolumeLoan findUnique
+   */
+  export type VolumeLoanFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    /**
+     * Filter, which VolumeLoan to fetch.
+     */
+    where: VolumeLoanWhereUniqueInput
+  }
+
+  /**
+   * VolumeLoan findUniqueOrThrow
+   */
+  export type VolumeLoanFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    /**
+     * Filter, which VolumeLoan to fetch.
+     */
+    where: VolumeLoanWhereUniqueInput
+  }
+
+  /**
+   * VolumeLoan findFirst
+   */
+  export type VolumeLoanFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    /**
+     * Filter, which VolumeLoan to fetch.
+     */
+    where?: VolumeLoanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VolumeLoans to fetch.
+     */
+    orderBy?: VolumeLoanOrderByWithRelationInput | VolumeLoanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VolumeLoans.
+     */
+    cursor?: VolumeLoanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VolumeLoans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VolumeLoans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VolumeLoans.
+     */
+    distinct?: VolumeLoanScalarFieldEnum | VolumeLoanScalarFieldEnum[]
+  }
+
+  /**
+   * VolumeLoan findFirstOrThrow
+   */
+  export type VolumeLoanFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    /**
+     * Filter, which VolumeLoan to fetch.
+     */
+    where?: VolumeLoanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VolumeLoans to fetch.
+     */
+    orderBy?: VolumeLoanOrderByWithRelationInput | VolumeLoanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VolumeLoans.
+     */
+    cursor?: VolumeLoanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VolumeLoans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VolumeLoans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VolumeLoans.
+     */
+    distinct?: VolumeLoanScalarFieldEnum | VolumeLoanScalarFieldEnum[]
+  }
+
+  /**
+   * VolumeLoan findMany
+   */
+  export type VolumeLoanFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    /**
+     * Filter, which VolumeLoans to fetch.
+     */
+    where?: VolumeLoanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VolumeLoans to fetch.
+     */
+    orderBy?: VolumeLoanOrderByWithRelationInput | VolumeLoanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VolumeLoans.
+     */
+    cursor?: VolumeLoanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VolumeLoans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VolumeLoans.
+     */
+    skip?: number
+    distinct?: VolumeLoanScalarFieldEnum | VolumeLoanScalarFieldEnum[]
+  }
+
+  /**
+   * VolumeLoan create
+   */
+  export type VolumeLoanCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VolumeLoan.
+     */
+    data: XOR<VolumeLoanCreateInput, VolumeLoanUncheckedCreateInput>
+  }
+
+  /**
+   * VolumeLoan createMany
+   */
+  export type VolumeLoanCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VolumeLoans.
+     */
+    data: VolumeLoanCreateManyInput | VolumeLoanCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VolumeLoan createManyAndReturn
+   */
+  export type VolumeLoanCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * The data used to create many VolumeLoans.
+     */
+    data: VolumeLoanCreateManyInput | VolumeLoanCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VolumeLoan update
+   */
+  export type VolumeLoanUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VolumeLoan.
+     */
+    data: XOR<VolumeLoanUpdateInput, VolumeLoanUncheckedUpdateInput>
+    /**
+     * Choose, which VolumeLoan to update.
+     */
+    where: VolumeLoanWhereUniqueInput
+  }
+
+  /**
+   * VolumeLoan updateMany
+   */
+  export type VolumeLoanUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VolumeLoans.
+     */
+    data: XOR<VolumeLoanUpdateManyMutationInput, VolumeLoanUncheckedUpdateManyInput>
+    /**
+     * Filter which VolumeLoans to update
+     */
+    where?: VolumeLoanWhereInput
+    /**
+     * Limit how many VolumeLoans to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VolumeLoan updateManyAndReturn
+   */
+  export type VolumeLoanUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * The data used to update VolumeLoans.
+     */
+    data: XOR<VolumeLoanUpdateManyMutationInput, VolumeLoanUncheckedUpdateManyInput>
+    /**
+     * Filter which VolumeLoans to update
+     */
+    where?: VolumeLoanWhereInput
+    /**
+     * Limit how many VolumeLoans to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VolumeLoan upsert
+   */
+  export type VolumeLoanUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VolumeLoan to update in case it exists.
+     */
+    where: VolumeLoanWhereUniqueInput
+    /**
+     * In case the VolumeLoan found by the `where` argument doesn't exist, create a new VolumeLoan with this data.
+     */
+    create: XOR<VolumeLoanCreateInput, VolumeLoanUncheckedCreateInput>
+    /**
+     * In case the VolumeLoan was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VolumeLoanUpdateInput, VolumeLoanUncheckedUpdateInput>
+  }
+
+  /**
+   * VolumeLoan delete
+   */
+  export type VolumeLoanDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    /**
+     * Filter which VolumeLoan to delete.
+     */
+    where: VolumeLoanWhereUniqueInput
+  }
+
+  /**
+   * VolumeLoan deleteMany
+   */
+  export type VolumeLoanDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VolumeLoans to delete
+     */
+    where?: VolumeLoanWhereInput
+    /**
+     * Limit how many VolumeLoans to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VolumeLoan.updated_by_user
+   */
+  export type VolumeLoan$updated_by_userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * VolumeLoan without action
+   */
+  export type VolumeLoanDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -16596,6 +18091,7 @@ export namespace Prisma {
     status: 'status',
     password: 'password',
     email: 'email',
+    phone: 'phone',
     role: 'role'
   };
 
@@ -16798,6 +18294,24 @@ export namespace Prisma {
   export type VolumeAccessScalarFieldEnum = (typeof VolumeAccessScalarFieldEnum)[keyof typeof VolumeAccessScalarFieldEnum]
 
 
+  export const VolumeLoanScalarFieldEnum: {
+    id: 'id',
+    created_at: 'created_at',
+    created_by_user_id: 'created_by_user_id',
+    updated_at: 'updated_at',
+    updated_by_user_id: 'updated_by_user_id',
+    status: 'status',
+    volume_id: 'volume_id',
+    user_id: 'user_id',
+    loan_date: 'loan_date',
+    due_date: 'due_date',
+    return_date: 'return_date',
+    description: 'description'
+  };
+
+  export type VolumeLoanScalarFieldEnum = (typeof VolumeLoanScalarFieldEnum)[keyof typeof VolumeLoanScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -16961,8 +18475,9 @@ export namespace Prisma {
     sex?: EnumSexEnumNullableFilter<"User"> | $Enums.SexEnum | null
     login?: StringFilter<"User"> | string
     status?: EnumStatusEnumFilter<"User"> | $Enums.StatusEnum
-    password?: StringFilter<"User"> | string
-    email?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
+    email?: StringNullableFilter<"User"> | string | null
+    phone?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     auth_tokens?: UserAuthTokenListRelationFilter
     created_authors?: AuthorListRelationFilter
@@ -16979,9 +18494,12 @@ export namespace Prisma {
     updated_publishers?: PublisherListRelationFilter
     created_book_tags?: BookTagListRelationFilter
     updated_book_tags?: BookTagListRelationFilter
+    created_volume_loans?: VolumeLoanListRelationFilter
+    updated_volume_loans?: VolumeLoanListRelationFilter
     created_categories?: CategoryListRelationFilter
     updated_categories?: CategoryListRelationFilter
     volume_accesses?: VolumeAccessListRelationFilter
+    volume_loans?: VolumeLoanListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -16993,8 +18511,9 @@ export namespace Prisma {
     sex?: SortOrderInput | SortOrder
     login?: SortOrder
     status?: SortOrder
-    password?: SortOrder
-    email?: SortOrder
+    password?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
     role?: SortOrder
     auth_tokens?: UserAuthTokenOrderByRelationAggregateInput
     created_authors?: AuthorOrderByRelationAggregateInput
@@ -17011,16 +18530,18 @@ export namespace Prisma {
     updated_publishers?: PublisherOrderByRelationAggregateInput
     created_book_tags?: BookTagOrderByRelationAggregateInput
     updated_book_tags?: BookTagOrderByRelationAggregateInput
+    created_volume_loans?: VolumeLoanOrderByRelationAggregateInput
+    updated_volume_loans?: VolumeLoanOrderByRelationAggregateInput
     created_categories?: CategoryOrderByRelationAggregateInput
     updated_categories?: CategoryOrderByRelationAggregateInput
     volume_accesses?: VolumeAccessOrderByRelationAggregateInput
+    volume_loans?: VolumeLoanOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
     slug?: string
     login?: string
-    email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -17029,7 +18550,9 @@ export namespace Prisma {
     display_name?: StringFilter<"User"> | string
     sex?: EnumSexEnumNullableFilter<"User"> | $Enums.SexEnum | null
     status?: EnumStatusEnumFilter<"User"> | $Enums.StatusEnum
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
+    email?: StringNullableFilter<"User"> | string | null
+    phone?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     auth_tokens?: UserAuthTokenListRelationFilter
     created_authors?: AuthorListRelationFilter
@@ -17046,10 +18569,13 @@ export namespace Prisma {
     updated_publishers?: PublisherListRelationFilter
     created_book_tags?: BookTagListRelationFilter
     updated_book_tags?: BookTagListRelationFilter
+    created_volume_loans?: VolumeLoanListRelationFilter
+    updated_volume_loans?: VolumeLoanListRelationFilter
     created_categories?: CategoryListRelationFilter
     updated_categories?: CategoryListRelationFilter
     volume_accesses?: VolumeAccessListRelationFilter
-  }, "id" | "id" | "slug" | "login" | "email">
+    volume_loans?: VolumeLoanListRelationFilter
+  }, "id" | "id" | "slug" | "login">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -17060,8 +18586,9 @@ export namespace Prisma {
     sex?: SortOrderInput | SortOrder
     login?: SortOrder
     status?: SortOrder
-    password?: SortOrder
-    email?: SortOrder
+    password?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
     role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -17082,8 +18609,9 @@ export namespace Prisma {
     sex?: EnumSexEnumNullableWithAggregatesFilter<"User"> | $Enums.SexEnum | null
     login?: StringWithAggregatesFilter<"User"> | string
     status?: EnumStatusEnumWithAggregatesFilter<"User"> | $Enums.StatusEnum
-    password?: StringWithAggregatesFilter<"User"> | string
-    email?: StringWithAggregatesFilter<"User"> | string
+    password?: StringNullableWithAggregatesFilter<"User"> | string | null
+    email?: StringNullableWithAggregatesFilter<"User"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   }
 
@@ -17906,6 +19434,7 @@ export namespace Prisma {
     publisher?: XOR<PublisherNullableScalarRelationFilter, PublisherWhereInput> | null
     authors?: VolumeAuthorListRelationFilter
     accesses?: VolumeAccessListRelationFilter
+    loans?: VolumeLoanListRelationFilter
   }
 
   export type VolumeOrderByWithRelationInput = {
@@ -17942,6 +19471,7 @@ export namespace Prisma {
     publisher?: PublisherOrderByWithRelationInput
     authors?: VolumeAuthorOrderByRelationAggregateInput
     accesses?: VolumeAccessOrderByRelationAggregateInput
+    loans?: VolumeLoanOrderByRelationAggregateInput
   }
 
   export type VolumeWhereUniqueInput = Prisma.AtLeast<{
@@ -17981,6 +19511,7 @@ export namespace Prisma {
     publisher?: XOR<PublisherNullableScalarRelationFilter, PublisherWhereInput> | null
     authors?: VolumeAuthorListRelationFilter
     accesses?: VolumeAccessListRelationFilter
+    loans?: VolumeLoanListRelationFilter
   }, "id" | "id" | "slug">
 
   export type VolumeOrderByWithAggregationInput = {
@@ -18153,6 +19684,107 @@ export namespace Prisma {
     status?: EnumStatusEnumWithAggregatesFilter<"VolumeAccess"> | $Enums.StatusEnum
   }
 
+  export type VolumeLoanWhereInput = {
+    AND?: VolumeLoanWhereInput | VolumeLoanWhereInput[]
+    OR?: VolumeLoanWhereInput[]
+    NOT?: VolumeLoanWhereInput | VolumeLoanWhereInput[]
+    id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    created_at?: DateTimeFilter<"VolumeLoan"> | Date | string
+    created_by_user_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    updated_at?: DateTimeNullableFilter<"VolumeLoan"> | Date | string | null
+    updated_by_user_id?: BigIntNullableFilter<"VolumeLoan"> | bigint | number | null
+    status?: EnumStatusEnumFilter<"VolumeLoan"> | $Enums.StatusEnum
+    volume_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    user_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    loan_date?: DateTimeFilter<"VolumeLoan"> | Date | string
+    due_date?: DateTimeFilter<"VolumeLoan"> | Date | string
+    return_date?: DateTimeNullableFilter<"VolumeLoan"> | Date | string | null
+    description?: StringNullableFilter<"VolumeLoan"> | string | null
+    created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    volume?: XOR<VolumeScalarRelationFilter, VolumeWhereInput>
+  }
+
+  export type VolumeLoanOrderByWithRelationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrderInput | SortOrder
+    updated_by_user_id?: SortOrderInput | SortOrder
+    status?: SortOrder
+    volume_id?: SortOrder
+    user_id?: SortOrder
+    loan_date?: SortOrder
+    due_date?: SortOrder
+    return_date?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    created_by_user?: UserOrderByWithRelationInput
+    updated_by_user?: UserOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+    volume?: VolumeOrderByWithRelationInput
+  }
+
+  export type VolumeLoanWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    AND?: VolumeLoanWhereInput | VolumeLoanWhereInput[]
+    OR?: VolumeLoanWhereInput[]
+    NOT?: VolumeLoanWhereInput | VolumeLoanWhereInput[]
+    created_at?: DateTimeFilter<"VolumeLoan"> | Date | string
+    created_by_user_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    updated_at?: DateTimeNullableFilter<"VolumeLoan"> | Date | string | null
+    updated_by_user_id?: BigIntNullableFilter<"VolumeLoan"> | bigint | number | null
+    status?: EnumStatusEnumFilter<"VolumeLoan"> | $Enums.StatusEnum
+    volume_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    user_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    loan_date?: DateTimeFilter<"VolumeLoan"> | Date | string
+    due_date?: DateTimeFilter<"VolumeLoan"> | Date | string
+    return_date?: DateTimeNullableFilter<"VolumeLoan"> | Date | string | null
+    description?: StringNullableFilter<"VolumeLoan"> | string | null
+    created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    volume?: XOR<VolumeScalarRelationFilter, VolumeWhereInput>
+  }, "id" | "id">
+
+  export type VolumeLoanOrderByWithAggregationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrderInput | SortOrder
+    updated_by_user_id?: SortOrderInput | SortOrder
+    status?: SortOrder
+    volume_id?: SortOrder
+    user_id?: SortOrder
+    loan_date?: SortOrder
+    due_date?: SortOrder
+    return_date?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    _count?: VolumeLoanCountOrderByAggregateInput
+    _avg?: VolumeLoanAvgOrderByAggregateInput
+    _max?: VolumeLoanMaxOrderByAggregateInput
+    _min?: VolumeLoanMinOrderByAggregateInput
+    _sum?: VolumeLoanSumOrderByAggregateInput
+  }
+
+  export type VolumeLoanScalarWhereWithAggregatesInput = {
+    AND?: VolumeLoanScalarWhereWithAggregatesInput | VolumeLoanScalarWhereWithAggregatesInput[]
+    OR?: VolumeLoanScalarWhereWithAggregatesInput[]
+    NOT?: VolumeLoanScalarWhereWithAggregatesInput | VolumeLoanScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"VolumeLoan"> | bigint | number
+    created_at?: DateTimeWithAggregatesFilter<"VolumeLoan"> | Date | string
+    created_by_user_id?: BigIntWithAggregatesFilter<"VolumeLoan"> | bigint | number
+    updated_at?: DateTimeNullableWithAggregatesFilter<"VolumeLoan"> | Date | string | null
+    updated_by_user_id?: BigIntNullableWithAggregatesFilter<"VolumeLoan"> | bigint | number | null
+    status?: EnumStatusEnumWithAggregatesFilter<"VolumeLoan"> | $Enums.StatusEnum
+    volume_id?: BigIntWithAggregatesFilter<"VolumeLoan"> | bigint | number
+    user_id?: BigIntWithAggregatesFilter<"VolumeLoan"> | bigint | number
+    loan_date?: DateTimeWithAggregatesFilter<"VolumeLoan"> | Date | string
+    due_date?: DateTimeWithAggregatesFilter<"VolumeLoan"> | Date | string
+    return_date?: DateTimeNullableWithAggregatesFilter<"VolumeLoan"> | Date | string | null
+    description?: StringNullableWithAggregatesFilter<"VolumeLoan"> | string | null
+  }
+
   export type UserCreateInput = {
     id?: bigint | number
     slug?: string
@@ -18162,9 +19794,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -18180,9 +19813,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -18194,9 +19830,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -18212,9 +19849,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -18226,8 +19866,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -18244,9 +19885,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -18258,8 +19902,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -18276,9 +19921,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -18290,9 +19938,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
   }
 
   export type UserUpdateManyMutationInput = {
@@ -18304,8 +19953,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
@@ -18318,8 +19968,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
@@ -19187,6 +20838,7 @@ export namespace Prisma {
     publisher?: PublisherCreateNestedOneWithoutVolumesInput
     authors?: VolumeAuthorCreateNestedManyWithoutVolumeInput
     accesses?: VolumeAccessCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeUncheckedCreateInput = {
@@ -19220,6 +20872,7 @@ export namespace Prisma {
     all_time_access_count_updated_at?: Date | string | null
     authors?: VolumeAuthorUncheckedCreateNestedManyWithoutVolumeInput
     accesses?: VolumeAccessUncheckedCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanUncheckedCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeUpdateInput = {
@@ -19253,6 +20906,7 @@ export namespace Prisma {
     publisher?: PublisherUpdateOneWithoutVolumesNestedInput
     authors?: VolumeAuthorUpdateManyWithoutVolumeNestedInput
     accesses?: VolumeAccessUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeUncheckedUpdateInput = {
@@ -19286,6 +20940,7 @@ export namespace Prisma {
     all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: VolumeAuthorUncheckedUpdateManyWithoutVolumeNestedInput
     accesses?: VolumeAccessUncheckedUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUncheckedUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeCreateManyInput = {
@@ -19488,6 +21143,107 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   }
 
+  export type VolumeLoanCreateInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    status?: $Enums.StatusEnum
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_volume_loansInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
+    user: UserCreateNestedOneWithoutVolume_loansInput
+    volume: VolumeCreateNestedOneWithoutLoansInput
+  }
+
+  export type VolumeLoanUncheckedCreateInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
+  export type VolumeLoanUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
+    user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
+    volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+  }
+
+  export type VolumeLoanUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VolumeLoanCreateManyInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
+  export type VolumeLoanUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VolumeLoanUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type BigIntFilter<$PrismaModel = never> = {
     equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
@@ -19537,6 +21293,21 @@ export namespace Prisma {
     in?: $Enums.StatusEnum[] | ListEnumStatusEnumFieldRefInput<$PrismaModel>
     notIn?: $Enums.StatusEnum[] | ListEnumStatusEnumFieldRefInput<$PrismaModel>
     not?: NestedEnumStatusEnumFilter<$PrismaModel> | $Enums.StatusEnum
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type EnumUserRoleFilter<$PrismaModel = never> = {
@@ -19594,6 +21365,12 @@ export namespace Prisma {
     none?: BookTagWhereInput
   }
 
+  export type VolumeLoanListRelationFilter = {
+    every?: VolumeLoanWhereInput
+    some?: VolumeLoanWhereInput
+    none?: VolumeLoanWhereInput
+  }
+
   export type CategoryListRelationFilter = {
     every?: CategoryWhereInput
     some?: CategoryWhereInput
@@ -19643,6 +21420,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type VolumeLoanOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type CategoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -19662,6 +21443,7 @@ export namespace Prisma {
     status?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    phone?: SortOrder
     role?: SortOrder
   }
 
@@ -19680,6 +21462,7 @@ export namespace Prisma {
     status?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    phone?: SortOrder
     role?: SortOrder
   }
 
@@ -19694,6 +21477,7 @@ export namespace Prisma {
     status?: SortOrder
     password?: SortOrder
     email?: SortOrder
+    phone?: SortOrder
     role?: SortOrder
   }
 
@@ -19769,6 +21553,24 @@ export namespace Prisma {
     _max?: NestedEnumStatusEnumFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -19788,21 +21590,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -19882,24 +21669,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -20597,6 +22366,67 @@ export namespace Prisma {
     volume_id?: SortOrder
   }
 
+  export type VolumeLoanCountOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrder
+    updated_by_user_id?: SortOrder
+    status?: SortOrder
+    volume_id?: SortOrder
+    user_id?: SortOrder
+    loan_date?: SortOrder
+    due_date?: SortOrder
+    return_date?: SortOrder
+    description?: SortOrder
+  }
+
+  export type VolumeLoanAvgOrderByAggregateInput = {
+    id?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_by_user_id?: SortOrder
+    volume_id?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type VolumeLoanMaxOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrder
+    updated_by_user_id?: SortOrder
+    status?: SortOrder
+    volume_id?: SortOrder
+    user_id?: SortOrder
+    loan_date?: SortOrder
+    due_date?: SortOrder
+    return_date?: SortOrder
+    description?: SortOrder
+  }
+
+  export type VolumeLoanMinOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_at?: SortOrder
+    updated_by_user_id?: SortOrder
+    status?: SortOrder
+    volume_id?: SortOrder
+    user_id?: SortOrder
+    loan_date?: SortOrder
+    due_date?: SortOrder
+    return_date?: SortOrder
+    description?: SortOrder
+  }
+
+  export type VolumeLoanSumOrderByAggregateInput = {
+    id?: SortOrder
+    created_by_user_id?: SortOrder
+    updated_by_user_id?: SortOrder
+    volume_id?: SortOrder
+    user_id?: SortOrder
+  }
+
   export type UserAuthTokenCreateNestedManyWithoutUserInput = {
     create?: XOR<UserAuthTokenCreateWithoutUserInput, UserAuthTokenUncheckedCreateWithoutUserInput> | UserAuthTokenCreateWithoutUserInput[] | UserAuthTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserAuthTokenCreateOrConnectWithoutUserInput | UserAuthTokenCreateOrConnectWithoutUserInput[]
@@ -20702,6 +22532,20 @@ export namespace Prisma {
     connect?: BookTagWhereUniqueInput | BookTagWhereUniqueInput[]
   }
 
+  export type VolumeLoanCreateNestedManyWithoutCreated_by_userInput = {
+    create?: XOR<VolumeLoanCreateWithoutCreated_by_userInput, VolumeLoanUncheckedCreateWithoutCreated_by_userInput> | VolumeLoanCreateWithoutCreated_by_userInput[] | VolumeLoanUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutCreated_by_userInput | VolumeLoanCreateOrConnectWithoutCreated_by_userInput[]
+    createMany?: VolumeLoanCreateManyCreated_by_userInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+  }
+
+  export type VolumeLoanCreateNestedManyWithoutUpdated_by_userInput = {
+    create?: XOR<VolumeLoanCreateWithoutUpdated_by_userInput, VolumeLoanUncheckedCreateWithoutUpdated_by_userInput> | VolumeLoanCreateWithoutUpdated_by_userInput[] | VolumeLoanUncheckedCreateWithoutUpdated_by_userInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutUpdated_by_userInput | VolumeLoanCreateOrConnectWithoutUpdated_by_userInput[]
+    createMany?: VolumeLoanCreateManyUpdated_by_userInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+  }
+
   export type CategoryCreateNestedManyWithoutCreated_by_userInput = {
     create?: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput> | CategoryCreateWithoutCreated_by_userInput[] | CategoryUncheckedCreateWithoutCreated_by_userInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutCreated_by_userInput | CategoryCreateOrConnectWithoutCreated_by_userInput[]
@@ -20721,6 +22565,13 @@ export namespace Prisma {
     connectOrCreate?: VolumeAccessCreateOrConnectWithoutCreated_by_userInput | VolumeAccessCreateOrConnectWithoutCreated_by_userInput[]
     createMany?: VolumeAccessCreateManyCreated_by_userInputEnvelope
     connect?: VolumeAccessWhereUniqueInput | VolumeAccessWhereUniqueInput[]
+  }
+
+  export type VolumeLoanCreateNestedManyWithoutUserInput = {
+    create?: XOR<VolumeLoanCreateWithoutUserInput, VolumeLoanUncheckedCreateWithoutUserInput> | VolumeLoanCreateWithoutUserInput[] | VolumeLoanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutUserInput | VolumeLoanCreateOrConnectWithoutUserInput[]
+    createMany?: VolumeLoanCreateManyUserInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
   }
 
   export type UserAuthTokenUncheckedCreateNestedManyWithoutUserInput = {
@@ -20828,6 +22679,20 @@ export namespace Prisma {
     connect?: BookTagWhereUniqueInput | BookTagWhereUniqueInput[]
   }
 
+  export type VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput = {
+    create?: XOR<VolumeLoanCreateWithoutCreated_by_userInput, VolumeLoanUncheckedCreateWithoutCreated_by_userInput> | VolumeLoanCreateWithoutCreated_by_userInput[] | VolumeLoanUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutCreated_by_userInput | VolumeLoanCreateOrConnectWithoutCreated_by_userInput[]
+    createMany?: VolumeLoanCreateManyCreated_by_userInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+  }
+
+  export type VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput = {
+    create?: XOR<VolumeLoanCreateWithoutUpdated_by_userInput, VolumeLoanUncheckedCreateWithoutUpdated_by_userInput> | VolumeLoanCreateWithoutUpdated_by_userInput[] | VolumeLoanUncheckedCreateWithoutUpdated_by_userInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutUpdated_by_userInput | VolumeLoanCreateOrConnectWithoutUpdated_by_userInput[]
+    createMany?: VolumeLoanCreateManyUpdated_by_userInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+  }
+
   export type CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput = {
     create?: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput> | CategoryCreateWithoutCreated_by_userInput[] | CategoryUncheckedCreateWithoutCreated_by_userInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutCreated_by_userInput | CategoryCreateOrConnectWithoutCreated_by_userInput[]
@@ -20847,6 +22712,13 @@ export namespace Prisma {
     connectOrCreate?: VolumeAccessCreateOrConnectWithoutCreated_by_userInput | VolumeAccessCreateOrConnectWithoutCreated_by_userInput[]
     createMany?: VolumeAccessCreateManyCreated_by_userInputEnvelope
     connect?: VolumeAccessWhereUniqueInput | VolumeAccessWhereUniqueInput[]
+  }
+
+  export type VolumeLoanUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<VolumeLoanCreateWithoutUserInput, VolumeLoanUncheckedCreateWithoutUserInput> | VolumeLoanCreateWithoutUserInput[] | VolumeLoanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutUserInput | VolumeLoanCreateOrConnectWithoutUserInput[]
+    createMany?: VolumeLoanCreateManyUserInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
   }
 
   export type BigIntFieldUpdateOperationsInput = {
@@ -20871,6 +22743,10 @@ export namespace Prisma {
 
   export type EnumStatusEnumFieldUpdateOperationsInput = {
     set?: $Enums.StatusEnum
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type EnumUserRoleFieldUpdateOperationsInput = {
@@ -21087,6 +22963,34 @@ export namespace Prisma {
     deleteMany?: BookTagScalarWhereInput | BookTagScalarWhereInput[]
   }
 
+  export type VolumeLoanUpdateManyWithoutCreated_by_userNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutCreated_by_userInput, VolumeLoanUncheckedCreateWithoutCreated_by_userInput> | VolumeLoanCreateWithoutCreated_by_userInput[] | VolumeLoanUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutCreated_by_userInput | VolumeLoanCreateOrConnectWithoutCreated_by_userInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutCreated_by_userInput | VolumeLoanUpsertWithWhereUniqueWithoutCreated_by_userInput[]
+    createMany?: VolumeLoanCreateManyCreated_by_userInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutCreated_by_userInput | VolumeLoanUpdateWithWhereUniqueWithoutCreated_by_userInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutCreated_by_userInput | VolumeLoanUpdateManyWithWhereWithoutCreated_by_userInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
+  }
+
+  export type VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutUpdated_by_userInput, VolumeLoanUncheckedCreateWithoutUpdated_by_userInput> | VolumeLoanCreateWithoutUpdated_by_userInput[] | VolumeLoanUncheckedCreateWithoutUpdated_by_userInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutUpdated_by_userInput | VolumeLoanCreateOrConnectWithoutUpdated_by_userInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutUpdated_by_userInput | VolumeLoanUpsertWithWhereUniqueWithoutUpdated_by_userInput[]
+    createMany?: VolumeLoanCreateManyUpdated_by_userInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutUpdated_by_userInput | VolumeLoanUpdateWithWhereUniqueWithoutUpdated_by_userInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutUpdated_by_userInput | VolumeLoanUpdateManyWithWhereWithoutUpdated_by_userInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
+  }
+
   export type CategoryUpdateManyWithoutCreated_by_userNestedInput = {
     create?: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput> | CategoryCreateWithoutCreated_by_userInput[] | CategoryUncheckedCreateWithoutCreated_by_userInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutCreated_by_userInput | CategoryCreateOrConnectWithoutCreated_by_userInput[]
@@ -21127,6 +23031,20 @@ export namespace Prisma {
     update?: VolumeAccessUpdateWithWhereUniqueWithoutCreated_by_userInput | VolumeAccessUpdateWithWhereUniqueWithoutCreated_by_userInput[]
     updateMany?: VolumeAccessUpdateManyWithWhereWithoutCreated_by_userInput | VolumeAccessUpdateManyWithWhereWithoutCreated_by_userInput[]
     deleteMany?: VolumeAccessScalarWhereInput | VolumeAccessScalarWhereInput[]
+  }
+
+  export type VolumeLoanUpdateManyWithoutUserNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutUserInput, VolumeLoanUncheckedCreateWithoutUserInput> | VolumeLoanCreateWithoutUserInput[] | VolumeLoanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutUserInput | VolumeLoanCreateOrConnectWithoutUserInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutUserInput | VolumeLoanUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: VolumeLoanCreateManyUserInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutUserInput | VolumeLoanUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutUserInput | VolumeLoanUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
   }
 
   export type UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput = {
@@ -21339,6 +23257,34 @@ export namespace Prisma {
     deleteMany?: BookTagScalarWhereInput | BookTagScalarWhereInput[]
   }
 
+  export type VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutCreated_by_userInput, VolumeLoanUncheckedCreateWithoutCreated_by_userInput> | VolumeLoanCreateWithoutCreated_by_userInput[] | VolumeLoanUncheckedCreateWithoutCreated_by_userInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutCreated_by_userInput | VolumeLoanCreateOrConnectWithoutCreated_by_userInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutCreated_by_userInput | VolumeLoanUpsertWithWhereUniqueWithoutCreated_by_userInput[]
+    createMany?: VolumeLoanCreateManyCreated_by_userInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutCreated_by_userInput | VolumeLoanUpdateWithWhereUniqueWithoutCreated_by_userInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutCreated_by_userInput | VolumeLoanUpdateManyWithWhereWithoutCreated_by_userInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
+  }
+
+  export type VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutUpdated_by_userInput, VolumeLoanUncheckedCreateWithoutUpdated_by_userInput> | VolumeLoanCreateWithoutUpdated_by_userInput[] | VolumeLoanUncheckedCreateWithoutUpdated_by_userInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutUpdated_by_userInput | VolumeLoanCreateOrConnectWithoutUpdated_by_userInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutUpdated_by_userInput | VolumeLoanUpsertWithWhereUniqueWithoutUpdated_by_userInput[]
+    createMany?: VolumeLoanCreateManyUpdated_by_userInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutUpdated_by_userInput | VolumeLoanUpdateWithWhereUniqueWithoutUpdated_by_userInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutUpdated_by_userInput | VolumeLoanUpdateManyWithWhereWithoutUpdated_by_userInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
+  }
+
   export type CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput = {
     create?: XOR<CategoryCreateWithoutCreated_by_userInput, CategoryUncheckedCreateWithoutCreated_by_userInput> | CategoryCreateWithoutCreated_by_userInput[] | CategoryUncheckedCreateWithoutCreated_by_userInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutCreated_by_userInput | CategoryCreateOrConnectWithoutCreated_by_userInput[]
@@ -21381,6 +23327,20 @@ export namespace Prisma {
     deleteMany?: VolumeAccessScalarWhereInput | VolumeAccessScalarWhereInput[]
   }
 
+  export type VolumeLoanUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutUserInput, VolumeLoanUncheckedCreateWithoutUserInput> | VolumeLoanCreateWithoutUserInput[] | VolumeLoanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutUserInput | VolumeLoanCreateOrConnectWithoutUserInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutUserInput | VolumeLoanUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: VolumeLoanCreateManyUserInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutUserInput | VolumeLoanUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutUserInput | VolumeLoanUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutAuth_tokensInput = {
     create?: XOR<UserCreateWithoutAuth_tokensInput, UserUncheckedCreateWithoutAuth_tokensInput>
     connectOrCreate?: UserCreateOrConnectWithoutAuth_tokensInput
@@ -21389,10 +23349,6 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -21956,6 +23912,13 @@ export namespace Prisma {
     connect?: VolumeAccessWhereUniqueInput | VolumeAccessWhereUniqueInput[]
   }
 
+  export type VolumeLoanCreateNestedManyWithoutVolumeInput = {
+    create?: XOR<VolumeLoanCreateWithoutVolumeInput, VolumeLoanUncheckedCreateWithoutVolumeInput> | VolumeLoanCreateWithoutVolumeInput[] | VolumeLoanUncheckedCreateWithoutVolumeInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutVolumeInput | VolumeLoanCreateOrConnectWithoutVolumeInput[]
+    createMany?: VolumeLoanCreateManyVolumeInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+  }
+
   export type VolumeAuthorUncheckedCreateNestedManyWithoutVolumeInput = {
     create?: XOR<VolumeAuthorCreateWithoutVolumeInput, VolumeAuthorUncheckedCreateWithoutVolumeInput> | VolumeAuthorCreateWithoutVolumeInput[] | VolumeAuthorUncheckedCreateWithoutVolumeInput[]
     connectOrCreate?: VolumeAuthorCreateOrConnectWithoutVolumeInput | VolumeAuthorCreateOrConnectWithoutVolumeInput[]
@@ -21968,6 +23931,13 @@ export namespace Prisma {
     connectOrCreate?: VolumeAccessCreateOrConnectWithoutVolumeInput | VolumeAccessCreateOrConnectWithoutVolumeInput[]
     createMany?: VolumeAccessCreateManyVolumeInputEnvelope
     connect?: VolumeAccessWhereUniqueInput | VolumeAccessWhereUniqueInput[]
+  }
+
+  export type VolumeLoanUncheckedCreateNestedManyWithoutVolumeInput = {
+    create?: XOR<VolumeLoanCreateWithoutVolumeInput, VolumeLoanUncheckedCreateWithoutVolumeInput> | VolumeLoanCreateWithoutVolumeInput[] | VolumeLoanUncheckedCreateWithoutVolumeInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutVolumeInput | VolumeLoanCreateOrConnectWithoutVolumeInput[]
+    createMany?: VolumeLoanCreateManyVolumeInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -22044,6 +24014,20 @@ export namespace Prisma {
     deleteMany?: VolumeAccessScalarWhereInput | VolumeAccessScalarWhereInput[]
   }
 
+  export type VolumeLoanUpdateManyWithoutVolumeNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutVolumeInput, VolumeLoanUncheckedCreateWithoutVolumeInput> | VolumeLoanCreateWithoutVolumeInput[] | VolumeLoanUncheckedCreateWithoutVolumeInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutVolumeInput | VolumeLoanCreateOrConnectWithoutVolumeInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutVolumeInput | VolumeLoanUpsertWithWhereUniqueWithoutVolumeInput[]
+    createMany?: VolumeLoanCreateManyVolumeInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutVolumeInput | VolumeLoanUpdateWithWhereUniqueWithoutVolumeInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutVolumeInput | VolumeLoanUpdateManyWithWhereWithoutVolumeInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
+  }
+
   export type VolumeAuthorUncheckedUpdateManyWithoutVolumeNestedInput = {
     create?: XOR<VolumeAuthorCreateWithoutVolumeInput, VolumeAuthorUncheckedCreateWithoutVolumeInput> | VolumeAuthorCreateWithoutVolumeInput[] | VolumeAuthorUncheckedCreateWithoutVolumeInput[]
     connectOrCreate?: VolumeAuthorCreateOrConnectWithoutVolumeInput | VolumeAuthorCreateOrConnectWithoutVolumeInput[]
@@ -22070,6 +24054,20 @@ export namespace Prisma {
     update?: VolumeAccessUpdateWithWhereUniqueWithoutVolumeInput | VolumeAccessUpdateWithWhereUniqueWithoutVolumeInput[]
     updateMany?: VolumeAccessUpdateManyWithWhereWithoutVolumeInput | VolumeAccessUpdateManyWithWhereWithoutVolumeInput[]
     deleteMany?: VolumeAccessScalarWhereInput | VolumeAccessScalarWhereInput[]
+  }
+
+  export type VolumeLoanUncheckedUpdateManyWithoutVolumeNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutVolumeInput, VolumeLoanUncheckedCreateWithoutVolumeInput> | VolumeLoanCreateWithoutVolumeInput[] | VolumeLoanUncheckedCreateWithoutVolumeInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutVolumeInput | VolumeLoanCreateOrConnectWithoutVolumeInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutVolumeInput | VolumeLoanUpsertWithWhereUniqueWithoutVolumeInput[]
+    createMany?: VolumeLoanCreateManyVolumeInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutVolumeInput | VolumeLoanUpdateWithWhereUniqueWithoutVolumeInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutVolumeInput | VolumeLoanUpdateManyWithWhereWithoutVolumeInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutVolume_accessesInput = {
@@ -22102,6 +24100,64 @@ export namespace Prisma {
     delete?: VolumeWhereInput | boolean
     connect?: VolumeWhereUniqueInput
     update?: XOR<XOR<VolumeUpdateToOneWithWhereWithoutAccessesInput, VolumeUpdateWithoutAccessesInput>, VolumeUncheckedUpdateWithoutAccessesInput>
+  }
+
+  export type UserCreateNestedOneWithoutCreated_volume_loansInput = {
+    create?: XOR<UserCreateWithoutCreated_volume_loansInput, UserUncheckedCreateWithoutCreated_volume_loansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreated_volume_loansInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutUpdated_volume_loansInput = {
+    create?: XOR<UserCreateWithoutUpdated_volume_loansInput, UserUncheckedCreateWithoutUpdated_volume_loansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUpdated_volume_loansInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutVolume_loansInput = {
+    create?: XOR<UserCreateWithoutVolume_loansInput, UserUncheckedCreateWithoutVolume_loansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVolume_loansInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type VolumeCreateNestedOneWithoutLoansInput = {
+    create?: XOR<VolumeCreateWithoutLoansInput, VolumeUncheckedCreateWithoutLoansInput>
+    connectOrCreate?: VolumeCreateOrConnectWithoutLoansInput
+    connect?: VolumeWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput = {
+    create?: XOR<UserCreateWithoutCreated_volume_loansInput, UserUncheckedCreateWithoutCreated_volume_loansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreated_volume_loansInput
+    upsert?: UserUpsertWithoutCreated_volume_loansInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreated_volume_loansInput, UserUpdateWithoutCreated_volume_loansInput>, UserUncheckedUpdateWithoutCreated_volume_loansInput>
+  }
+
+  export type UserUpdateOneWithoutUpdated_volume_loansNestedInput = {
+    create?: XOR<UserCreateWithoutUpdated_volume_loansInput, UserUncheckedCreateWithoutUpdated_volume_loansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUpdated_volume_loansInput
+    upsert?: UserUpsertWithoutUpdated_volume_loansInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUpdated_volume_loansInput, UserUpdateWithoutUpdated_volume_loansInput>, UserUncheckedUpdateWithoutUpdated_volume_loansInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutVolume_loansNestedInput = {
+    create?: XOR<UserCreateWithoutVolume_loansInput, UserUncheckedCreateWithoutVolume_loansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVolume_loansInput
+    upsert?: UserUpsertWithoutVolume_loansInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVolume_loansInput, UserUpdateWithoutVolume_loansInput>, UserUncheckedUpdateWithoutVolume_loansInput>
+  }
+
+  export type VolumeUpdateOneRequiredWithoutLoansNestedInput = {
+    create?: XOR<VolumeCreateWithoutLoansInput, VolumeUncheckedCreateWithoutLoansInput>
+    connectOrCreate?: VolumeCreateOrConnectWithoutLoansInput
+    upsert?: VolumeUpsertWithoutLoansInput
+    connect?: VolumeWhereUniqueInput
+    update?: XOR<XOR<VolumeUpdateToOneWithWhereWithoutLoansInput, VolumeUpdateWithoutLoansInput>, VolumeUncheckedUpdateWithoutLoansInput>
   }
 
   export type NestedBigIntFilter<$PrismaModel = never> = {
@@ -22152,6 +24208,20 @@ export namespace Prisma {
     in?: $Enums.StatusEnum[] | ListEnumStatusEnumFieldRefInput<$PrismaModel>
     notIn?: $Enums.StatusEnum[] | ListEnumStatusEnumFieldRefInput<$PrismaModel>
     not?: NestedEnumStatusEnumFilter<$PrismaModel> | $Enums.StatusEnum
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
@@ -22261,6 +24331,23 @@ export namespace Prisma {
     _max?: NestedEnumStatusEnumFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -22282,20 +24369,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -22313,23 +24386,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -22662,6 +24718,7 @@ export namespace Prisma {
     publisher?: PublisherCreateNestedOneWithoutVolumesInput
     authors?: VolumeAuthorCreateNestedManyWithoutVolumeInput
     accesses?: VolumeAccessCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeUncheckedCreateWithoutCreated_by_userInput = {
@@ -22694,6 +24751,7 @@ export namespace Prisma {
     all_time_access_count_updated_at?: Date | string | null
     authors?: VolumeAuthorUncheckedCreateNestedManyWithoutVolumeInput
     accesses?: VolumeAccessUncheckedCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanUncheckedCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeCreateOrConnectWithoutCreated_by_userInput = {
@@ -22736,6 +24794,7 @@ export namespace Prisma {
     publisher?: PublisherCreateNestedOneWithoutVolumesInput
     authors?: VolumeAuthorCreateNestedManyWithoutVolumeInput
     accesses?: VolumeAccessCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeUncheckedCreateWithoutUpdated_by_userInput = {
@@ -22768,6 +24827,7 @@ export namespace Prisma {
     all_time_access_count_updated_at?: Date | string | null
     authors?: VolumeAuthorUncheckedCreateNestedManyWithoutVolumeInput
     accesses?: VolumeAccessUncheckedCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanUncheckedCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeCreateOrConnectWithoutUpdated_by_userInput = {
@@ -23056,6 +25116,82 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type VolumeLoanCreateWithoutCreated_by_userInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    status?: $Enums.StatusEnum
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
+    user: UserCreateNestedOneWithoutVolume_loansInput
+    volume: VolumeCreateNestedOneWithoutLoansInput
+  }
+
+  export type VolumeLoanUncheckedCreateWithoutCreated_by_userInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
+  export type VolumeLoanCreateOrConnectWithoutCreated_by_userInput = {
+    where: VolumeLoanWhereUniqueInput
+    create: XOR<VolumeLoanCreateWithoutCreated_by_userInput, VolumeLoanUncheckedCreateWithoutCreated_by_userInput>
+  }
+
+  export type VolumeLoanCreateManyCreated_by_userInputEnvelope = {
+    data: VolumeLoanCreateManyCreated_by_userInput | VolumeLoanCreateManyCreated_by_userInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VolumeLoanCreateWithoutUpdated_by_userInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    status?: $Enums.StatusEnum
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_volume_loansInput
+    user: UserCreateNestedOneWithoutVolume_loansInput
+    volume: VolumeCreateNestedOneWithoutLoansInput
+  }
+
+  export type VolumeLoanUncheckedCreateWithoutUpdated_by_userInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
+  export type VolumeLoanCreateOrConnectWithoutUpdated_by_userInput = {
+    where: VolumeLoanWhereUniqueInput
+    create: XOR<VolumeLoanCreateWithoutUpdated_by_userInput, VolumeLoanUncheckedCreateWithoutUpdated_by_userInput>
+  }
+
+  export type VolumeLoanCreateManyUpdated_by_userInputEnvelope = {
+    data: VolumeLoanCreateManyUpdated_by_userInput | VolumeLoanCreateManyUpdated_by_userInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CategoryCreateWithoutCreated_by_userInput = {
     id?: bigint | number
     slug?: string
@@ -23165,6 +25301,44 @@ export namespace Prisma {
 
   export type VolumeAccessCreateManyCreated_by_userInputEnvelope = {
     data: VolumeAccessCreateManyCreated_by_userInput | VolumeAccessCreateManyCreated_by_userInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VolumeLoanCreateWithoutUserInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    status?: $Enums.StatusEnum
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_volume_loansInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
+    volume: VolumeCreateNestedOneWithoutLoansInput
+  }
+
+  export type VolumeLoanUncheckedCreateWithoutUserInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
+  export type VolumeLoanCreateOrConnectWithoutUserInput = {
+    where: VolumeLoanWhereUniqueInput
+    create: XOR<VolumeLoanCreateWithoutUserInput, VolumeLoanUncheckedCreateWithoutUserInput>
+  }
+
+  export type VolumeLoanCreateManyUserInputEnvelope = {
+    data: VolumeLoanCreateManyUserInput | VolumeLoanCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -23569,6 +25743,56 @@ export namespace Prisma {
     data: XOR<BookTagUpdateManyMutationInput, BookTagUncheckedUpdateManyWithoutUpdated_by_userInput>
   }
 
+  export type VolumeLoanUpsertWithWhereUniqueWithoutCreated_by_userInput = {
+    where: VolumeLoanWhereUniqueInput
+    update: XOR<VolumeLoanUpdateWithoutCreated_by_userInput, VolumeLoanUncheckedUpdateWithoutCreated_by_userInput>
+    create: XOR<VolumeLoanCreateWithoutCreated_by_userInput, VolumeLoanUncheckedCreateWithoutCreated_by_userInput>
+  }
+
+  export type VolumeLoanUpdateWithWhereUniqueWithoutCreated_by_userInput = {
+    where: VolumeLoanWhereUniqueInput
+    data: XOR<VolumeLoanUpdateWithoutCreated_by_userInput, VolumeLoanUncheckedUpdateWithoutCreated_by_userInput>
+  }
+
+  export type VolumeLoanUpdateManyWithWhereWithoutCreated_by_userInput = {
+    where: VolumeLoanScalarWhereInput
+    data: XOR<VolumeLoanUpdateManyMutationInput, VolumeLoanUncheckedUpdateManyWithoutCreated_by_userInput>
+  }
+
+  export type VolumeLoanScalarWhereInput = {
+    AND?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
+    OR?: VolumeLoanScalarWhereInput[]
+    NOT?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
+    id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    created_at?: DateTimeFilter<"VolumeLoan"> | Date | string
+    created_by_user_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    updated_at?: DateTimeNullableFilter<"VolumeLoan"> | Date | string | null
+    updated_by_user_id?: BigIntNullableFilter<"VolumeLoan"> | bigint | number | null
+    status?: EnumStatusEnumFilter<"VolumeLoan"> | $Enums.StatusEnum
+    volume_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    user_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    loan_date?: DateTimeFilter<"VolumeLoan"> | Date | string
+    due_date?: DateTimeFilter<"VolumeLoan"> | Date | string
+    return_date?: DateTimeNullableFilter<"VolumeLoan"> | Date | string | null
+    description?: StringNullableFilter<"VolumeLoan"> | string | null
+  }
+
+  export type VolumeLoanUpsertWithWhereUniqueWithoutUpdated_by_userInput = {
+    where: VolumeLoanWhereUniqueInput
+    update: XOR<VolumeLoanUpdateWithoutUpdated_by_userInput, VolumeLoanUncheckedUpdateWithoutUpdated_by_userInput>
+    create: XOR<VolumeLoanCreateWithoutUpdated_by_userInput, VolumeLoanUncheckedCreateWithoutUpdated_by_userInput>
+  }
+
+  export type VolumeLoanUpdateWithWhereUniqueWithoutUpdated_by_userInput = {
+    where: VolumeLoanWhereUniqueInput
+    data: XOR<VolumeLoanUpdateWithoutUpdated_by_userInput, VolumeLoanUncheckedUpdateWithoutUpdated_by_userInput>
+  }
+
+  export type VolumeLoanUpdateManyWithWhereWithoutUpdated_by_userInput = {
+    where: VolumeLoanScalarWhereInput
+    data: XOR<VolumeLoanUpdateManyMutationInput, VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userInput>
+  }
+
   export type CategoryUpsertWithWhereUniqueWithoutCreated_by_userInput = {
     where: CategoryWhereUniqueInput
     update: XOR<CategoryUpdateWithoutCreated_by_userInput, CategoryUncheckedUpdateWithoutCreated_by_userInput>
@@ -23652,6 +25876,22 @@ export namespace Prisma {
     status?: EnumStatusEnumFilter<"VolumeAccess"> | $Enums.StatusEnum
   }
 
+  export type VolumeLoanUpsertWithWhereUniqueWithoutUserInput = {
+    where: VolumeLoanWhereUniqueInput
+    update: XOR<VolumeLoanUpdateWithoutUserInput, VolumeLoanUncheckedUpdateWithoutUserInput>
+    create: XOR<VolumeLoanCreateWithoutUserInput, VolumeLoanUncheckedCreateWithoutUserInput>
+  }
+
+  export type VolumeLoanUpdateWithWhereUniqueWithoutUserInput = {
+    where: VolumeLoanWhereUniqueInput
+    data: XOR<VolumeLoanUpdateWithoutUserInput, VolumeLoanUncheckedUpdateWithoutUserInput>
+  }
+
+  export type VolumeLoanUpdateManyWithWhereWithoutUserInput = {
+    where: VolumeLoanScalarWhereInput
+    data: XOR<VolumeLoanUpdateManyMutationInput, VolumeLoanUncheckedUpdateManyWithoutUserInput>
+  }
+
   export type UserCreateWithoutAuth_tokensInput = {
     id?: bigint | number
     slug?: string
@@ -23661,9 +25901,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
     created_books?: BookCreateNestedManyWithoutCreated_by_userInput
@@ -23678,9 +25919,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuth_tokensInput = {
@@ -23692,9 +25936,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -23709,9 +25954,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuth_tokensInput = {
@@ -23739,8 +25987,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
     updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
@@ -23756,9 +26005,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuth_tokensInput = {
@@ -23770,8 +26022,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
@@ -23787,9 +26040,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCreated_authorsInput = {
@@ -23801,9 +26057,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
     created_books?: BookCreateNestedManyWithoutCreated_by_userInput
@@ -23818,9 +26075,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_authorsInput = {
@@ -23832,9 +26092,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -23849,9 +26110,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_authorsInput = {
@@ -23868,9 +26132,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     created_books?: BookCreateNestedManyWithoutCreated_by_userInput
@@ -23885,9 +26150,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_authorsInput = {
@@ -23899,9 +26167,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -23916,9 +26185,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_authorsInput = {
@@ -23978,8 +26250,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
@@ -23995,9 +26268,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_authorsInput = {
@@ -24009,8 +26285,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
@@ -24026,9 +26303,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_authorsInput = {
@@ -24051,8 +26331,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -24068,9 +26349,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_authorsInput = {
@@ -24082,8 +26366,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -24099,9 +26384,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VolumeAuthorUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -24129,9 +26417,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -24146,9 +26435,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_book_authorsInput = {
@@ -24160,9 +26452,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -24177,9 +26470,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_book_authorsInput = {
@@ -24196,9 +26492,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -24213,9 +26510,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_volume_authorsInput = {
@@ -24227,9 +26527,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -24244,9 +26545,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_volume_authorsInput = {
@@ -24319,6 +26623,7 @@ export namespace Prisma {
     updated_by_user?: UserCreateNestedOneWithoutUpdated_volumesInput
     publisher?: PublisherCreateNestedOneWithoutVolumesInput
     accesses?: VolumeAccessCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeUncheckedCreateWithoutAuthorsInput = {
@@ -24351,6 +26656,7 @@ export namespace Prisma {
     all_time_access_count?: bigint | number
     all_time_access_count_updated_at?: Date | string | null
     accesses?: VolumeAccessUncheckedCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanUncheckedCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeCreateOrConnectWithoutAuthorsInput = {
@@ -24378,8 +26684,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -24395,9 +26702,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_book_authorsInput = {
@@ -24409,8 +26719,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -24426,9 +26737,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_volume_authorsInput = {
@@ -24451,8 +26765,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -24468,9 +26783,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_volume_authorsInput = {
@@ -24482,8 +26800,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -24499,9 +26818,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AuthorUpsertWithoutVolumesInput = {
@@ -24586,6 +26908,7 @@ export namespace Prisma {
     updated_by_user?: UserUpdateOneWithoutUpdated_volumesNestedInput
     publisher?: PublisherUpdateOneWithoutVolumesNestedInput
     accesses?: VolumeAccessUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeUncheckedUpdateWithoutAuthorsInput = {
@@ -24618,6 +26941,7 @@ export namespace Prisma {
     all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accesses?: VolumeAccessUncheckedUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUncheckedUpdateManyWithoutVolumeNestedInput
   }
 
   export type UserCreateWithoutCreated_tagsInput = {
@@ -24629,9 +26953,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -24646,9 +26971,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_tagsInput = {
@@ -24660,9 +26988,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -24677,9 +27006,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_tagsInput = {
@@ -24696,9 +27028,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -24713,9 +27046,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_tagsInput = {
@@ -24727,9 +27063,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -24744,9 +27081,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_tagsInput = {
@@ -24804,8 +27144,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -24821,9 +27162,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_tagsInput = {
@@ -24835,8 +27179,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -24852,9 +27197,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_tagsInput = {
@@ -24877,8 +27225,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -24894,9 +27243,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_tagsInput = {
@@ -24908,8 +27260,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -24925,9 +27278,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BookTagUpsertWithWhereUniqueWithoutTagInput = {
@@ -24955,9 +27311,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -24972,9 +27329,12 @@ export namespace Prisma {
     created_publishers?: PublisherCreateNestedManyWithoutCreated_by_userInput
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_book_tagsInput = {
@@ -24986,9 +27346,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -25003,9 +27364,12 @@ export namespace Prisma {
     created_publishers?: PublisherUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_book_tagsInput = {
@@ -25022,9 +27386,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -25039,9 +27404,12 @@ export namespace Prisma {
     created_publishers?: PublisherCreateNestedManyWithoutCreated_by_userInput
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_book_tagsInput = {
@@ -25053,9 +27421,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -25070,9 +27439,12 @@ export namespace Prisma {
     created_publishers?: PublisherUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_book_tagsInput = {
@@ -25186,8 +27558,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -25203,9 +27576,12 @@ export namespace Prisma {
     created_publishers?: PublisherUpdateManyWithoutCreated_by_userNestedInput
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_book_tagsInput = {
@@ -25217,8 +27593,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -25234,9 +27611,12 @@ export namespace Prisma {
     created_publishers?: PublisherUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_book_tagsInput = {
@@ -25259,8 +27639,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -25276,9 +27657,12 @@ export namespace Prisma {
     created_publishers?: PublisherUpdateManyWithoutCreated_by_userNestedInput
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_book_tagsInput = {
@@ -25290,8 +27674,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -25307,9 +27692,12 @@ export namespace Prisma {
     created_publishers?: PublisherUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TagUpsertWithoutBooksInput = {
@@ -25419,9 +27807,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -25437,8 +27826,11 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_categoriesInput = {
@@ -25450,9 +27842,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -25468,8 +27861,11 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_categoriesInput = {
@@ -25486,9 +27882,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -25504,8 +27901,11 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_categoriesInput = {
@@ -25517,9 +27917,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -25535,8 +27936,11 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_categoriesInput = {
@@ -25624,8 +28028,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -25642,8 +28047,11 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_categoriesInput = {
@@ -25655,8 +28063,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -25673,8 +28082,11 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_categoriesInput = {
@@ -25697,8 +28109,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -25715,8 +28128,11 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_categoriesInput = {
@@ -25728,8 +28144,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -25746,8 +28163,11 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BookUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -25775,9 +28195,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -25792,9 +28213,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_publishersInput = {
@@ -25806,9 +28230,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -25823,9 +28248,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_publishersInput = {
@@ -25842,9 +28270,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -25859,9 +28288,12 @@ export namespace Prisma {
     created_publishers?: PublisherCreateNestedManyWithoutCreated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_publishersInput = {
@@ -25873,9 +28305,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -25890,9 +28323,12 @@ export namespace Prisma {
     created_publishers?: PublisherUncheckedCreateNestedManyWithoutCreated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_publishersInput = {
@@ -25930,6 +28366,7 @@ export namespace Prisma {
     updated_by_user?: UserCreateNestedOneWithoutUpdated_volumesInput
     authors?: VolumeAuthorCreateNestedManyWithoutVolumeInput
     accesses?: VolumeAccessCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeUncheckedCreateWithoutPublisherInput = {
@@ -25962,6 +28399,7 @@ export namespace Prisma {
     all_time_access_count_updated_at?: Date | string | null
     authors?: VolumeAuthorUncheckedCreateNestedManyWithoutVolumeInput
     accesses?: VolumeAccessUncheckedCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanUncheckedCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeCreateOrConnectWithoutPublisherInput = {
@@ -25994,8 +28432,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -26011,9 +28450,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_publishersInput = {
@@ -26025,8 +28467,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26042,9 +28485,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_publishersInput = {
@@ -26067,8 +28513,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -26084,9 +28531,12 @@ export namespace Prisma {
     created_publishers?: PublisherUpdateManyWithoutCreated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_publishersInput = {
@@ -26098,8 +28548,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26115,9 +28566,12 @@ export namespace Prisma {
     created_publishers?: PublisherUncheckedUpdateManyWithoutCreated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VolumeUpsertWithWhereUniqueWithoutPublisherInput = {
@@ -26145,9 +28599,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -26162,9 +28617,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_booksInput = {
@@ -26176,9 +28634,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -26193,9 +28652,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_booksInput = {
@@ -26212,9 +28674,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -26229,9 +28692,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_booksInput = {
@@ -26243,9 +28709,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -26260,9 +28727,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_booksInput = {
@@ -26351,8 +28821,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -26368,9 +28839,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_booksInput = {
@@ -26382,8 +28856,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26399,9 +28874,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_booksInput = {
@@ -26424,8 +28902,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -26441,9 +28920,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_booksInput = {
@@ -26455,8 +28937,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26472,9 +28955,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CategoryUpsertWithoutBooksInput = {
@@ -26539,9 +29025,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -26556,9 +29043,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_volumesInput = {
@@ -26570,9 +29060,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -26587,9 +29078,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_volumesInput = {
@@ -26606,9 +29100,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -26623,9 +29118,12 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_volumesInput = {
@@ -26637,9 +29135,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -26654,9 +29153,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_volumesInput = {
@@ -26771,6 +29273,44 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type VolumeLoanCreateWithoutVolumeInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    status?: $Enums.StatusEnum
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_volume_loansInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
+    user: UserCreateNestedOneWithoutVolume_loansInput
+  }
+
+  export type VolumeLoanUncheckedCreateWithoutVolumeInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
+  export type VolumeLoanCreateOrConnectWithoutVolumeInput = {
+    where: VolumeLoanWhereUniqueInput
+    create: XOR<VolumeLoanCreateWithoutVolumeInput, VolumeLoanUncheckedCreateWithoutVolumeInput>
+  }
+
+  export type VolumeLoanCreateManyVolumeInputEnvelope = {
+    data: VolumeLoanCreateManyVolumeInput | VolumeLoanCreateManyVolumeInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutCreated_volumesInput = {
     update: XOR<UserUpdateWithoutCreated_volumesInput, UserUncheckedUpdateWithoutCreated_volumesInput>
     create: XOR<UserCreateWithoutCreated_volumesInput, UserUncheckedCreateWithoutCreated_volumesInput>
@@ -26791,8 +29331,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -26808,9 +29349,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_volumesInput = {
@@ -26822,8 +29366,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26839,9 +29384,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_volumesInput = {
@@ -26864,8 +29412,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -26881,9 +29430,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_volumesInput = {
@@ -26895,8 +29447,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26912,9 +29465,12 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PublisherUpsertWithoutVolumesInput = {
@@ -26990,6 +29546,22 @@ export namespace Prisma {
     data: XOR<VolumeAccessUpdateManyMutationInput, VolumeAccessUncheckedUpdateManyWithoutVolumeInput>
   }
 
+  export type VolumeLoanUpsertWithWhereUniqueWithoutVolumeInput = {
+    where: VolumeLoanWhereUniqueInput
+    update: XOR<VolumeLoanUpdateWithoutVolumeInput, VolumeLoanUncheckedUpdateWithoutVolumeInput>
+    create: XOR<VolumeLoanCreateWithoutVolumeInput, VolumeLoanUncheckedCreateWithoutVolumeInput>
+  }
+
+  export type VolumeLoanUpdateWithWhereUniqueWithoutVolumeInput = {
+    where: VolumeLoanWhereUniqueInput
+    data: XOR<VolumeLoanUpdateWithoutVolumeInput, VolumeLoanUncheckedUpdateWithoutVolumeInput>
+  }
+
+  export type VolumeLoanUpdateManyWithWhereWithoutVolumeInput = {
+    where: VolumeLoanScalarWhereInput
+    data: XOR<VolumeLoanUpdateManyMutationInput, VolumeLoanUncheckedUpdateManyWithoutVolumeInput>
+  }
+
   export type UserCreateWithoutVolume_accessesInput = {
     id?: bigint | number
     slug?: string
@@ -26999,9 +29571,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -27017,8 +29590,11 @@ export namespace Prisma {
     updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVolume_accessesInput = {
@@ -27030,9 +29606,10 @@ export namespace Prisma {
     sex?: $Enums.SexEnum | null
     login: string
     status?: $Enums.StatusEnum
-    password: string
-    email: string
-    role: $Enums.UserRole
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -27048,8 +29625,11 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVolume_accessesInput = {
@@ -27087,6 +29667,7 @@ export namespace Prisma {
     updated_by_user?: UserCreateNestedOneWithoutUpdated_volumesInput
     publisher?: PublisherCreateNestedOneWithoutVolumesInput
     authors?: VolumeAuthorCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeUncheckedCreateWithoutAccessesInput = {
@@ -27119,6 +29700,7 @@ export namespace Prisma {
     all_time_access_count?: bigint | number
     all_time_access_count_updated_at?: Date | string | null
     authors?: VolumeAuthorUncheckedCreateNestedManyWithoutVolumeInput
+    loans?: VolumeLoanUncheckedCreateNestedManyWithoutVolumeInput
   }
 
   export type VolumeCreateOrConnectWithoutAccessesInput = {
@@ -27146,8 +29728,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -27164,8 +29747,11 @@ export namespace Prisma {
     updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVolume_accessesInput = {
@@ -27177,8 +29763,9 @@ export namespace Prisma {
     sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
     login?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
-    password?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -27195,8 +29782,11 @@ export namespace Prisma {
     updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VolumeUpsertWithoutAccessesInput = {
@@ -27240,6 +29830,7 @@ export namespace Prisma {
     updated_by_user?: UserUpdateOneWithoutUpdated_volumesNestedInput
     publisher?: PublisherUpdateOneWithoutVolumesNestedInput
     authors?: VolumeAuthorUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeUncheckedUpdateWithoutAccessesInput = {
@@ -27272,6 +29863,623 @@ export namespace Prisma {
     all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
     all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: VolumeAuthorUncheckedUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUncheckedUpdateManyWithoutVolumeNestedInput
+  }
+
+  export type UserCreateWithoutCreated_volume_loansInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
+    created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookCreateNestedManyWithoutUpdated_by_userInput
+    created_volumes?: VolumeCreateNestedManyWithoutCreated_by_userInput
+    updated_volumes?: VolumeCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: VolumeAuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_authors?: VolumeAuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
+    created_publishers?: PublisherCreateNestedManyWithoutCreated_by_userInput
+    updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
+    volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCreated_volume_loansInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
+    created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volumes?: VolumeUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volumes?: VolumeUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: VolumeAuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_authors?: VolumeAuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_publishers?: PublisherUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCreated_volume_loansInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreated_volume_loansInput, UserUncheckedCreateWithoutCreated_volume_loansInput>
+  }
+
+  export type UserCreateWithoutUpdated_volume_loansInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
+    created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookCreateNestedManyWithoutUpdated_by_userInput
+    created_volumes?: VolumeCreateNestedManyWithoutCreated_by_userInput
+    updated_volumes?: VolumeCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: VolumeAuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_authors?: VolumeAuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
+    created_publishers?: PublisherCreateNestedManyWithoutCreated_by_userInput
+    updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
+    volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUpdated_volume_loansInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
+    created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volumes?: VolumeUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volumes?: VolumeUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: VolumeAuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_authors?: VolumeAuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_publishers?: PublisherUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUpdated_volume_loansInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUpdated_volume_loansInput, UserUncheckedCreateWithoutUpdated_volume_loansInput>
+  }
+
+  export type UserCreateWithoutVolume_loansInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
+    created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookCreateNestedManyWithoutUpdated_by_userInput
+    created_volumes?: VolumeCreateNestedManyWithoutCreated_by_userInput
+    updated_volumes?: VolumeCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: VolumeAuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_authors?: VolumeAuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
+    created_publishers?: PublisherCreateNestedManyWithoutCreated_by_userInput
+    updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
+    volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+  }
+
+  export type UserUncheckedCreateWithoutVolume_loansInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
+    created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volumes?: VolumeUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volumes?: VolumeUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: VolumeAuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_authors?: VolumeAuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_publishers?: PublisherUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+  }
+
+  export type UserCreateOrConnectWithoutVolume_loansInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutVolume_loansInput, UserUncheckedCreateWithoutVolume_loansInput>
+  }
+
+  export type VolumeCreateWithoutLoansInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    book_id: bigint | number
+    year?: number | null
+    edition?: string | null
+    isbn_old?: string | null
+    isbn?: string | null
+    pages?: number | null
+    description?: string | null
+    pdf_url?: string | null
+    cover_url?: string | null
+    back_url?: string | null
+    images_url?: VolumeCreateimages_urlInput | string[]
+    keywords?: VolumeCreatekeywordsInput | string[]
+    label?: string | null
+    shelf?: string | null
+    status?: $Enums.StatusEnum
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_volumesInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_volumesInput
+    publisher?: PublisherCreateNestedOneWithoutVolumesInput
+    authors?: VolumeAuthorCreateNestedManyWithoutVolumeInput
+    accesses?: VolumeAccessCreateNestedManyWithoutVolumeInput
+  }
+
+  export type VolumeUncheckedCreateWithoutLoansInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    book_id: bigint | number
+    publisher_id?: bigint | number | null
+    year?: number | null
+    edition?: string | null
+    isbn_old?: string | null
+    isbn?: string | null
+    pages?: number | null
+    description?: string | null
+    pdf_url?: string | null
+    cover_url?: string | null
+    back_url?: string | null
+    images_url?: VolumeCreateimages_urlInput | string[]
+    keywords?: VolumeCreatekeywordsInput | string[]
+    label?: string | null
+    shelf?: string | null
+    status?: $Enums.StatusEnum
+    last_week_access_count?: bigint | number
+    last_week_access_count_updated_at?: Date | string | null
+    last_month_access_count?: bigint | number
+    last_month_access_count_updated_at?: Date | string | null
+    all_time_access_count?: bigint | number
+    all_time_access_count_updated_at?: Date | string | null
+    authors?: VolumeAuthorUncheckedCreateNestedManyWithoutVolumeInput
+    accesses?: VolumeAccessUncheckedCreateNestedManyWithoutVolumeInput
+  }
+
+  export type VolumeCreateOrConnectWithoutLoansInput = {
+    where: VolumeWhereUniqueInput
+    create: XOR<VolumeCreateWithoutLoansInput, VolumeUncheckedCreateWithoutLoansInput>
+  }
+
+  export type UserUpsertWithoutCreated_volume_loansInput = {
+    update: XOR<UserUpdateWithoutCreated_volume_loansInput, UserUncheckedUpdateWithoutCreated_volume_loansInput>
+    create: XOR<UserCreateWithoutCreated_volume_loansInput, UserUncheckedCreateWithoutCreated_volume_loansInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreated_volume_loansInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreated_volume_loansInput, UserUncheckedUpdateWithoutCreated_volume_loansInput>
+  }
+
+  export type UserUpdateWithoutCreated_volume_loansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUpdateManyWithoutUpdated_by_userNestedInput
+    created_volumes?: VolumeUpdateManyWithoutCreated_by_userNestedInput
+    updated_volumes?: VolumeUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: VolumeAuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_authors?: VolumeAuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
+    created_publishers?: PublisherUpdateManyWithoutCreated_by_userNestedInput
+    updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
+    volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreated_volume_loansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volumes?: VolumeUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volumes?: VolumeUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: VolumeAuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_authors?: VolumeAuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_publishers?: PublisherUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUpsertWithoutUpdated_volume_loansInput = {
+    update: XOR<UserUpdateWithoutUpdated_volume_loansInput, UserUncheckedUpdateWithoutUpdated_volume_loansInput>
+    create: XOR<UserCreateWithoutUpdated_volume_loansInput, UserUncheckedCreateWithoutUpdated_volume_loansInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUpdated_volume_loansInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUpdated_volume_loansInput, UserUncheckedUpdateWithoutUpdated_volume_loansInput>
+  }
+
+  export type UserUpdateWithoutUpdated_volume_loansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUpdateManyWithoutUpdated_by_userNestedInput
+    created_volumes?: VolumeUpdateManyWithoutCreated_by_userNestedInput
+    updated_volumes?: VolumeUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: VolumeAuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_authors?: VolumeAuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
+    created_publishers?: PublisherUpdateManyWithoutCreated_by_userNestedInput
+    updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
+    volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUpdated_volume_loansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volumes?: VolumeUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volumes?: VolumeUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: VolumeAuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_authors?: VolumeAuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_publishers?: PublisherUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUpsertWithoutVolume_loansInput = {
+    update: XOR<UserUpdateWithoutVolume_loansInput, UserUncheckedUpdateWithoutVolume_loansInput>
+    create: XOR<UserCreateWithoutVolume_loansInput, UserUncheckedCreateWithoutVolume_loansInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutVolume_loansInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutVolume_loansInput, UserUncheckedUpdateWithoutVolume_loansInput>
+  }
+
+  export type UserUpdateWithoutVolume_loansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUpdateManyWithoutUpdated_by_userNestedInput
+    created_volumes?: VolumeUpdateManyWithoutCreated_by_userNestedInput
+    updated_volumes?: VolumeUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: VolumeAuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_authors?: VolumeAuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
+    created_publishers?: PublisherUpdateManyWithoutCreated_by_userNestedInput
+    updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
+    volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutVolume_loansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
+    created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volumes?: VolumeUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volumes?: VolumeUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: VolumeAuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_authors?: VolumeAuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_publishers?: PublisherUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+  }
+
+  export type VolumeUpsertWithoutLoansInput = {
+    update: XOR<VolumeUpdateWithoutLoansInput, VolumeUncheckedUpdateWithoutLoansInput>
+    create: XOR<VolumeCreateWithoutLoansInput, VolumeUncheckedCreateWithoutLoansInput>
+    where?: VolumeWhereInput
+  }
+
+  export type VolumeUpdateToOneWithWhereWithoutLoansInput = {
+    where?: VolumeWhereInput
+    data: XOR<VolumeUpdateWithoutLoansInput, VolumeUncheckedUpdateWithoutLoansInput>
+  }
+
+  export type VolumeUpdateWithoutLoansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    edition?: NullableStringFieldUpdateOperationsInput | string | null
+    isbn_old?: NullableStringFieldUpdateOperationsInput | string | null
+    isbn?: NullableStringFieldUpdateOperationsInput | string | null
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
+    images_url?: VolumeUpdateimages_urlInput | string[]
+    keywords?: VolumeUpdatekeywordsInput | string[]
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    shelf?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_volumesNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_volumesNestedInput
+    publisher?: PublisherUpdateOneWithoutVolumesNestedInput
+    authors?: VolumeAuthorUpdateManyWithoutVolumeNestedInput
+    accesses?: VolumeAccessUpdateManyWithoutVolumeNestedInput
+  }
+
+  export type VolumeUncheckedUpdateWithoutLoansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    book_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    publisher_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    year?: NullableIntFieldUpdateOperationsInput | number | null
+    edition?: NullableStringFieldUpdateOperationsInput | string | null
+    isbn_old?: NullableStringFieldUpdateOperationsInput | string | null
+    isbn?: NullableStringFieldUpdateOperationsInput | string | null
+    pages?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    pdf_url?: NullableStringFieldUpdateOperationsInput | string | null
+    cover_url?: NullableStringFieldUpdateOperationsInput | string | null
+    back_url?: NullableStringFieldUpdateOperationsInput | string | null
+    images_url?: VolumeUpdateimages_urlInput | string[]
+    keywords?: VolumeUpdatekeywordsInput | string[]
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    shelf?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    last_week_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_week_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_month_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    last_month_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    all_time_access_count?: BigIntFieldUpdateOperationsInput | bigint | number
+    all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    authors?: VolumeAuthorUncheckedUpdateManyWithoutVolumeNestedInput
+    accesses?: VolumeAccessUncheckedUpdateManyWithoutVolumeNestedInput
   }
 
   export type UserAuthTokenCreateManyUserInput = {
@@ -27518,6 +30726,34 @@ export namespace Prisma {
     book_id: bigint | number
   }
 
+  export type VolumeLoanCreateManyCreated_by_userInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
+  export type VolumeLoanCreateManyUpdated_by_userInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
   export type CategoryCreateManyCreated_by_userInput = {
     id?: bigint | number
     slug?: string
@@ -27555,6 +30791,20 @@ export namespace Prisma {
     device_name?: string | null
     device_vendor?: string | null
     status?: $Enums.StatusEnum
+  }
+
+  export type VolumeLoanCreateManyUserInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
   }
 
   export type UserAuthTokenUpdateWithoutUserInput = {
@@ -27865,6 +31115,7 @@ export namespace Prisma {
     publisher?: PublisherUpdateOneWithoutVolumesNestedInput
     authors?: VolumeAuthorUpdateManyWithoutVolumeNestedInput
     accesses?: VolumeAccessUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeUncheckedUpdateWithoutCreated_by_userInput = {
@@ -27897,6 +31148,7 @@ export namespace Prisma {
     all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: VolumeAuthorUncheckedUpdateManyWithoutVolumeNestedInput
     accesses?: VolumeAccessUncheckedUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUncheckedUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeUncheckedUpdateManyWithoutCreated_by_userInput = {
@@ -27959,6 +31211,7 @@ export namespace Prisma {
     publisher?: PublisherUpdateOneWithoutVolumesNestedInput
     authors?: VolumeAuthorUpdateManyWithoutVolumeNestedInput
     accesses?: VolumeAccessUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeUncheckedUpdateWithoutUpdated_by_userInput = {
@@ -27991,6 +31244,7 @@ export namespace Prisma {
     all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: VolumeAuthorUncheckedUpdateManyWithoutVolumeNestedInput
     accesses?: VolumeAccessUncheckedUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUncheckedUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeUncheckedUpdateManyWithoutUpdated_by_userInput = {
@@ -28313,6 +31567,90 @@ export namespace Prisma {
     book_id?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type VolumeLoanUpdateWithoutCreated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
+    user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
+    volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+  }
+
+  export type VolumeLoanUncheckedUpdateWithoutCreated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VolumeLoanUncheckedUpdateManyWithoutCreated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VolumeLoanUpdateWithoutUpdated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput
+    user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
+    volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+  }
+
+  export type VolumeLoanUncheckedUpdateWithoutUpdated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type CategoryUpdateWithoutCreated_by_userInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     slug?: StringFieldUpdateOperationsInput | string
@@ -28432,6 +31770,48 @@ export namespace Prisma {
     device_name?: NullableStringFieldUpdateOperationsInput | string | null
     device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  }
+
+  export type VolumeLoanUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
+    volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+  }
+
+  export type VolumeLoanUncheckedUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VolumeLoanUncheckedUpdateManyWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VolumeAuthorCreateManyAuthorInput = {
@@ -28676,6 +32056,7 @@ export namespace Prisma {
     updated_by_user?: UserUpdateOneWithoutUpdated_volumesNestedInput
     authors?: VolumeAuthorUpdateManyWithoutVolumeNestedInput
     accesses?: VolumeAccessUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeUncheckedUpdateWithoutPublisherInput = {
@@ -28708,6 +32089,7 @@ export namespace Prisma {
     all_time_access_count_updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authors?: VolumeAuthorUncheckedUpdateManyWithoutVolumeNestedInput
     accesses?: VolumeAccessUncheckedUpdateManyWithoutVolumeNestedInput
+    loans?: VolumeLoanUncheckedUpdateManyWithoutVolumeNestedInput
   }
 
   export type VolumeUncheckedUpdateManyWithoutPublisherInput = {
@@ -28806,6 +32188,20 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
   }
 
+  export type VolumeLoanCreateManyVolumeInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
   export type VolumeAuthorUpdateWithoutVolumeInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28882,6 +32278,48 @@ export namespace Prisma {
     device_name?: NullableStringFieldUpdateOperationsInput | string | null
     device_vendor?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  }
+
+  export type VolumeLoanUpdateWithoutVolumeInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
+    user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
+  }
+
+  export type VolumeLoanUncheckedUpdateWithoutVolumeInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VolumeLoanUncheckedUpdateManyWithoutVolumeInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

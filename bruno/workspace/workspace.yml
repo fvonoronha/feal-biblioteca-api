@@ -12,6 +12,8 @@ collections:
     path: "collections/Acervo"
   - name: "Gerenciamento"
     path: "collections/Gerenciamento"
+  - name: "Gemini"
+    path: "collections/Gemini"
 
 specs:
 

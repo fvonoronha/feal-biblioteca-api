@@ -1,0 +1,7 @@
+info:
+  name: Empréstimos
+  type: folder
+  seq: 7
+
+request:
+  auth: inherit
