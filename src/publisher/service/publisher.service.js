@@ -91,5 +91,14 @@ module.exports = {
             console.log(err);
             return parseError(err);
         }
+    },
+
+    async getPublishersMetaForGemini(limit) {
+        return await module.exports.listPublishers(
+            {},
+            {
+                limit: limit
+            }
+        );
     }
 };

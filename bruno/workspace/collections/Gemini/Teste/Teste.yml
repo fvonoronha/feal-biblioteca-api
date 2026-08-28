@@ -1,11 +1,11 @@
 info:
-  name: Ler volume
+  name: Teste
   type: http
-  seq: 2
+  seq: 4
 
 http:
-  method: GET
-  url: "{{URL}}/volume/772eaf733c"
+  method: POST
+  url: "{{URL}}/gemini/books/enhance/20"
   body:
     type: json
     data: |-
@@ -15,6 +15,11 @@ http:
   auth:
     type: bearer
     token: "{{AUTH_TOKEN}}"
+
+runtime:
+  variables:
+    - name: BOOK_SLUG
+      value: autistas-do-alem
 
 settings:
   encodeUrl: true

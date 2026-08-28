@@ -132,6 +132,7 @@ exports.Prisma.UserScalarFieldEnum = {
   status: 'status',
   password: 'password',
   email: 'email',
+  phone: 'phone',
   role: 'role'
 };
 
@@ -301,6 +302,21 @@ exports.Prisma.VolumeAccessScalarFieldEnum = {
   status: 'status'
 };
 
+exports.Prisma.VolumeLoanScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  created_by_user_id: 'created_by_user_id',
+  updated_at: 'updated_at',
+  updated_by_user_id: 'updated_by_user_id',
+  status: 'status',
+  volume_id: 'volume_id',
+  user_id: 'user_id',
+  loan_date: 'loan_date',
+  due_date: 'due_date',
+  return_date: 'return_date',
+  description: 'description'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -322,6 +338,7 @@ exports.SexEnum = exports.$Enums.SexEnum = {
 };
 
 exports.StatusEnum = exports.$Enums.StatusEnum = {
+  P: 'P',
   A: 'A',
   I: 'I',
   E: 'E',
@@ -346,7 +363,8 @@ exports.Prisma.ModelName = {
   Publisher: 'Publisher',
   Book: 'Book',
   Volume: 'Volume',
-  VolumeAccess: 'VolumeAccess'
+  VolumeAccess: 'VolumeAccess',
+  VolumeLoan: 'VolumeLoan'
 };
 
 /**
