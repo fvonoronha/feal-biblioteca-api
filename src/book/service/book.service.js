@@ -72,7 +72,6 @@ module.exports = {
                 message: "Livro inválido"
             };
         } catch (err) {
-            console.log("Err: ", err);
             return parseError(err);
         }
     },
@@ -143,7 +142,6 @@ module.exports = {
                 message: "Livro inválido"
             };
         } catch (err) {
-            console.log("Err: ", err);
             return parseError(err);
         }
     },
