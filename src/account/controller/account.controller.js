@@ -47,6 +47,7 @@ module.exports = {
         return next();
     },
 
+    // v1 Ready
     async createAccount(req, res, next) {
         const validatedUser = validateSchema(createUserSchema, req.body);
 

@@ -30,6 +30,7 @@
         "json-bigint-patch": "^0.0.9",
         "jsonwebtoken": "^9.0.3",
         "node-cron": "^4.2.1",
+        "nodemailer": "^9.1.1",
         "nodemon": "^3.1.14",
         "npm": "^11.6.0",
         "path": "^0.12.7",
