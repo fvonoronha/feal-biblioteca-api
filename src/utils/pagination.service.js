@@ -1,5 +1,8 @@
 const DEFAULT_PAGINATION_LIMIT = 10;
 const DEFAULT_PAGINATION_PAGE = 1;
+// Alto o suficiente para as telas administrativas carregarem taxonomias inteiras (editoras,
+// autores) de uma vez só nos selects de cadastro, sem paginar - ver TAXONOMY_LIST_LIMIT no web.
+const MAX_PAGINATION_LIMIT = 500;
 
 const { Prisma } = require("./db.service");
 
@@ -8,7 +11,7 @@ module.exports = {
         const obj = {};
         obj.limit = Object.prototype.hasOwnProperty.call(pagination, "limit")
             ? pagination.limit >= 0
-                ? parseInt(pagination.limit)
+                ? Math.min(parseInt(pagination.limit), MAX_PAGINATION_LIMIT)
                 : DEFAULT_PAGINATION_LIMIT
             : DEFAULT_PAGINATION_LIMIT;
 
@@ -58,6 +61,24 @@ module.exports = {
         return obj;
     },
 
+    // Monta o bloco `pagination` padrão devolvido por todo endpoint de listagem
+    // ({page, limit, total_elements, total_pages, has_next, has_previous}), a partir do
+    // objeto retornado por parsePagination() e do total de linhas encontrado pela query de COUNT.
+    // Centraliza aqui o que antes era recalculado (e por vezes com bugs) em cada service.
+    buildPageMeta(paginationObj, total) {
+        const totalElements = Number(total);
+        const totalPages = paginationObj.limit > 0 ? Math.ceil(totalElements / paginationObj.limit) : 1;
+
+        return {
+            page: paginationObj.page,
+            limit: paginationObj.limit,
+            total_elements: totalElements,
+            total_pages: totalPages,
+            has_next: paginationObj.page < totalPages,
+            has_previous: paginationObj.page > 1
+        };
+    },
+
     parseListToPagination(pagination, obj) {
         const pgnation = module.exports.parsePagination(pagination);
 
@@ -74,7 +95,7 @@ module.exports = {
         response.totalPages = pgnation.limit === 0 ? 1 : Math.ceil(response.totalElements / pgnation.limit);
         response.page = pgnation.limit === 0 ? 1 : pgnation.page;
         response.pagingCounter = pgnation.limit === 0 ? 1 : (response.page - 1) * response.limit + 1;
-        response.hasPrevPage = pgnation.page > 1 && response.totalPages > pgnation.page;
+        response.hasPrevPage = pgnation.page > 1;
         response.hasNextPage = pgnation.page < response.totalPages;
         response.prevPage = response.hasPrevPage ? response.page - 1 : null;
         response.nextPage = response.hasNextPage ? response.page + 1 : null;

@@ -1,8 +1,9 @@
-const { end } = require("../../utils/request.service");
+const { end, respondError } = require("../../utils/request.service");
 const FEEDBACK = require("../../utils/feedback.service").getFeedbacks();
 const { validateSchema } = require("../../utils/validation.service");
 const bookService = require("../service/book.service");
 const { createBookSchema, updateBookSchema } = require("../../utils/schema/Book");
+const { getClientIp } = require("../../utils/ip.service");
 const UAParser = require("ua-parser-js");
 
 module.exports = {
@@ -18,9 +19,7 @@ module.exports = {
         const newBook = await bookService.createBook(book.data, req);
 
         if (newBook.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book = { error: newBook.error };
-            return end(req, res);
+            return respondError(req, res, "book", newBook);
         }
 
         req.response.meta.feedback = FEEDBACK.CREATED;
@@ -28,13 +27,56 @@ module.exports = {
         return next();
     },
 
+    async updateBook(req, res, next) {
+        const validated = validateSchema(updateBookSchema, req.body);
+
+        if (!validated.success) {
+            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
+            req.response.body.book = { error: validated.err };
+            return end(req, res);
+        }
+
+        const book = await bookService.updateBook(req.params.bookId, validated.data, req);
+
+        if (book.error) {
+            return respondError(req, res, "book", book);
+        }
+
+        req.response.meta.feedback = FEEDBACK.OK;
+        req.response.body.book = book;
+        return next();
+    },
+
+    async setBookTags(req, res, next) {
+        const tagIds = Array.isArray(req.body.tag_ids) ? req.body.tag_ids : [];
+        const book = await bookService.setBookTags(req.params.bookId, tagIds, req);
+
+        if (book.error) {
+            return respondError(req, res, "book", book);
+        }
+
+        req.response.meta.feedback = FEEDBACK.OK;
+        req.response.body.book = book;
+        return next();
+    },
+
+    async deleteBook(req, res, next) {
+        const book = await bookService.deleteBook(req.params.bookId, req);
+
+        if (book.error) {
+            return respondError(req, res, "book", book);
+        }
+
+        req.response.meta.feedback = FEEDBACK.OK;
+        req.response.body.book = book;
+        return next();
+    },
+
     async listBooks(req, res, next) {
         const book = await bookService.listBooks(req.body.filter, req.body.pagination);
 
         if (book.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book = { error: book.error };
-            return end(req, res);
+            return respondError(req, res, "book", book);
         }
 
         req.response.meta.feedback = FEEDBACK.READ;
@@ -46,9 +88,7 @@ module.exports = {
         const book = await bookService.getBook(req.params.bookId, req.params.bookSlug);
 
         if (book.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book = { error: book.error };
-            return end(req, res);
+            return respondError(req, res, "book", book);
         }
 
         req.response.meta.feedback = FEEDBACK.READ;
@@ -60,9 +100,7 @@ module.exports = {
         const book = await bookService.listPublicBooks(req.body.filter, req.body.pagination);
 
         if (book.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book = { error: book.error };
-            return end(req, res);
+            return respondError(req, res, "book", book);
         }
 
         req.response.meta.feedback = FEEDBACK.READ;
@@ -74,9 +112,7 @@ module.exports = {
         const book = await bookService.searchBooks(req.body.filter, req.body.pagination);
 
         if (book.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book = { error: book.error };
-            return end(req, res);
+            return respondError(req, res, "book", book);
         }
 
         req.response.meta.feedback = FEEDBACK.READ;
@@ -91,9 +127,7 @@ module.exports = {
         });
 
         if (book.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book = { error: book.error };
-            return end(req, res);
+            return respondError(req, res, "book", book);
         }
 
         req.response.meta.feedback = FEEDBACK.READ;
@@ -111,13 +145,11 @@ module.exports = {
             req.params.bookSlug,
             req.response.params.user,
             info,
-            req.headers["x-forwarded-for"]?.split(",").pop().trim() || req.socket.remoteAddress // ToDo: Fazer uma função utilitária para extrair o IP do request, considerando proxies e load balancers
+            getClientIp(req)
         );
 
         if (book.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book = { error: book.error };
-            return end(req, res);
+            return respondError(req, res, "book", book);
         }
 
         req.response.meta.feedback = FEEDBACK.READ;
@@ -129,9 +161,7 @@ module.exports = {
         const book = await bookService.listRelatedBooks(req.params.bookId, req.body.pagination);
 
         if (book.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book = { error: book.error };
-            return end(req, res);
+            return respondError(req, res, "book", book);
         }
 
         req.response.meta.feedback = FEEDBACK.READ;
@@ -143,9 +173,7 @@ module.exports = {
         const publishers = await bookService.listPublicPublishers(req.body.filter, req.body.pagination);
 
         if (publishers.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.publisher = { error: publishers.error };
-            return end(req, res);
+            return respondError(req, res, "publisher", publishers);
         }
 
         req.response.meta.feedback = FEEDBACK.READ;

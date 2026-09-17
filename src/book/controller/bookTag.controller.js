@@ -1,4 +1,4 @@
-const { end } = require("../../utils/request.service");
+const { end, respondError } = require("../../utils/request.service");
 const FEEDBACK = require("../../utils/feedback.service").getFeedbacks();
 const { validateSchema } = require("../../utils/validation.service");
 const bookTagService = require("../service/bookTag.service");
@@ -21,9 +21,7 @@ module.exports = {
         const newBookTag = await bookTagService.linkTagToBook(bookTag.data, req);
 
         if (newBookTag.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book_tag = { error: newBookTag.error };
-            return end(req, res);
+            return respondError(req, res, "book_tag", newBookTag);
         }
 
         req.response.meta.feedback = FEEDBACK.CREATED;
@@ -35,12 +33,10 @@ module.exports = {
         const newBookTag = await bookTagService.unlinkTagFromBook(req.params.tagId, req.params.bookId, req);
 
         if (newBookTag.error) {
-            req.response.meta.feedback = FEEDBACK.BAD_REQUEST;
-            req.response.body.book_tag = { error: newBookTag.error };
-            return end(req, res);
+            return respondError(req, res, "book_tag", newBookTag);
         }
 
-        req.response.meta.feedback = FEEDBACK.CREATED;
+        req.response.meta.feedback = FEEDBACK.OK;
         req.response.body.book_tag = newBookTag;
         return next();
     }

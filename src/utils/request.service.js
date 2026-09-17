@@ -9,6 +9,17 @@ const PRINT_REQUESTS = env.PRINT_REQUESTS === "true" ? true : false;
 const CMD_STYLE = cmdService.getCMDStyleCodes();
 
 module.exports = {
+    // Padroniza a resposta de erro de um controller a partir do retorno de um service
+    // (que já passou por db.service.js#parseError). `result.httpStatus` (quando presente)
+    // escolhe o FEEDBACK certo (404/409/500/...); na ausência dele cai em BAD_REQUEST,
+    // que é o caso de erro de validação de schema (entrada do cliente é sempre 400).
+    respondError(req, res, bodyKey, result) {
+        const feedbacks = feedbackService.getFeedbacks();
+        req.response.meta.feedback = feedbacks[result?.httpStatus] || feedbacks.BAD_REQUEST;
+        req.response.body[bodyKey] = { error: result?.error || result };
+        return module.exports.end(req, res);
+    },
+
     async init(req, res, next) {
         const requestId = await idService.getId(10);
         const method = expressService.getHttpMethodList()[req.method];

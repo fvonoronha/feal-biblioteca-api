@@ -1,13 +1,30 @@
 const method = require("express").Router();
 const { init, end } = require("../../utils/request.service");
-const { isAdmin } = require("../../utils/permission.service");
-const { slug } = require("../../utils/urlParams.service");
+const { id } = require("../../utils/urlParams.service");
+const { hasRole } = require("../../utils/permission.service");
 
-const { isAuth, isAuthOrNot } = require("../../auth/controller/auth.controller");
-const { listPublishers } = require("../controller/publisher.controller");
+const { attachUserIfPresent, requireAuth } = require("../../auth/controller/auth.controller");
+const {
+    listPublishers,
+    listPublishersToExplore,
+    listPublishersAdmin,
+    createPublisher,
+    updatePublisher,
+    deletePublisher
+} = require("../controller/publisher.controller");
 
-method.post(`/publishers`, init, isAuthOrNot, listPublishers, end);
+const canManageCatalog = hasRole("ADMIN", "LIBRARIAN");
 
-method.post(`/publishers-to-explore`, init, isAuthOrNot, listPublishers, end);
+method.post(`/publishers`, init, attachUserIfPresent, listPublishers, end);
+
+method.post(`/publishers-to-explore`, init, attachUserIfPresent, listPublishersToExplore, end);
+
+method.post(`/publishers/admin`, init, requireAuth, canManageCatalog, listPublishersAdmin, end);
+
+method.post(`/publisher`, init, requireAuth, canManageCatalog, createPublisher, end);
+
+method.put(`/publisher/${id("publisherId")}`, init, requireAuth, canManageCatalog, updatePublisher, end);
+
+method.delete(`/publisher/${id("publisherId")}`, init, requireAuth, canManageCatalog, deletePublisher, end);
 
 module.exports = method;

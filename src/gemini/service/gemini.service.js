@@ -1,13 +1,13 @@
-const { parsePagination } = require("../../utils/pagination.service");
-const { getSlug } = require("../../utils/id.service");
-const { encrypt2, decrypt2 } = require("../../utils/cryptography.service");
-const { treatVolumeFilters } = require("../../utils/filters.service");
-const { Prisma, db, parseError } = require("../../utils/db.service");
+const { parseError } = require("../../utils/db.service");
 
 const { env } = require("process");
 
-// const { GoogleGenAI } = require("@google/genai");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+if (!env.GEMINI_API_KEY) {
+    throw new Error("GEMINI_API_KEY não configurado.");
+}
+
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 
 const NUMBER_OF_RETRIES = 5;
@@ -497,103 +497,6 @@ const tagSlugs = tags.map((t) => t.slug);
 
 module.exports = {
     // Operações de Consumo
-    // async getVolumeEnhancedInfo(volume) {
-    //     try {
-    //         const vol = {
-    //             year: volume.year,
-    //             edition: volume.edition,
-    //             isbn_13: volume.isbn,
-    //             isbn_10: volume.isbn_old,
-    //             pages: volume.pages,
-    //             publisher: volume.publisher?.name || "Não informada",
-    //             title: volume.book.title,
-    //             description: volume.book.description,
-    //             authors: []
-    //         };
-
-    //         let authorsWritten = "";
-
-    //         for (let i in volume.authors) {
-    //             authorsWritten += `${volume.authors[i].name}, `;
-    //             vol.authors.push({
-    //                 name: volume.authors[i].name
-    //             });
-    //         }
-
-    //         const schema = {
-    //             type: "OBJECT",
-    //             properties: {
-    //                 summary: {
-    //                     type: "STRING",
-    //                     description:
-    //                         "Um resumo detalhado e fiel focado no conteúdo doutrinário do livro em até 500 palavras."
-    //                 },
-    //                 description: {
-    //                     type: "STRING",
-    //                     description:
-    //                         "Uma breve frase comercial de impacto para exibição rápida que chame a atenção para que as pessoas queiram ler."
-    //                 },
-    //                 recommended_for: {
-    //                     type: "STRING",
-    //                     description: "Um parágrafo indicando o leitor ideal para este livro."
-    //                 },
-    //                 category: {
-    //                     type: "STRING",
-    //                     enum: categorySlugs, // Força a IA a escolher uma destas
-    //                     description: "Selecione a categoria correspondente ao livro."
-    //                 },
-    //                 tags: {
-    //                     type: "ARRAY",
-    //                     items: {
-    //                         type: "STRING",
-    //                         enum: tagSlugs // Força a IA a escolher itens desta lista
-    //                     },
-    //                     description: "Selecione todos os temas doutrinários que tenham relação com o livro."
-    //                 },
-    //                 keywords: {
-    //                     type: "ARRAY",
-    //                     items: { type: "STRING" },
-    //                     description:
-    //                         "até 20 palavras-chave cruciais para busca, termos que possam ter relaçao com os assuntos abordados."
-    //                 }
-    //             },
-    //             required: ["summary", "description", "recommended_for", "category", "tags", "keywords"]
-    //         };
-
-    //         const model = genAI.getGenerativeModel({
-    //             model: "gemini-3.5-flash",
-    //             generationConfig: {
-    //                 responseMimeType: "application/json",
-    //                 responseSchema: schema
-    //             }
-    //         });
-
-    //         const prompt = `Você é um bibliotecário especialista em literatura espírita clássica e contemporânea.
-    //             Sua tarefa é analisar a obra fornecida abaixo e gerar metadados ricos e doutrinariamente precisos.
-    //             DADOS DO LIVRO:
-    //             - Título: "${vol.title}"
-    //             - Edição: "${vol.edition}"
-    //             - Ano: "${vol.year}"
-    //             - Autores: "${authorsWritten.slice(0, -2)}"
-    //             - ISBN: "${vol.isbn_13 || vol.isbn_10}"
-    //             - Resumo Base: "${(vol.description || "").replaceAll('"', "")}"
-    //             DIRETRIZES DE CONFIABILIDADE:
-    //             1. Baseie-se estritamente em fatos reais sobre a obra literária indicada.
-    //             2. Se você não souber dados reais sobre esta obra, use apenas as informações fornecidas no resumo simples para estruturar a resposta, sem inventar.`;
-
-    //         // return prompt;
-
-    //         const result = await model.generateContent(prompt);
-    //         const response = await result.response;
-    //         const jsonTexto = response.text();
-
-    //         return JSON.parse(jsonTexto);
-    //     } catch (err) {
-    //         console.log(err);
-    //         return parseError(err);
-    //     }
-    // },
-
     async getVolumeEnhancedInfo(book) {
         try {
             const bookData = {
@@ -676,6 +579,7 @@ module.exports = {
             // return prompt;
 
             console.log(`Calling for '${book.slug}':`);
+            let lastError;
             for (let i = 0; i < NUMBER_OF_RETRIES; i++) {
                 try {
                     const result = await model.generateContent(prompt);
@@ -684,11 +588,13 @@ module.exports = {
 
                     return JSON.parse(jsonTexto);
                 } catch (err) {
+                    lastError = err;
                     console.log(`\tError on the ${i + 1}* call: `, err.message);
-                    if (i < NUMBER_OF_RETRIES) continue;
-                    else return parseError(err);
                 }
             }
+            // Esgotou as tentativas: antes disso a função "caía do final" e retornava
+            // `undefined` silenciosamente, fazendo o controller quebrar ao checar `.error`.
+            return parseError(lastError);
         } catch (err) {
             return parseError(err);
         }
@@ -710,33 +616,10 @@ module.exports = {
                     },
                     description: {
                         type: "STRING",
-                        description: "Um resumo detalhado"
-                    },
-                    recommended_for: {
-                        type: "STRING",
-                        description: "Um parágrafo indicando o leitor ideal para este livro."
-                    },
-                    category: {
-                        type: "STRING",
-                        enum: categorySlugs, // Força a IA a escolher uma destas
-                        description: "Selecione a categoria correspondente ao livro."
-                    },
-                    tags: {
-                        type: "ARRAY",
-                        items: {
-                            type: "STRING",
-                            enum: tagSlugs // Força a IA a escolher itens desta lista
-                        },
-                        description: "Selecione todos os temas doutrinários que tenham relação com o livro."
-                    },
-                    keywords: {
-                        type: "ARRAY",
-                        items: { type: "STRING" },
-                        description:
-                            "até 20 palavras-chave cruciais para busca, termos que possam ter relaçao com os assuntos abordados."
+                        description: "Um resumo detalhado sobre a editora."
                     }
                 },
-                required: ["summary", "description", "recommended_for", "category", "tags", "keywords"]
+                required: ["abbreviation", "description"]
             };
 
             const model = genAI.getGenerativeModel({
@@ -748,25 +631,95 @@ module.exports = {
             });
 
             const prompt = `Você é um bibliotecário especialista em literatura espírita clássica e contemporânea.
-                Sua tarefa é analisar a obra fornecida abaixo e gerar metadados ricos e doutrinariamente precisos.
-                DADOS DO LIVRO:
-                - Título: "${bookData.title}"
-                - Autores: "${authorsWritten.slice(0, -2)}"
-                - ISBN: "${bookData.isbn_13 || bookData.isbn_10}"
-                - Resumo Base: "${(bookData.description || "").replaceAll('"', "")}"
+                Sua tarefa é analisar a editora fornecida abaixo e gerar metadados precisos sobre ela.
+                DADOS DA EDITORA:
+                - Nome: "${publisherData.name}"
                 DIRETRIZES DE CONFIABILIDADE:
-                1. Baseie-se estritamente em fatos reais sobre a obra literária indicada.
-                2. Se você não souber dados reais sobre esta obra, use apenas as informações fornecidas no resumo simples para estruturar a resposta, sem inventar.`;
+                1. Baseie-se estritamente em fatos reais sobre a editora indicada.
+                2. Se você não souber dados reais sobre esta editora, devolva uma descrição genérica sem inventar fatos.`;
 
-            // return prompt;
+            let lastError;
+            for (let i = 0; i < NUMBER_OF_RETRIES; i++) {
+                try {
+                    const result = await model.generateContent(prompt);
+                    const response = await result.response;
+                    const jsonTexto = response.text();
 
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const jsonTexto = response.text();
-
-            return JSON.parse(jsonTexto);
+                    return JSON.parse(jsonTexto);
+                } catch (err) {
+                    lastError = err;
+                    console.log(`\tError on the ${i + 1}* call: `, err.message);
+                }
+            }
+            return parseError(lastError);
         } catch (err) {
-            console.log(err);
+            return parseError(err);
+        }
+    },
+
+    async getAuthorEnhancedInfo(author) {
+        try {
+            const authorData = {
+                name: author.name,
+                is_spirit: author.is_spirit
+            };
+
+            const schema = {
+                type: "OBJECT",
+                properties: {
+                    description: {
+                        type: "STRING",
+                        description:
+                            "Uma biografia fiel e concisa do autor (até 400 palavras), sem inventar fatos. Se o autor for um espírito comunicante " +
+                            "(desencarnado), foque na sua trajetória enquanto encarnado, se conhecida, e no contexto de suas obras psicografadas."
+                    },
+                    birth_date: {
+                        type: "STRING",
+                        description:
+                            "Data de nascimento no formato AAAA-MM-DD, apenas se for um fato real e conhecido. Se não souber o dia/mês exatos, omita o campo."
+                    },
+                    death_date: {
+                        type: "STRING",
+                        description:
+                            "Data de falecimento/desencarne no formato AAAA-MM-DD, apenas se for um fato real e conhecido e o autor já tiver desencarnado. Se não souber o dia/mês exatos, omita o campo."
+                    }
+                },
+                required: ["description"]
+            };
+
+            const model = genAI.getGenerativeModel({
+                model: "gemini-3.5-flash",
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: schema
+                }
+            });
+
+            const prompt = `Você é um bibliotecário especialista em literatura espírita clássica e contemporânea.
+                Sua tarefa é analisar o autor fornecido abaixo e gerar metadados biográficos fiéis sobre ele.
+                DADOS DO AUTOR:
+                - Nome: "${authorData.name}"
+                - É um espírito comunicante (desencarnado)?: "${authorData.is_spirit ? "Sim" : "Não"}"
+                DIRETRIZES DE CONFIABILIDADE:
+                1. Baseie-se estritamente em fatos reais sobre o autor indicado.
+                2. Nunca invente datas de nascimento ou falecimento - se não tiver certeza, omita o campo.
+                3. Se você não souber dados reais sobre este autor, devolva uma descrição genérica sem inventar fatos.`;
+
+            let lastError;
+            for (let i = 0; i < NUMBER_OF_RETRIES; i++) {
+                try {
+                    const result = await model.generateContent(prompt);
+                    const response = await result.response;
+                    const jsonTexto = response.text();
+
+                    return JSON.parse(jsonTexto);
+                } catch (err) {
+                    lastError = err;
+                    console.log(`\tError on the ${i + 1}* call: `, err.message);
+                }
+            }
+            return parseError(lastError);
+        } catch (err) {
             return parseError(err);
         }
     }

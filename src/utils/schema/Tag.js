@@ -1,8 +1,8 @@
 const { z } = require("zod");
 
 const createTagSchema = z.object({
-    name: z.string().min(1, "Nome é obrigatório"),
-    description: z.string().optional(),
+    name: z.string().min(1, "Nome é obrigatório").max(200),
+    description: z.string().max(2000).optional(),
     status: z.enum(["A", "I", "D"]).optional(),
     slug: z
         .string()

@@ -41,29 +41,31 @@ model User {
   password     String?
   email        String?
   phone        String?
+  document     String?    @unique() // CPF (somente dígitos)
   role         UserRole   @default(MEMBER)
 
-  auth_tokens            UserAuthToken[] @relation(name: "UserAuthToken_User")
-  created_authors        Author[]        @relation(name: "Author_User_created_by_user_id")
-  updated_authors        Author[]        @relation(name: "Author_User_updated_by_user_id")
-  created_books          Book[]          @relation(name: "Book_User_created_by_user_id")
-  updated_books          Book[]          @relation(name: "Book_User_updated_by_user_id")
-  created_volumes        Volume[]        @relation(name: "Volume_User_created_by_user_id")
-  updated_volumes        Volume[]        @relation(name: "Volume_User_updated_by_user_id")
-  created_book_authors   VolumeAuthor[]  @relation(name: "VolumeAuthor_User_created_by_user_id")
-  updated_volume_authors VolumeAuthor[]  @relation(name: "VolumeAuthor_User_updated_by_user_id")
-  created_tags           Tag[]           @relation(name: "Tag_User_created_by_user_id")
-  updated_tags           Tag[]           @relation(name: "Tag_User_updated_by_user_id")
-  created_publishers     Publisher[]     @relation(name: "Publisher_User_created_by_user_id")
-  updated_publishers     Publisher[]     @relation(name: "Publisher_User_updated_by_user_id")
-  created_book_tags      BookTag[]       @relation(name: "BookTag_User_created_by_user_id")
-  updated_book_tags      BookTag[]       @relation(name: "BookTag_User_updated_by_user_id")
-  created_volume_loans   VolumeLoan[]    @relation(name: "VolumeLoan_User_created_by_user_id")
-  updated_volume_loans   VolumeLoan[]    @relation(name: "VolumeLoan_User_updated_by_user_id")
-  created_categories     Category[]      @relation(name: "Category_User_created_by_user_id")
-  updated_categories     Category[]      @relation(name: "Category_User_updated_by_user_id")
-  volume_accesses        VolumeAccess[]  @relation(name: "VolumeAccess_User_created_by_user_id")
-  volume_loans           VolumeLoan[]    @relation(name: "VolumeLoan_User_user_id")
+  auth_tokens            UserAuthToken[]      @relation(name: "UserAuthToken_User")
+  created_authors        Author[]             @relation(name: "Author_User_created_by_user_id")
+  updated_authors        Author[]             @relation(name: "Author_User_updated_by_user_id")
+  created_books          Book[]               @relation(name: "Book_User_created_by_user_id")
+  updated_books          Book[]               @relation(name: "Book_User_updated_by_user_id")
+  created_volumes        Volume[]             @relation(name: "Volume_User_created_by_user_id")
+  updated_volumes        Volume[]             @relation(name: "Volume_User_updated_by_user_id")
+  created_book_authors   VolumeAuthor[]       @relation(name: "VolumeAuthor_User_created_by_user_id")
+  updated_volume_authors VolumeAuthor[]       @relation(name: "VolumeAuthor_User_updated_by_user_id")
+  created_tags           Tag[]                @relation(name: "Tag_User_created_by_user_id")
+  updated_tags           Tag[]                @relation(name: "Tag_User_updated_by_user_id")
+  created_publishers     Publisher[]          @relation(name: "Publisher_User_created_by_user_id")
+  updated_publishers     Publisher[]          @relation(name: "Publisher_User_updated_by_user_id")
+  created_book_tags      BookTag[]            @relation(name: "BookTag_User_created_by_user_id")
+  updated_book_tags      BookTag[]            @relation(name: "BookTag_User_updated_by_user_id")
+  created_volume_loans   VolumeLoan[]         @relation(name: "VolumeLoan_User_created_by_user_id")
+  updated_volume_loans   VolumeLoan[]         @relation(name: "VolumeLoan_User_updated_by_user_id")
+  created_categories     Category[]           @relation(name: "Category_User_created_by_user_id")
+  updated_categories     Category[]           @relation(name: "Category_User_updated_by_user_id")
+  volume_accesses        VolumeAccess[]       @relation(name: "VolumeAccess_User_created_by_user_id")
+  volume_loans           VolumeLoan[]         @relation(name: "VolumeLoan_User_user_id")
+  password_reset_tokens  PasswordResetToken[] @relation(name: "PasswordResetToken_User_user_id")
 
   @@index([login])
   @@index([status])
@@ -97,6 +99,23 @@ model UserAuthToken {
   @@map("user_auth_token")
 }
 
+model PasswordResetToken {
+  id         BigInt    @id() @unique() @default(autoincrement())
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  created_ip String?
+  user_id    BigInt
+  token      String    @unique()
+  expires_at DateTime  @db.Timestamptz(6)
+  used_at    DateTime? @db.Timestamptz(6)
+
+  user User @relation(fields: [user_id], references: [id], name: "PasswordResetToken_User_user_id")
+
+  @@index([user_id])
+  @@index([token])
+  @@index([expires_at])
+  @@map("password_reset_token")
+}
+
 model Author {
   id                 BigInt     @id() @unique() @default(autoincrement())
   slug               String     @unique() @default(uuid())
@@ -110,6 +129,8 @@ model Author {
   description        String?
   avatar_url         String?
   is_spirit          Boolean    @default(false)
+  birth_date         DateTime?  @db.Date
+  death_date         DateTime?  @db.Date
 
   created_by_user User  @relation(fields: [created_by_user_id], references: [id], name: "Author_User_created_by_user_id")
   updated_by_user User? @relation(fields: [updated_by_user_id], references: [id], name: "Author_User_updated_by_user_id")
@@ -367,22 +388,27 @@ model VolumeLoan {
   updated_by_user_id BigInt?
   status             StatusEnum @default(A)
 
-  volume_id BigInt
-  user_id   BigInt
+  volume_id            BigInt
+  user_id              BigInt
+  renewed_from_loan_id BigInt?
 
   loan_date   DateTime  @default(now()) @db.Timestamptz(6)
   due_date    DateTime
   return_date DateTime?
   description String?
 
-  created_by_user User   @relation(fields: [created_by_user_id], references: [id], name: "VolumeLoan_User_created_by_user_id")
-  updated_by_user User?  @relation(fields: [updated_by_user_id], references: [id], name: "VolumeLoan_User_updated_by_user_id")
-  user            User   @relation(fields: [user_id], references: [id], name: "VolumeLoan_User_user_id")
-  volume          Volume @relation(fields: [volume_id], references: [id], name: "VolumeLoan_Volume_volume_id")
+  created_by_user    User         @relation(fields: [created_by_user_id], references: [id], name: "VolumeLoan_User_created_by_user_id")
+  updated_by_user    User?        @relation(fields: [updated_by_user_id], references: [id], name: "VolumeLoan_User_updated_by_user_id")
+  user               User         @relation(fields: [user_id], references: [id], name: "VolumeLoan_User_user_id")
+  volume             Volume       @relation(fields: [volume_id], references: [id], name: "VolumeLoan_Volume_volume_id")
+  renewed_from_loan  VolumeLoan?  @relation(fields: [renewed_from_loan_id], references: [id], name: "VolumeLoan_RenewedFrom")
+  renewed_into_loans VolumeLoan[] @relation(name: "VolumeLoan_RenewedFrom")
 
   @@index([status])
   @@index([volume_id])
   @@index([user_id])
+  @@index([due_date])
+  @@index([renewed_from_loan_id])
   @@map("volume_loan")
 }
 
