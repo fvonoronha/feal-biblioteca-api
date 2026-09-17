@@ -4,9 +4,14 @@
     "private": true,
     "description": "API da Biblioteca digital da Fraternidade Espírita Amor e Luz - FEAL",
     "main": "server.js",
+    "engines": {
+        "node": ">=20"
+    },
     "scripts": {
-        "start": "set NODE_OPTIONS=--openssl-legacy-provider && node server.js",
-        "dev": "set NODE_OPTIONS=--openssl-legacy-provider && nodemon server.js -ext js,json,env,proto,prisma"
+        "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider node server.js",
+        "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider nodemon server.js -ext js,json,env,proto,prisma",
+        "prisma:validate": "prisma validate",
+        "prisma:generate": "prisma generate"
     },
     "keywords": [
         "FEAL",
@@ -15,26 +20,23 @@
     "author": "Scient1st",
     "license": "Apache-2.0",
     "dependencies": {
-        "@google/genai": "^2.11.0",
+        "@aws-sdk/client-s3": "^3.1134.0",
         "@google/generative-ai": "^0.24.1",
-        "@prisma/adapter-pg": "^7.4.2",
-        "@prisma/client": "^6.7.0",
-        "axios": "^1.13.6",
+        "@prisma/client": "^6.19.2",
         "bcrypt": "^6.0.0",
         "cors": "^2.8.6",
-        "crypto": "^1.0.1",
+        "cross-env": "^10.1.0",
         "dotenv": "^17.3.1",
         "express": "^5.2.1",
-        "fs": "^0.0.1-security",
-        "https": "^1.0.0",
+        "express-rate-limit": "^8.2.1",
+        "helmet": "^8.1.0",
         "json-bigint-patch": "^0.0.9",
         "jsonwebtoken": "^9.0.3",
+        "multer": "^2.4.0",
         "node-cron": "^4.2.1",
         "nodemailer": "^9.1.1",
         "nodemon": "^3.1.14",
-        "npm": "^11.6.0",
-        "path": "^0.12.7",
-        "pg": "^8.20.0",
+        "sharp": "^0.35.4",
         "short-unique-id": "^5.3.2",
         "ua-parser-js": "^2.0.9",
         "zod": "^4.3.6"

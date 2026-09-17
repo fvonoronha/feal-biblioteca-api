@@ -1,10 +1,6 @@
-const { parsePagination } = require("../../utils/pagination.service");
-const { getSlug } = require("../../utils/id.service");
-const { encrypt2, decrypt2 } = require("../../utils/cryptography.service");
-const { db, parseError } = require("../../utils/db.service");
+const { db, parseError, notFoundError } = require("../../utils/db.service");
 
 module.exports = {
-    // Operaçoes de Gerenciamento
     async linkTagToBook(bookTag, req) {
         try {
             const exists = await db.bookTag.findFirst({
@@ -16,20 +12,21 @@ module.exports = {
             });
 
             if (exists) {
-                throw new Error("Tag already linked to this book");
+                return { httpStatus: "CONFLICT", error: [{ field: "tag_id", message: "Tema já vinculado a este livro" }] };
             }
 
             const newBookTag = await db.bookTag.create({
                 data: {
-                    ...bookTag,
-                    slug: getSlug(),
+                    tag_id: bookTag.tag_id,
+                    book_id: bookTag.book_id,
                     created_at: new Date(),
                     created_by_user_id: req.response.params.user.id
                 },
                 select: {
-                    // ToDo: Ajustar os campos retornados
                     id: true,
-                    slug: true
+                    tag_id: true,
+                    book_id: true,
+                    status: true
                 }
             });
 
@@ -43,14 +40,14 @@ module.exports = {
         try {
             const bookTag = await db.bookTag.findFirst({
                 where: {
-                    tag_id: tagId,
-                    book_id: bookId,
+                    tag_id: parseInt(tagId),
+                    book_id: parseInt(bookId),
                     status: "A"
                 }
             });
 
             if (!bookTag) {
-                throw new Error("Tag is not linked to this book");
+                throw notFoundError("Tema não está vinculado a este livro");
             }
             const updatedBookTag = await db.bookTag.update({
                 where: {

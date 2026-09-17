@@ -1,61 +1,61 @@
-const { parsePagination } = require("../../utils/pagination.service");
 const { getSlug } = require("../../utils/id.service");
-const { encrypt2, decrypt2 } = require("../../utils/cryptography.service");
-const { db, parseError } = require("../../utils/db.service");
+const { db, parseError, notFoundError } = require("../../utils/db.service");
 
 module.exports = {
-    // Operaçoes de Gerenciamento
-    async linkAuthorToBook(bookAuthor, req) {
+    async linkAuthorToBook(volumeAuthor, req) {
         try {
-            const exists = await db.bookAuthor.findFirst({
+            const exists = await db.volumeAuthor.findFirst({
                 where: {
-                    author_id: bookAuthor.author_id,
-                    book_id: bookAuthor.book_id,
+                    author_id: volumeAuthor.author_id,
+                    volume_id: volumeAuthor.volume_id,
                     status: "A"
                 }
             });
 
             if (exists) {
-                throw new Error("Author already linked to this book");
+                return { httpStatus: "CONFLICT", error: [{ field: "author_id", message: "Autor já vinculado a este volume" }] };
             }
 
-            const newBookAuthor = await db.bookAuthor.create({
+            const newVolumeAuthor = await db.volumeAuthor.create({
                 data: {
-                    ...bookAuthor,
-                    slug: getSlug(),
+                    author_id: volumeAuthor.author_id,
+                    volume_id: volumeAuthor.volume_id,
+                    description: volumeAuthor.description,
                     created_at: new Date(),
                     created_by_user_id: req.response.params.user.id
                 },
                 select: {
-                    // ToDo: Ajustar os campos retornados
                     id: true,
-                    slug: true,
-                    description: true
+                    author_id: true,
+                    volume_id: true,
+                    description: true,
+                    status: true
                 }
             });
 
-            return newBookAuthor;
+            return newVolumeAuthor;
         } catch (err) {
             return parseError(err);
         }
     },
 
-    async unlinkAuthorFromBook(authorId, bookId, req) {
+    async unlinkAuthorFromBook(authorId, volumeId, req) {
         try {
-            const bookAuthor = await db.bookAuthor.findFirst({
+            const volumeAuthor = await db.volumeAuthor.findFirst({
                 where: {
-                    author_id: authorId,
-                    book_id: bookId,
+                    author_id: parseInt(authorId),
+                    volume_id: parseInt(volumeId),
                     status: "A"
                 }
             });
 
-            if (!bookAuthor) {
-                throw new Error("Author is not linked to this book");
+            if (!volumeAuthor) {
+                throw notFoundError("Autor não está vinculado a este volume");
             }
-            const updatedBookAuthor = await db.bookAuthor.update({
+
+            const updatedVolumeAuthor = await db.volumeAuthor.update({
                 where: {
-                    id: bookAuthor.id
+                    id: volumeAuthor.id
                 },
                 data: {
                     status: "D",
@@ -65,13 +65,13 @@ module.exports = {
                 select: {
                     id: true,
                     author_id: true,
-                    book_id: true,
+                    volume_id: true,
                     status: true,
                     updated_at: true
                 }
             });
 
-            return updatedBookAuthor;
+            return updatedVolumeAuthor;
         } catch (err) {
             return parseError(err);
         }

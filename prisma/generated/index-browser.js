@@ -133,6 +133,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   email: 'email',
   phone: 'phone',
+  document: 'document',
   role: 'role'
 };
 
@@ -151,6 +152,16 @@ exports.Prisma.UserAuthTokenScalarFieldEnum = {
   user_id: 'user_id'
 };
 
+exports.Prisma.PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  created_ip: 'created_ip',
+  user_id: 'user_id',
+  token: 'token',
+  expires_at: 'expires_at',
+  used_at: 'used_at'
+};
+
 exports.Prisma.AuthorScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
@@ -163,7 +174,9 @@ exports.Prisma.AuthorScalarFieldEnum = {
   status: 'status',
   description: 'description',
   avatar_url: 'avatar_url',
-  is_spirit: 'is_spirit'
+  is_spirit: 'is_spirit',
+  birth_date: 'birth_date',
+  death_date: 'death_date'
 };
 
 exports.Prisma.VolumeAuthorScalarFieldEnum = {
@@ -311,6 +324,7 @@ exports.Prisma.VolumeLoanScalarFieldEnum = {
   status: 'status',
   volume_id: 'volume_id',
   user_id: 'user_id',
+  renewed_from_loan_id: 'renewed_from_loan_id',
   loan_date: 'loan_date',
   due_date: 'due_date',
   return_date: 'return_date',
@@ -355,6 +369,7 @@ exports.UserRole = exports.$Enums.UserRole = {
 exports.Prisma.ModelName = {
   User: 'User',
   UserAuthToken: 'UserAuthToken',
+  PasswordResetToken: 'PasswordResetToken',
   Author: 'Author',
   VolumeAuthor: 'VolumeAuthor',
   Tag: 'Tag',

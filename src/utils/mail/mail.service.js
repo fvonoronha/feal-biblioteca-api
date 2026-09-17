@@ -33,6 +33,18 @@ if (!SMTP_SERVER_PASSWORD) {
     throw new Error("SMTP_SERVER_PASSWORD não configurado.");
 }
 
+if (!SMTP_SERVER_FROM_ADDRESS) {
+    throw new Error("SMTP_SERVER_FROM_ADDRESS não configurado.");
+}
+
+if (!WEB_URL) {
+    throw new Error("WEB_URL não configurado.");
+}
+
+// Aceita WEB_URL com ou sem esquema (ex.: "biblioteca.feal.org.br" ou "https://biblioteca.feal.org.br")
+// para não gerar links quebrados como "https://https://...".
+const WEB_BASE_URL = /^https?:\/\//i.test(WEB_URL) ? WEB_URL : `https://${WEB_URL}`;
+
 const transporter = nodemailer.createTransport({
     host: SMTP_SERVER_HOST,
     port: Number(SMTP_SERVER_PORT),
@@ -55,9 +67,19 @@ module.exports = {
         const html = replaceVariables(await fs.readFile(templatePath, "utf8"), {
             NAME: cap(user.name.split(" ")[0]),
             LOGIN: user.login.toLowerCase(),
-            URL: `https://${WEB_URL}`
+            URL: WEB_BASE_URL
         });
         return await module.exports.sendSimpleEmail(user.email, "Bem-vindo à Biblioteca da FEAL!", html);
+    },
+
+    async sendPasswordResetEmail(user, token, expiresInText) {
+        const templatePath = path.join(__dirname, "templates", "passwordReset.html");
+        const html = replaceVariables(await fs.readFile(templatePath, "utf8"), {
+            NAME: cap(user.name.split(" ")[0]),
+            URL: `${WEB_BASE_URL}/recuperar-senha?token=${encodeURIComponent(token)}`,
+            EXPIRES_IN: expiresInText || "1 hora"
+        });
+        return await module.exports.sendSimpleEmail(user.email, "Redefinição de senha - Biblioteca FEAL", html);
     },
 
     async sendSimpleEmail(to, subject, body, attachments = [], options = {}) {

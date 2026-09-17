@@ -41,7 +41,8 @@ const HTTP_METHODS = {
 };
 
 const printRoutes = (prefix, router) => {
-    for (let i = 0; i < router.stack.length; i++)
+    for (let i = 0; i < router.stack.length; i++) {
+        if (!router.stack[i].route) continue; // middleware registrado via router.use(), sem rota própria
         for (const m in router.stack[i].route.methods) {
             const method = Object.prototype.hasOwnProperty.call(HTTP_METHODS, `${m}`.toUpperCase())
                 ? HTTP_METHODS[`${m}`.toUpperCase()]
@@ -59,6 +60,7 @@ const printRoutes = (prefix, router) => {
                     `\t${`${importedRoutes}`.padStart(4, " ").padEnd(6, " ")}${`[${method.color}${method.name}${CMD_STYLE.DEFAULT}] `.padEnd(22, " ")}${prefix}${path}`
                 );
         }
+    }
 };
 
 const printedTopLevelPaths = {};
@@ -113,12 +115,21 @@ module.exports = {
     },
 
     importRoutes(server, basePath) {
+        // Só recursa em diretórios de verdade - arquivos soltos na raiz de src/ (ex.: .DS_Store
+        // do macOS) faziam isso estourar com ENOTDIR em todo boot, erro que ficava escondido
+        // pelo try/catch vazio que existia aqui antes.
         fs.readdirSync(basePath).forEach((dirName) => {
-            try {
-                importRoutes(server, `${basePath}/${dirName}`, `${dirName}`);
-            } catch {
-                // Error handling can be added here if needed
-            }
+            if (!fs.lstatSync(`${basePath}/${dirName}`).isDirectory()) return;
+            importRoutes(server, `${basePath}/${dirName}`, `${dirName}`);
         });
+
+        // Um arquivo de rota quebrado hoje só logava um erro e o boot seguia como se estivesse tudo bem,
+        // publicando a API com rotas faltando. Falha o processo para o problema ser notado imediatamente.
+        if (RouterFileErrors > 0) {
+            console.error(
+                `\n\t${CMD_STYLE.BG_BRIGHT_RED}${CMD_STYLE.BOLD} Boot abortado: ${RouterFileErrors} arquivo(s) de rota com erro. ${CMD_STYLE.DEFAULT}\n`
+            );
+            process.exit(1);
+        }
     }
 };

@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type UserAuthToken = $Result.DefaultSelection<Prisma.$UserAuthTokenPayload>
 /**
+ * Model PasswordResetToken
+ * 
+ */
+export type PasswordResetToken = $Result.DefaultSelection<Prisma.$PasswordResetTokenPayload>
+/**
  * Model Author
  * 
  */
@@ -258,6 +263,16 @@ export class PrismaClient<
     * ```
     */
   get userAuthToken(): Prisma.UserAuthTokenDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.passwordResetToken`: Exposes CRUD operations for the **PasswordResetToken** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PasswordResetTokens
+    * const passwordResetTokens = await prisma.passwordResetToken.findMany()
+    * ```
+    */
+  get passwordResetToken(): Prisma.PasswordResetTokenDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.author`: Exposes CRUD operations for the **Author** model.
@@ -801,6 +816,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     UserAuthToken: 'UserAuthToken',
+    PasswordResetToken: 'PasswordResetToken',
     Author: 'Author',
     VolumeAuthor: 'VolumeAuthor',
     Tag: 'Tag',
@@ -829,7 +845,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userAuthToken" | "author" | "volumeAuthor" | "tag" | "bookTag" | "category" | "publisher" | "book" | "volume" | "volumeAccess" | "volumeLoan"
+      modelProps: "user" | "userAuthToken" | "passwordResetToken" | "author" | "volumeAuthor" | "tag" | "bookTag" | "category" | "publisher" | "book" | "volume" | "volumeAccess" | "volumeLoan"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -978,6 +994,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserAuthTokenCountArgs<ExtArgs>
             result: $Utils.Optional<UserAuthTokenCountAggregateOutputType> | number
+          }
+        }
+      }
+      PasswordResetToken: {
+        payload: Prisma.$PasswordResetTokenPayload<ExtArgs>
+        fields: Prisma.PasswordResetTokenFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PasswordResetTokenFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PasswordResetTokenFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload>
+          }
+          findFirst: {
+            args: Prisma.PasswordResetTokenFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PasswordResetTokenFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload>
+          }
+          findMany: {
+            args: Prisma.PasswordResetTokenFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload>[]
+          }
+          create: {
+            args: Prisma.PasswordResetTokenCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload>
+          }
+          createMany: {
+            args: Prisma.PasswordResetTokenCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PasswordResetTokenCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload>[]
+          }
+          delete: {
+            args: Prisma.PasswordResetTokenDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload>
+          }
+          update: {
+            args: Prisma.PasswordResetTokenUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload>
+          }
+          deleteMany: {
+            args: Prisma.PasswordResetTokenDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PasswordResetTokenUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PasswordResetTokenUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload>[]
+          }
+          upsert: {
+            args: Prisma.PasswordResetTokenUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PasswordResetTokenPayload>
+          }
+          aggregate: {
+            args: Prisma.PasswordResetTokenAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePasswordResetToken>
+          }
+          groupBy: {
+            args: Prisma.PasswordResetTokenGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PasswordResetTokenGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PasswordResetTokenCountArgs<ExtArgs>
+            result: $Utils.Optional<PasswordResetTokenCountAggregateOutputType> | number
           }
         }
       }
@@ -1819,6 +1909,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     userAuthToken?: UserAuthTokenOmit
+    passwordResetToken?: PasswordResetTokenOmit
     author?: AuthorOmit
     volumeAuthor?: VolumeAuthorOmit
     tag?: TagOmit
@@ -1930,6 +2021,7 @@ export namespace Prisma {
     updated_categories: number
     volume_accesses: number
     volume_loans: number
+    password_reset_tokens: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1954,6 +2046,7 @@ export namespace Prisma {
     updated_categories?: boolean | UserCountOutputTypeCountUpdated_categoriesArgs
     volume_accesses?: boolean | UserCountOutputTypeCountVolume_accessesArgs
     volume_loans?: boolean | UserCountOutputTypeCountVolume_loansArgs
+    password_reset_tokens?: boolean | UserCountOutputTypeCountPassword_reset_tokensArgs
   }
 
   // Custom InputTypes
@@ -2112,6 +2205,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountVolume_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VolumeLoanWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPassword_reset_tokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PasswordResetTokenWhereInput
   }
 
 
@@ -2320,6 +2420,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type VolumeLoanCountOutputType
+   */
+
+  export type VolumeLoanCountOutputType = {
+    renewed_into_loans: number
+  }
+
+  export type VolumeLoanCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    renewed_into_loans?: boolean | VolumeLoanCountOutputTypeCountRenewed_into_loansArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * VolumeLoanCountOutputType without action
+   */
+  export type VolumeLoanCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoanCountOutputType
+     */
+    select?: VolumeLoanCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * VolumeLoanCountOutputType without action
+   */
+  export type VolumeLoanCountOutputTypeCountRenewed_into_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VolumeLoanWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -2355,6 +2486,7 @@ export namespace Prisma {
     password: string | null
     email: string | null
     phone: string | null
+    document: string | null
     role: $Enums.UserRole | null
   }
 
@@ -2370,6 +2502,7 @@ export namespace Prisma {
     password: string | null
     email: string | null
     phone: string | null
+    document: string | null
     role: $Enums.UserRole | null
   }
 
@@ -2385,6 +2518,7 @@ export namespace Prisma {
     password: number
     email: number
     phone: number
+    document: number
     role: number
     _all: number
   }
@@ -2410,6 +2544,7 @@ export namespace Prisma {
     password?: true
     email?: true
     phone?: true
+    document?: true
     role?: true
   }
 
@@ -2425,6 +2560,7 @@ export namespace Prisma {
     password?: true
     email?: true
     phone?: true
+    document?: true
     role?: true
   }
 
@@ -2440,6 +2576,7 @@ export namespace Prisma {
     password?: true
     email?: true
     phone?: true
+    document?: true
     role?: true
     _all?: true
   }
@@ -2542,6 +2679,7 @@ export namespace Prisma {
     password: string | null
     email: string | null
     phone: string | null
+    document: string | null
     role: $Enums.UserRole
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -2576,6 +2714,7 @@ export namespace Prisma {
     password?: boolean
     email?: boolean
     phone?: boolean
+    document?: boolean
     role?: boolean
     auth_tokens?: boolean | User$auth_tokensArgs<ExtArgs>
     created_authors?: boolean | User$created_authorsArgs<ExtArgs>
@@ -2598,6 +2737,7 @@ export namespace Prisma {
     updated_categories?: boolean | User$updated_categoriesArgs<ExtArgs>
     volume_accesses?: boolean | User$volume_accessesArgs<ExtArgs>
     volume_loans?: boolean | User$volume_loansArgs<ExtArgs>
+    password_reset_tokens?: boolean | User$password_reset_tokensArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2613,6 +2753,7 @@ export namespace Prisma {
     password?: boolean
     email?: boolean
     phone?: boolean
+    document?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2628,6 +2769,7 @@ export namespace Prisma {
     password?: boolean
     email?: boolean
     phone?: boolean
+    document?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2643,10 +2785,11 @@ export namespace Prisma {
     password?: boolean
     email?: boolean
     phone?: boolean
+    document?: boolean
     role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "name" | "display_name" | "sex" | "login" | "status" | "password" | "email" | "phone" | "role", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "name" | "display_name" | "sex" | "login" | "status" | "password" | "email" | "phone" | "document" | "role", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     auth_tokens?: boolean | User$auth_tokensArgs<ExtArgs>
     created_authors?: boolean | User$created_authorsArgs<ExtArgs>
@@ -2669,6 +2812,7 @@ export namespace Prisma {
     updated_categories?: boolean | User$updated_categoriesArgs<ExtArgs>
     volume_accesses?: boolean | User$volume_accessesArgs<ExtArgs>
     volume_loans?: boolean | User$volume_loansArgs<ExtArgs>
+    password_reset_tokens?: boolean | User$password_reset_tokensArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2698,6 +2842,7 @@ export namespace Prisma {
       updated_categories: Prisma.$CategoryPayload<ExtArgs>[]
       volume_accesses: Prisma.$VolumeAccessPayload<ExtArgs>[]
       volume_loans: Prisma.$VolumeLoanPayload<ExtArgs>[]
+      password_reset_tokens: Prisma.$PasswordResetTokenPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -2711,6 +2856,7 @@ export namespace Prisma {
       password: string | null
       email: string | null
       phone: string | null
+      document: string | null
       role: $Enums.UserRole
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -3127,6 +3273,7 @@ export namespace Prisma {
     updated_categories<T extends User$updated_categoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$updated_categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     volume_accesses<T extends User$volume_accessesArgs<ExtArgs> = {}>(args?: Subset<T, User$volume_accessesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     volume_loans<T extends User$volume_loansArgs<ExtArgs> = {}>(args?: Subset<T, User$volume_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    password_reset_tokens<T extends User$password_reset_tokensArgs<ExtArgs> = {}>(args?: Subset<T, User$password_reset_tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3167,6 +3314,7 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
+    readonly document: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
   }
     
@@ -4057,6 +4205,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VolumeLoanScalarFieldEnum | VolumeLoanScalarFieldEnum[]
+  }
+
+  /**
+   * User.password_reset_tokens
+   */
+  export type User$password_reset_tokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    where?: PasswordResetTokenWhereInput
+    orderBy?: PasswordResetTokenOrderByWithRelationInput | PasswordResetTokenOrderByWithRelationInput[]
+    cursor?: PasswordResetTokenWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PasswordResetTokenScalarFieldEnum | PasswordResetTokenScalarFieldEnum[]
   }
 
   /**
@@ -5266,6 +5438,1128 @@ export namespace Prisma {
 
 
   /**
+   * Model PasswordResetToken
+   */
+
+  export type AggregatePasswordResetToken = {
+    _count: PasswordResetTokenCountAggregateOutputType | null
+    _avg: PasswordResetTokenAvgAggregateOutputType | null
+    _sum: PasswordResetTokenSumAggregateOutputType | null
+    _min: PasswordResetTokenMinAggregateOutputType | null
+    _max: PasswordResetTokenMaxAggregateOutputType | null
+  }
+
+  export type PasswordResetTokenAvgAggregateOutputType = {
+    id: number | null
+    user_id: number | null
+  }
+
+  export type PasswordResetTokenSumAggregateOutputType = {
+    id: bigint | null
+    user_id: bigint | null
+  }
+
+  export type PasswordResetTokenMinAggregateOutputType = {
+    id: bigint | null
+    created_at: Date | null
+    created_ip: string | null
+    user_id: bigint | null
+    token: string | null
+    expires_at: Date | null
+    used_at: Date | null
+  }
+
+  export type PasswordResetTokenMaxAggregateOutputType = {
+    id: bigint | null
+    created_at: Date | null
+    created_ip: string | null
+    user_id: bigint | null
+    token: string | null
+    expires_at: Date | null
+    used_at: Date | null
+  }
+
+  export type PasswordResetTokenCountAggregateOutputType = {
+    id: number
+    created_at: number
+    created_ip: number
+    user_id: number
+    token: number
+    expires_at: number
+    used_at: number
+    _all: number
+  }
+
+
+  export type PasswordResetTokenAvgAggregateInputType = {
+    id?: true
+    user_id?: true
+  }
+
+  export type PasswordResetTokenSumAggregateInputType = {
+    id?: true
+    user_id?: true
+  }
+
+  export type PasswordResetTokenMinAggregateInputType = {
+    id?: true
+    created_at?: true
+    created_ip?: true
+    user_id?: true
+    token?: true
+    expires_at?: true
+    used_at?: true
+  }
+
+  export type PasswordResetTokenMaxAggregateInputType = {
+    id?: true
+    created_at?: true
+    created_ip?: true
+    user_id?: true
+    token?: true
+    expires_at?: true
+    used_at?: true
+  }
+
+  export type PasswordResetTokenCountAggregateInputType = {
+    id?: true
+    created_at?: true
+    created_ip?: true
+    user_id?: true
+    token?: true
+    expires_at?: true
+    used_at?: true
+    _all?: true
+  }
+
+  export type PasswordResetTokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PasswordResetToken to aggregate.
+     */
+    where?: PasswordResetTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PasswordResetTokens to fetch.
+     */
+    orderBy?: PasswordResetTokenOrderByWithRelationInput | PasswordResetTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PasswordResetTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PasswordResetTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PasswordResetTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PasswordResetTokens
+    **/
+    _count?: true | PasswordResetTokenCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PasswordResetTokenAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PasswordResetTokenSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PasswordResetTokenMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PasswordResetTokenMaxAggregateInputType
+  }
+
+  export type GetPasswordResetTokenAggregateType<T extends PasswordResetTokenAggregateArgs> = {
+        [P in keyof T & keyof AggregatePasswordResetToken]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePasswordResetToken[P]>
+      : GetScalarType<T[P], AggregatePasswordResetToken[P]>
+  }
+
+
+
+
+  export type PasswordResetTokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PasswordResetTokenWhereInput
+    orderBy?: PasswordResetTokenOrderByWithAggregationInput | PasswordResetTokenOrderByWithAggregationInput[]
+    by: PasswordResetTokenScalarFieldEnum[] | PasswordResetTokenScalarFieldEnum
+    having?: PasswordResetTokenScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PasswordResetTokenCountAggregateInputType | true
+    _avg?: PasswordResetTokenAvgAggregateInputType
+    _sum?: PasswordResetTokenSumAggregateInputType
+    _min?: PasswordResetTokenMinAggregateInputType
+    _max?: PasswordResetTokenMaxAggregateInputType
+  }
+
+  export type PasswordResetTokenGroupByOutputType = {
+    id: bigint
+    created_at: Date
+    created_ip: string | null
+    user_id: bigint
+    token: string
+    expires_at: Date
+    used_at: Date | null
+    _count: PasswordResetTokenCountAggregateOutputType | null
+    _avg: PasswordResetTokenAvgAggregateOutputType | null
+    _sum: PasswordResetTokenSumAggregateOutputType | null
+    _min: PasswordResetTokenMinAggregateOutputType | null
+    _max: PasswordResetTokenMaxAggregateOutputType | null
+  }
+
+  type GetPasswordResetTokenGroupByPayload<T extends PasswordResetTokenGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PasswordResetTokenGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PasswordResetTokenGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PasswordResetTokenGroupByOutputType[P]>
+            : GetScalarType<T[P], PasswordResetTokenGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PasswordResetTokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    created_ip?: boolean
+    user_id?: boolean
+    token?: boolean
+    expires_at?: boolean
+    used_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["passwordResetToken"]>
+
+  export type PasswordResetTokenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    created_ip?: boolean
+    user_id?: boolean
+    token?: boolean
+    expires_at?: boolean
+    used_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["passwordResetToken"]>
+
+  export type PasswordResetTokenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    created_ip?: boolean
+    user_id?: boolean
+    token?: boolean
+    expires_at?: boolean
+    used_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["passwordResetToken"]>
+
+  export type PasswordResetTokenSelectScalar = {
+    id?: boolean
+    created_at?: boolean
+    created_ip?: boolean
+    user_id?: boolean
+    token?: boolean
+    expires_at?: boolean
+    used_at?: boolean
+  }
+
+  export type PasswordResetTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "created_ip" | "user_id" | "token" | "expires_at" | "used_at", ExtArgs["result"]["passwordResetToken"]>
+  export type PasswordResetTokenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PasswordResetTokenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PasswordResetTokenIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PasswordResetTokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PasswordResetToken"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      created_at: Date
+      created_ip: string | null
+      user_id: bigint
+      token: string
+      expires_at: Date
+      used_at: Date | null
+    }, ExtArgs["result"]["passwordResetToken"]>
+    composites: {}
+  }
+
+  type PasswordResetTokenGetPayload<S extends boolean | null | undefined | PasswordResetTokenDefaultArgs> = $Result.GetResult<Prisma.$PasswordResetTokenPayload, S>
+
+  type PasswordResetTokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PasswordResetTokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PasswordResetTokenCountAggregateInputType | true
+    }
+
+  export interface PasswordResetTokenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PasswordResetToken'], meta: { name: 'PasswordResetToken' } }
+    /**
+     * Find zero or one PasswordResetToken that matches the filter.
+     * @param {PasswordResetTokenFindUniqueArgs} args - Arguments to find a PasswordResetToken
+     * @example
+     * // Get one PasswordResetToken
+     * const passwordResetToken = await prisma.passwordResetToken.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PasswordResetTokenFindUniqueArgs>(args: SelectSubset<T, PasswordResetTokenFindUniqueArgs<ExtArgs>>): Prisma__PasswordResetTokenClient<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PasswordResetToken that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PasswordResetTokenFindUniqueOrThrowArgs} args - Arguments to find a PasswordResetToken
+     * @example
+     * // Get one PasswordResetToken
+     * const passwordResetToken = await prisma.passwordResetToken.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PasswordResetTokenFindUniqueOrThrowArgs>(args: SelectSubset<T, PasswordResetTokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PasswordResetTokenClient<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PasswordResetToken that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PasswordResetTokenFindFirstArgs} args - Arguments to find a PasswordResetToken
+     * @example
+     * // Get one PasswordResetToken
+     * const passwordResetToken = await prisma.passwordResetToken.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PasswordResetTokenFindFirstArgs>(args?: SelectSubset<T, PasswordResetTokenFindFirstArgs<ExtArgs>>): Prisma__PasswordResetTokenClient<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PasswordResetToken that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PasswordResetTokenFindFirstOrThrowArgs} args - Arguments to find a PasswordResetToken
+     * @example
+     * // Get one PasswordResetToken
+     * const passwordResetToken = await prisma.passwordResetToken.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PasswordResetTokenFindFirstOrThrowArgs>(args?: SelectSubset<T, PasswordResetTokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__PasswordResetTokenClient<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PasswordResetTokens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PasswordResetTokenFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PasswordResetTokens
+     * const passwordResetTokens = await prisma.passwordResetToken.findMany()
+     * 
+     * // Get first 10 PasswordResetTokens
+     * const passwordResetTokens = await prisma.passwordResetToken.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const passwordResetTokenWithIdOnly = await prisma.passwordResetToken.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PasswordResetTokenFindManyArgs>(args?: SelectSubset<T, PasswordResetTokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PasswordResetToken.
+     * @param {PasswordResetTokenCreateArgs} args - Arguments to create a PasswordResetToken.
+     * @example
+     * // Create one PasswordResetToken
+     * const PasswordResetToken = await prisma.passwordResetToken.create({
+     *   data: {
+     *     // ... data to create a PasswordResetToken
+     *   }
+     * })
+     * 
+     */
+    create<T extends PasswordResetTokenCreateArgs>(args: SelectSubset<T, PasswordResetTokenCreateArgs<ExtArgs>>): Prisma__PasswordResetTokenClient<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PasswordResetTokens.
+     * @param {PasswordResetTokenCreateManyArgs} args - Arguments to create many PasswordResetTokens.
+     * @example
+     * // Create many PasswordResetTokens
+     * const passwordResetToken = await prisma.passwordResetToken.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PasswordResetTokenCreateManyArgs>(args?: SelectSubset<T, PasswordResetTokenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PasswordResetTokens and returns the data saved in the database.
+     * @param {PasswordResetTokenCreateManyAndReturnArgs} args - Arguments to create many PasswordResetTokens.
+     * @example
+     * // Create many PasswordResetTokens
+     * const passwordResetToken = await prisma.passwordResetToken.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PasswordResetTokens and only return the `id`
+     * const passwordResetTokenWithIdOnly = await prisma.passwordResetToken.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PasswordResetTokenCreateManyAndReturnArgs>(args?: SelectSubset<T, PasswordResetTokenCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PasswordResetToken.
+     * @param {PasswordResetTokenDeleteArgs} args - Arguments to delete one PasswordResetToken.
+     * @example
+     * // Delete one PasswordResetToken
+     * const PasswordResetToken = await prisma.passwordResetToken.delete({
+     *   where: {
+     *     // ... filter to delete one PasswordResetToken
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PasswordResetTokenDeleteArgs>(args: SelectSubset<T, PasswordResetTokenDeleteArgs<ExtArgs>>): Prisma__PasswordResetTokenClient<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PasswordResetToken.
+     * @param {PasswordResetTokenUpdateArgs} args - Arguments to update one PasswordResetToken.
+     * @example
+     * // Update one PasswordResetToken
+     * const passwordResetToken = await prisma.passwordResetToken.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PasswordResetTokenUpdateArgs>(args: SelectSubset<T, PasswordResetTokenUpdateArgs<ExtArgs>>): Prisma__PasswordResetTokenClient<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PasswordResetTokens.
+     * @param {PasswordResetTokenDeleteManyArgs} args - Arguments to filter PasswordResetTokens to delete.
+     * @example
+     * // Delete a few PasswordResetTokens
+     * const { count } = await prisma.passwordResetToken.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PasswordResetTokenDeleteManyArgs>(args?: SelectSubset<T, PasswordResetTokenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PasswordResetTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PasswordResetTokenUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PasswordResetTokens
+     * const passwordResetToken = await prisma.passwordResetToken.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PasswordResetTokenUpdateManyArgs>(args: SelectSubset<T, PasswordResetTokenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PasswordResetTokens and returns the data updated in the database.
+     * @param {PasswordResetTokenUpdateManyAndReturnArgs} args - Arguments to update many PasswordResetTokens.
+     * @example
+     * // Update many PasswordResetTokens
+     * const passwordResetToken = await prisma.passwordResetToken.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PasswordResetTokens and only return the `id`
+     * const passwordResetTokenWithIdOnly = await prisma.passwordResetToken.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PasswordResetTokenUpdateManyAndReturnArgs>(args: SelectSubset<T, PasswordResetTokenUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PasswordResetToken.
+     * @param {PasswordResetTokenUpsertArgs} args - Arguments to update or create a PasswordResetToken.
+     * @example
+     * // Update or create a PasswordResetToken
+     * const passwordResetToken = await prisma.passwordResetToken.upsert({
+     *   create: {
+     *     // ... data to create a PasswordResetToken
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PasswordResetToken we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PasswordResetTokenUpsertArgs>(args: SelectSubset<T, PasswordResetTokenUpsertArgs<ExtArgs>>): Prisma__PasswordResetTokenClient<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PasswordResetTokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PasswordResetTokenCountArgs} args - Arguments to filter PasswordResetTokens to count.
+     * @example
+     * // Count the number of PasswordResetTokens
+     * const count = await prisma.passwordResetToken.count({
+     *   where: {
+     *     // ... the filter for the PasswordResetTokens we want to count
+     *   }
+     * })
+    **/
+    count<T extends PasswordResetTokenCountArgs>(
+      args?: Subset<T, PasswordResetTokenCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PasswordResetTokenCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PasswordResetToken.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PasswordResetTokenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PasswordResetTokenAggregateArgs>(args: Subset<T, PasswordResetTokenAggregateArgs>): Prisma.PrismaPromise<GetPasswordResetTokenAggregateType<T>>
+
+    /**
+     * Group by PasswordResetToken.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PasswordResetTokenGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PasswordResetTokenGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PasswordResetTokenGroupByArgs['orderBy'] }
+        : { orderBy?: PasswordResetTokenGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PasswordResetTokenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPasswordResetTokenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PasswordResetToken model
+   */
+  readonly fields: PasswordResetTokenFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PasswordResetToken.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PasswordResetTokenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PasswordResetToken model
+   */
+  interface PasswordResetTokenFieldRefs {
+    readonly id: FieldRef<"PasswordResetToken", 'BigInt'>
+    readonly created_at: FieldRef<"PasswordResetToken", 'DateTime'>
+    readonly created_ip: FieldRef<"PasswordResetToken", 'String'>
+    readonly user_id: FieldRef<"PasswordResetToken", 'BigInt'>
+    readonly token: FieldRef<"PasswordResetToken", 'String'>
+    readonly expires_at: FieldRef<"PasswordResetToken", 'DateTime'>
+    readonly used_at: FieldRef<"PasswordResetToken", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PasswordResetToken findUnique
+   */
+  export type PasswordResetTokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PasswordResetToken to fetch.
+     */
+    where: PasswordResetTokenWhereUniqueInput
+  }
+
+  /**
+   * PasswordResetToken findUniqueOrThrow
+   */
+  export type PasswordResetTokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PasswordResetToken to fetch.
+     */
+    where: PasswordResetTokenWhereUniqueInput
+  }
+
+  /**
+   * PasswordResetToken findFirst
+   */
+  export type PasswordResetTokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PasswordResetToken to fetch.
+     */
+    where?: PasswordResetTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PasswordResetTokens to fetch.
+     */
+    orderBy?: PasswordResetTokenOrderByWithRelationInput | PasswordResetTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PasswordResetTokens.
+     */
+    cursor?: PasswordResetTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PasswordResetTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PasswordResetTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PasswordResetTokens.
+     */
+    distinct?: PasswordResetTokenScalarFieldEnum | PasswordResetTokenScalarFieldEnum[]
+  }
+
+  /**
+   * PasswordResetToken findFirstOrThrow
+   */
+  export type PasswordResetTokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PasswordResetToken to fetch.
+     */
+    where?: PasswordResetTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PasswordResetTokens to fetch.
+     */
+    orderBy?: PasswordResetTokenOrderByWithRelationInput | PasswordResetTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PasswordResetTokens.
+     */
+    cursor?: PasswordResetTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PasswordResetTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PasswordResetTokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PasswordResetTokens.
+     */
+    distinct?: PasswordResetTokenScalarFieldEnum | PasswordResetTokenScalarFieldEnum[]
+  }
+
+  /**
+   * PasswordResetToken findMany
+   */
+  export type PasswordResetTokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    /**
+     * Filter, which PasswordResetTokens to fetch.
+     */
+    where?: PasswordResetTokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PasswordResetTokens to fetch.
+     */
+    orderBy?: PasswordResetTokenOrderByWithRelationInput | PasswordResetTokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PasswordResetTokens.
+     */
+    cursor?: PasswordResetTokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PasswordResetTokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PasswordResetTokens.
+     */
+    skip?: number
+    distinct?: PasswordResetTokenScalarFieldEnum | PasswordResetTokenScalarFieldEnum[]
+  }
+
+  /**
+   * PasswordResetToken create
+   */
+  export type PasswordResetTokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PasswordResetToken.
+     */
+    data: XOR<PasswordResetTokenCreateInput, PasswordResetTokenUncheckedCreateInput>
+  }
+
+  /**
+   * PasswordResetToken createMany
+   */
+  export type PasswordResetTokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PasswordResetTokens.
+     */
+    data: PasswordResetTokenCreateManyInput | PasswordResetTokenCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PasswordResetToken createManyAndReturn
+   */
+  export type PasswordResetTokenCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * The data used to create many PasswordResetTokens.
+     */
+    data: PasswordResetTokenCreateManyInput | PasswordResetTokenCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PasswordResetToken update
+   */
+  export type PasswordResetTokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PasswordResetToken.
+     */
+    data: XOR<PasswordResetTokenUpdateInput, PasswordResetTokenUncheckedUpdateInput>
+    /**
+     * Choose, which PasswordResetToken to update.
+     */
+    where: PasswordResetTokenWhereUniqueInput
+  }
+
+  /**
+   * PasswordResetToken updateMany
+   */
+  export type PasswordResetTokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PasswordResetTokens.
+     */
+    data: XOR<PasswordResetTokenUpdateManyMutationInput, PasswordResetTokenUncheckedUpdateManyInput>
+    /**
+     * Filter which PasswordResetTokens to update
+     */
+    where?: PasswordResetTokenWhereInput
+    /**
+     * Limit how many PasswordResetTokens to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PasswordResetToken updateManyAndReturn
+   */
+  export type PasswordResetTokenUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * The data used to update PasswordResetTokens.
+     */
+    data: XOR<PasswordResetTokenUpdateManyMutationInput, PasswordResetTokenUncheckedUpdateManyInput>
+    /**
+     * Filter which PasswordResetTokens to update
+     */
+    where?: PasswordResetTokenWhereInput
+    /**
+     * Limit how many PasswordResetTokens to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PasswordResetToken upsert
+   */
+  export type PasswordResetTokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PasswordResetToken to update in case it exists.
+     */
+    where: PasswordResetTokenWhereUniqueInput
+    /**
+     * In case the PasswordResetToken found by the `where` argument doesn't exist, create a new PasswordResetToken with this data.
+     */
+    create: XOR<PasswordResetTokenCreateInput, PasswordResetTokenUncheckedCreateInput>
+    /**
+     * In case the PasswordResetToken was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PasswordResetTokenUpdateInput, PasswordResetTokenUncheckedUpdateInput>
+  }
+
+  /**
+   * PasswordResetToken delete
+   */
+  export type PasswordResetTokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+    /**
+     * Filter which PasswordResetToken to delete.
+     */
+    where: PasswordResetTokenWhereUniqueInput
+  }
+
+  /**
+   * PasswordResetToken deleteMany
+   */
+  export type PasswordResetTokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PasswordResetTokens to delete
+     */
+    where?: PasswordResetTokenWhereInput
+    /**
+     * Limit how many PasswordResetTokens to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PasswordResetToken without action
+   */
+  export type PasswordResetTokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordResetToken
+     */
+    select?: PasswordResetTokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordResetToken
+     */
+    omit?: PasswordResetTokenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetTokenInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Author
    */
 
@@ -5302,6 +6596,8 @@ export namespace Prisma {
     description: string | null
     avatar_url: string | null
     is_spirit: boolean | null
+    birth_date: Date | null
+    death_date: Date | null
   }
 
   export type AuthorMaxAggregateOutputType = {
@@ -5317,6 +6613,8 @@ export namespace Prisma {
     description: string | null
     avatar_url: string | null
     is_spirit: boolean | null
+    birth_date: Date | null
+    death_date: Date | null
   }
 
   export type AuthorCountAggregateOutputType = {
@@ -5332,6 +6630,8 @@ export namespace Prisma {
     description: number
     avatar_url: number
     is_spirit: number
+    birth_date: number
+    death_date: number
     _all: number
   }
 
@@ -5361,6 +6661,8 @@ export namespace Prisma {
     description?: true
     avatar_url?: true
     is_spirit?: true
+    birth_date?: true
+    death_date?: true
   }
 
   export type AuthorMaxAggregateInputType = {
@@ -5376,6 +6678,8 @@ export namespace Prisma {
     description?: true
     avatar_url?: true
     is_spirit?: true
+    birth_date?: true
+    death_date?: true
   }
 
   export type AuthorCountAggregateInputType = {
@@ -5391,6 +6695,8 @@ export namespace Prisma {
     description?: true
     avatar_url?: true
     is_spirit?: true
+    birth_date?: true
+    death_date?: true
     _all?: true
   }
 
@@ -5493,6 +6799,8 @@ export namespace Prisma {
     description: string | null
     avatar_url: string | null
     is_spirit: boolean
+    birth_date: Date | null
+    death_date: Date | null
     _count: AuthorCountAggregateOutputType | null
     _avg: AuthorAvgAggregateOutputType | null
     _sum: AuthorSumAggregateOutputType | null
@@ -5527,6 +6835,8 @@ export namespace Prisma {
     description?: boolean
     avatar_url?: boolean
     is_spirit?: boolean
+    birth_date?: boolean
+    death_date?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Author$updated_by_userArgs<ExtArgs>
     volumes?: boolean | Author$volumesArgs<ExtArgs>
@@ -5546,6 +6856,8 @@ export namespace Prisma {
     description?: boolean
     avatar_url?: boolean
     is_spirit?: boolean
+    birth_date?: boolean
+    death_date?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Author$updated_by_userArgs<ExtArgs>
   }, ExtArgs["result"]["author"]>
@@ -5563,6 +6875,8 @@ export namespace Prisma {
     description?: boolean
     avatar_url?: boolean
     is_spirit?: boolean
+    birth_date?: boolean
+    death_date?: boolean
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Author$updated_by_userArgs<ExtArgs>
   }, ExtArgs["result"]["author"]>
@@ -5580,9 +6894,11 @@ export namespace Prisma {
     description?: boolean
     avatar_url?: boolean
     is_spirit?: boolean
+    birth_date?: boolean
+    death_date?: boolean
   }
 
-  export type AuthorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "name" | "search_name" | "status" | "description" | "avatar_url" | "is_spirit", ExtArgs["result"]["author"]>
+  export type AuthorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "name" | "search_name" | "status" | "description" | "avatar_url" | "is_spirit" | "birth_date" | "death_date", ExtArgs["result"]["author"]>
   export type AuthorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | Author$updated_by_userArgs<ExtArgs>
@@ -5618,6 +6934,8 @@ export namespace Prisma {
       description: string | null
       avatar_url: string | null
       is_spirit: boolean
+      birth_date: Date | null
+      death_date: Date | null
     }, ExtArgs["result"]["author"]>
     composites: {}
   }
@@ -6056,6 +7374,8 @@ export namespace Prisma {
     readonly description: FieldRef<"Author", 'String'>
     readonly avatar_url: FieldRef<"Author", 'String'>
     readonly is_spirit: FieldRef<"Author", 'Boolean'>
+    readonly birth_date: FieldRef<"Author", 'DateTime'>
+    readonly death_date: FieldRef<"Author", 'DateTime'>
   }
     
 
@@ -16842,6 +18162,7 @@ export namespace Prisma {
     updated_by_user_id: number | null
     volume_id: number | null
     user_id: number | null
+    renewed_from_loan_id: number | null
   }
 
   export type VolumeLoanSumAggregateOutputType = {
@@ -16850,6 +18171,7 @@ export namespace Prisma {
     updated_by_user_id: bigint | null
     volume_id: bigint | null
     user_id: bigint | null
+    renewed_from_loan_id: bigint | null
   }
 
   export type VolumeLoanMinAggregateOutputType = {
@@ -16861,6 +18183,7 @@ export namespace Prisma {
     status: $Enums.StatusEnum | null
     volume_id: bigint | null
     user_id: bigint | null
+    renewed_from_loan_id: bigint | null
     loan_date: Date | null
     due_date: Date | null
     return_date: Date | null
@@ -16876,6 +18199,7 @@ export namespace Prisma {
     status: $Enums.StatusEnum | null
     volume_id: bigint | null
     user_id: bigint | null
+    renewed_from_loan_id: bigint | null
     loan_date: Date | null
     due_date: Date | null
     return_date: Date | null
@@ -16891,6 +18215,7 @@ export namespace Prisma {
     status: number
     volume_id: number
     user_id: number
+    renewed_from_loan_id: number
     loan_date: number
     due_date: number
     return_date: number
@@ -16905,6 +18230,7 @@ export namespace Prisma {
     updated_by_user_id?: true
     volume_id?: true
     user_id?: true
+    renewed_from_loan_id?: true
   }
 
   export type VolumeLoanSumAggregateInputType = {
@@ -16913,6 +18239,7 @@ export namespace Prisma {
     updated_by_user_id?: true
     volume_id?: true
     user_id?: true
+    renewed_from_loan_id?: true
   }
 
   export type VolumeLoanMinAggregateInputType = {
@@ -16924,6 +18251,7 @@ export namespace Prisma {
     status?: true
     volume_id?: true
     user_id?: true
+    renewed_from_loan_id?: true
     loan_date?: true
     due_date?: true
     return_date?: true
@@ -16939,6 +18267,7 @@ export namespace Prisma {
     status?: true
     volume_id?: true
     user_id?: true
+    renewed_from_loan_id?: true
     loan_date?: true
     due_date?: true
     return_date?: true
@@ -16954,6 +18283,7 @@ export namespace Prisma {
     status?: true
     volume_id?: true
     user_id?: true
+    renewed_from_loan_id?: true
     loan_date?: true
     due_date?: true
     return_date?: true
@@ -17056,6 +18386,7 @@ export namespace Prisma {
     status: $Enums.StatusEnum
     volume_id: bigint
     user_id: bigint
+    renewed_from_loan_id: bigint | null
     loan_date: Date
     due_date: Date
     return_date: Date | null
@@ -17090,6 +18421,7 @@ export namespace Prisma {
     status?: boolean
     volume_id?: boolean
     user_id?: boolean
+    renewed_from_loan_id?: boolean
     loan_date?: boolean
     due_date?: boolean
     return_date?: boolean
@@ -17098,6 +18430,9 @@ export namespace Prisma {
     updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     volume?: boolean | VolumeDefaultArgs<ExtArgs>
+    renewed_from_loan?: boolean | VolumeLoan$renewed_from_loanArgs<ExtArgs>
+    renewed_into_loans?: boolean | VolumeLoan$renewed_into_loansArgs<ExtArgs>
+    _count?: boolean | VolumeLoanCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["volumeLoan"]>
 
   export type VolumeLoanSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17109,6 +18444,7 @@ export namespace Prisma {
     status?: boolean
     volume_id?: boolean
     user_id?: boolean
+    renewed_from_loan_id?: boolean
     loan_date?: boolean
     due_date?: boolean
     return_date?: boolean
@@ -17117,6 +18453,7 @@ export namespace Prisma {
     updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     volume?: boolean | VolumeDefaultArgs<ExtArgs>
+    renewed_from_loan?: boolean | VolumeLoan$renewed_from_loanArgs<ExtArgs>
   }, ExtArgs["result"]["volumeLoan"]>
 
   export type VolumeLoanSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17128,6 +18465,7 @@ export namespace Prisma {
     status?: boolean
     volume_id?: boolean
     user_id?: boolean
+    renewed_from_loan_id?: boolean
     loan_date?: boolean
     due_date?: boolean
     return_date?: boolean
@@ -17136,6 +18474,7 @@ export namespace Prisma {
     updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     volume?: boolean | VolumeDefaultArgs<ExtArgs>
+    renewed_from_loan?: boolean | VolumeLoan$renewed_from_loanArgs<ExtArgs>
   }, ExtArgs["result"]["volumeLoan"]>
 
   export type VolumeLoanSelectScalar = {
@@ -17147,30 +18486,36 @@ export namespace Prisma {
     status?: boolean
     volume_id?: boolean
     user_id?: boolean
+    renewed_from_loan_id?: boolean
     loan_date?: boolean
     due_date?: boolean
     return_date?: boolean
     description?: boolean
   }
 
-  export type VolumeLoanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "status" | "volume_id" | "user_id" | "loan_date" | "due_date" | "return_date" | "description", ExtArgs["result"]["volumeLoan"]>
+  export type VolumeLoanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "created_by_user_id" | "updated_at" | "updated_by_user_id" | "status" | "volume_id" | "user_id" | "renewed_from_loan_id" | "loan_date" | "due_date" | "return_date" | "description", ExtArgs["result"]["volumeLoan"]>
   export type VolumeLoanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     volume?: boolean | VolumeDefaultArgs<ExtArgs>
+    renewed_from_loan?: boolean | VolumeLoan$renewed_from_loanArgs<ExtArgs>
+    renewed_into_loans?: boolean | VolumeLoan$renewed_into_loansArgs<ExtArgs>
+    _count?: boolean | VolumeLoanCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VolumeLoanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     volume?: boolean | VolumeDefaultArgs<ExtArgs>
+    renewed_from_loan?: boolean | VolumeLoan$renewed_from_loanArgs<ExtArgs>
   }
   export type VolumeLoanIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     created_by_user?: boolean | UserDefaultArgs<ExtArgs>
     updated_by_user?: boolean | VolumeLoan$updated_by_userArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     volume?: boolean | VolumeDefaultArgs<ExtArgs>
+    renewed_from_loan?: boolean | VolumeLoan$renewed_from_loanArgs<ExtArgs>
   }
 
   export type $VolumeLoanPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17180,6 +18525,8 @@ export namespace Prisma {
       updated_by_user: Prisma.$UserPayload<ExtArgs> | null
       user: Prisma.$UserPayload<ExtArgs>
       volume: Prisma.$VolumePayload<ExtArgs>
+      renewed_from_loan: Prisma.$VolumeLoanPayload<ExtArgs> | null
+      renewed_into_loans: Prisma.$VolumeLoanPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -17190,6 +18537,7 @@ export namespace Prisma {
       status: $Enums.StatusEnum
       volume_id: bigint
       user_id: bigint
+      renewed_from_loan_id: bigint | null
       loan_date: Date
       due_date: Date
       return_date: Date | null
@@ -17592,6 +18940,8 @@ export namespace Prisma {
     updated_by_user<T extends VolumeLoan$updated_by_userArgs<ExtArgs> = {}>(args?: Subset<T, VolumeLoan$updated_by_userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     volume<T extends VolumeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VolumeDefaultArgs<ExtArgs>>): Prisma__VolumeClient<$Result.GetResult<Prisma.$VolumePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    renewed_from_loan<T extends VolumeLoan$renewed_from_loanArgs<ExtArgs> = {}>(args?: Subset<T, VolumeLoan$renewed_from_loanArgs<ExtArgs>>): Prisma__VolumeLoanClient<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    renewed_into_loans<T extends VolumeLoan$renewed_into_loansArgs<ExtArgs> = {}>(args?: Subset<T, VolumeLoan$renewed_into_loansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VolumeLoanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17629,6 +18979,7 @@ export namespace Prisma {
     readonly status: FieldRef<"VolumeLoan", 'StatusEnum'>
     readonly volume_id: FieldRef<"VolumeLoan", 'BigInt'>
     readonly user_id: FieldRef<"VolumeLoan", 'BigInt'>
+    readonly renewed_from_loan_id: FieldRef<"VolumeLoan", 'BigInt'>
     readonly loan_date: FieldRef<"VolumeLoan", 'DateTime'>
     readonly due_date: FieldRef<"VolumeLoan", 'DateTime'>
     readonly return_date: FieldRef<"VolumeLoan", 'DateTime'>
@@ -18048,6 +19399,49 @@ export namespace Prisma {
   }
 
   /**
+   * VolumeLoan.renewed_from_loan
+   */
+  export type VolumeLoan$renewed_from_loanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    where?: VolumeLoanWhereInput
+  }
+
+  /**
+   * VolumeLoan.renewed_into_loans
+   */
+  export type VolumeLoan$renewed_into_loansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VolumeLoan
+     */
+    select?: VolumeLoanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VolumeLoan
+     */
+    omit?: VolumeLoanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VolumeLoanInclude<ExtArgs> | null
+    where?: VolumeLoanWhereInput
+    orderBy?: VolumeLoanOrderByWithRelationInput | VolumeLoanOrderByWithRelationInput[]
+    cursor?: VolumeLoanWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VolumeLoanScalarFieldEnum | VolumeLoanScalarFieldEnum[]
+  }
+
+  /**
    * VolumeLoan without action
    */
   export type VolumeLoanDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -18092,6 +19486,7 @@ export namespace Prisma {
     password: 'password',
     email: 'email',
     phone: 'phone',
+    document: 'document',
     role: 'role'
   };
 
@@ -18116,6 +19511,19 @@ export namespace Prisma {
   export type UserAuthTokenScalarFieldEnum = (typeof UserAuthTokenScalarFieldEnum)[keyof typeof UserAuthTokenScalarFieldEnum]
 
 
+  export const PasswordResetTokenScalarFieldEnum: {
+    id: 'id',
+    created_at: 'created_at',
+    created_ip: 'created_ip',
+    user_id: 'user_id',
+    token: 'token',
+    expires_at: 'expires_at',
+    used_at: 'used_at'
+  };
+
+  export type PasswordResetTokenScalarFieldEnum = (typeof PasswordResetTokenScalarFieldEnum)[keyof typeof PasswordResetTokenScalarFieldEnum]
+
+
   export const AuthorScalarFieldEnum: {
     id: 'id',
     slug: 'slug',
@@ -18128,7 +19536,9 @@ export namespace Prisma {
     status: 'status',
     description: 'description',
     avatar_url: 'avatar_url',
-    is_spirit: 'is_spirit'
+    is_spirit: 'is_spirit',
+    birth_date: 'birth_date',
+    death_date: 'death_date'
   };
 
   export type AuthorScalarFieldEnum = (typeof AuthorScalarFieldEnum)[keyof typeof AuthorScalarFieldEnum]
@@ -18303,6 +19713,7 @@ export namespace Prisma {
     status: 'status',
     volume_id: 'volume_id',
     user_id: 'user_id',
+    renewed_from_loan_id: 'renewed_from_loan_id',
     loan_date: 'loan_date',
     due_date: 'due_date',
     return_date: 'return_date',
@@ -18478,6 +19889,7 @@ export namespace Prisma {
     password?: StringNullableFilter<"User"> | string | null
     email?: StringNullableFilter<"User"> | string | null
     phone?: StringNullableFilter<"User"> | string | null
+    document?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     auth_tokens?: UserAuthTokenListRelationFilter
     created_authors?: AuthorListRelationFilter
@@ -18500,6 +19912,7 @@ export namespace Prisma {
     updated_categories?: CategoryListRelationFilter
     volume_accesses?: VolumeAccessListRelationFilter
     volume_loans?: VolumeLoanListRelationFilter
+    password_reset_tokens?: PasswordResetTokenListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -18514,6 +19927,7 @@ export namespace Prisma {
     password?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    document?: SortOrderInput | SortOrder
     role?: SortOrder
     auth_tokens?: UserAuthTokenOrderByRelationAggregateInput
     created_authors?: AuthorOrderByRelationAggregateInput
@@ -18536,12 +19950,14 @@ export namespace Prisma {
     updated_categories?: CategoryOrderByRelationAggregateInput
     volume_accesses?: VolumeAccessOrderByRelationAggregateInput
     volume_loans?: VolumeLoanOrderByRelationAggregateInput
+    password_reset_tokens?: PasswordResetTokenOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
     slug?: string
     login?: string
+    document?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -18575,7 +19991,8 @@ export namespace Prisma {
     updated_categories?: CategoryListRelationFilter
     volume_accesses?: VolumeAccessListRelationFilter
     volume_loans?: VolumeLoanListRelationFilter
-  }, "id" | "id" | "slug" | "login">
+    password_reset_tokens?: PasswordResetTokenListRelationFilter
+  }, "id" | "id" | "slug" | "login" | "document">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -18589,6 +20006,7 @@ export namespace Prisma {
     password?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    document?: SortOrderInput | SortOrder
     role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -18612,6 +20030,7 @@ export namespace Prisma {
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
+    document?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   }
 
@@ -18707,6 +20126,73 @@ export namespace Prisma {
     user_id?: BigIntWithAggregatesFilter<"UserAuthToken"> | bigint | number
   }
 
+  export type PasswordResetTokenWhereInput = {
+    AND?: PasswordResetTokenWhereInput | PasswordResetTokenWhereInput[]
+    OR?: PasswordResetTokenWhereInput[]
+    NOT?: PasswordResetTokenWhereInput | PasswordResetTokenWhereInput[]
+    id?: BigIntFilter<"PasswordResetToken"> | bigint | number
+    created_at?: DateTimeFilter<"PasswordResetToken"> | Date | string
+    created_ip?: StringNullableFilter<"PasswordResetToken"> | string | null
+    user_id?: BigIntFilter<"PasswordResetToken"> | bigint | number
+    token?: StringFilter<"PasswordResetToken"> | string
+    expires_at?: DateTimeFilter<"PasswordResetToken"> | Date | string
+    used_at?: DateTimeNullableFilter<"PasswordResetToken"> | Date | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PasswordResetTokenOrderByWithRelationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_ip?: SortOrderInput | SortOrder
+    user_id?: SortOrder
+    token?: SortOrder
+    expires_at?: SortOrder
+    used_at?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type PasswordResetTokenWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    token?: string
+    AND?: PasswordResetTokenWhereInput | PasswordResetTokenWhereInput[]
+    OR?: PasswordResetTokenWhereInput[]
+    NOT?: PasswordResetTokenWhereInput | PasswordResetTokenWhereInput[]
+    created_at?: DateTimeFilter<"PasswordResetToken"> | Date | string
+    created_ip?: StringNullableFilter<"PasswordResetToken"> | string | null
+    user_id?: BigIntFilter<"PasswordResetToken"> | bigint | number
+    expires_at?: DateTimeFilter<"PasswordResetToken"> | Date | string
+    used_at?: DateTimeNullableFilter<"PasswordResetToken"> | Date | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "id" | "token">
+
+  export type PasswordResetTokenOrderByWithAggregationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_ip?: SortOrderInput | SortOrder
+    user_id?: SortOrder
+    token?: SortOrder
+    expires_at?: SortOrder
+    used_at?: SortOrderInput | SortOrder
+    _count?: PasswordResetTokenCountOrderByAggregateInput
+    _avg?: PasswordResetTokenAvgOrderByAggregateInput
+    _max?: PasswordResetTokenMaxOrderByAggregateInput
+    _min?: PasswordResetTokenMinOrderByAggregateInput
+    _sum?: PasswordResetTokenSumOrderByAggregateInput
+  }
+
+  export type PasswordResetTokenScalarWhereWithAggregatesInput = {
+    AND?: PasswordResetTokenScalarWhereWithAggregatesInput | PasswordResetTokenScalarWhereWithAggregatesInput[]
+    OR?: PasswordResetTokenScalarWhereWithAggregatesInput[]
+    NOT?: PasswordResetTokenScalarWhereWithAggregatesInput | PasswordResetTokenScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"PasswordResetToken"> | bigint | number
+    created_at?: DateTimeWithAggregatesFilter<"PasswordResetToken"> | Date | string
+    created_ip?: StringNullableWithAggregatesFilter<"PasswordResetToken"> | string | null
+    user_id?: BigIntWithAggregatesFilter<"PasswordResetToken"> | bigint | number
+    token?: StringWithAggregatesFilter<"PasswordResetToken"> | string
+    expires_at?: DateTimeWithAggregatesFilter<"PasswordResetToken"> | Date | string
+    used_at?: DateTimeNullableWithAggregatesFilter<"PasswordResetToken"> | Date | string | null
+  }
+
   export type AuthorWhereInput = {
     AND?: AuthorWhereInput | AuthorWhereInput[]
     OR?: AuthorWhereInput[]
@@ -18723,6 +20209,8 @@ export namespace Prisma {
     description?: StringNullableFilter<"Author"> | string | null
     avatar_url?: StringNullableFilter<"Author"> | string | null
     is_spirit?: BoolFilter<"Author"> | boolean
+    birth_date?: DateTimeNullableFilter<"Author"> | Date | string | null
+    death_date?: DateTimeNullableFilter<"Author"> | Date | string | null
     created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     volumes?: VolumeAuthorListRelationFilter
@@ -18741,6 +20229,8 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     avatar_url?: SortOrderInput | SortOrder
     is_spirit?: SortOrder
+    birth_date?: SortOrderInput | SortOrder
+    death_date?: SortOrderInput | SortOrder
     created_by_user?: UserOrderByWithRelationInput
     updated_by_user?: UserOrderByWithRelationInput
     volumes?: VolumeAuthorOrderByRelationAggregateInput
@@ -18762,6 +20252,8 @@ export namespace Prisma {
     description?: StringNullableFilter<"Author"> | string | null
     avatar_url?: StringNullableFilter<"Author"> | string | null
     is_spirit?: BoolFilter<"Author"> | boolean
+    birth_date?: DateTimeNullableFilter<"Author"> | Date | string | null
+    death_date?: DateTimeNullableFilter<"Author"> | Date | string | null
     created_by_user?: XOR<UserScalarRelationFilter, UserWhereInput>
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     volumes?: VolumeAuthorListRelationFilter
@@ -18780,6 +20272,8 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     avatar_url?: SortOrderInput | SortOrder
     is_spirit?: SortOrder
+    birth_date?: SortOrderInput | SortOrder
+    death_date?: SortOrderInput | SortOrder
     _count?: AuthorCountOrderByAggregateInput
     _avg?: AuthorAvgOrderByAggregateInput
     _max?: AuthorMaxOrderByAggregateInput
@@ -18803,6 +20297,8 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"Author"> | string | null
     avatar_url?: StringNullableWithAggregatesFilter<"Author"> | string | null
     is_spirit?: BoolWithAggregatesFilter<"Author"> | boolean
+    birth_date?: DateTimeNullableWithAggregatesFilter<"Author"> | Date | string | null
+    death_date?: DateTimeNullableWithAggregatesFilter<"Author"> | Date | string | null
   }
 
   export type VolumeAuthorWhereInput = {
@@ -19696,6 +21192,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFilter<"VolumeLoan"> | $Enums.StatusEnum
     volume_id?: BigIntFilter<"VolumeLoan"> | bigint | number
     user_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    renewed_from_loan_id?: BigIntNullableFilter<"VolumeLoan"> | bigint | number | null
     loan_date?: DateTimeFilter<"VolumeLoan"> | Date | string
     due_date?: DateTimeFilter<"VolumeLoan"> | Date | string
     return_date?: DateTimeNullableFilter<"VolumeLoan"> | Date | string | null
@@ -19704,6 +21201,8 @@ export namespace Prisma {
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     volume?: XOR<VolumeScalarRelationFilter, VolumeWhereInput>
+    renewed_from_loan?: XOR<VolumeLoanNullableScalarRelationFilter, VolumeLoanWhereInput> | null
+    renewed_into_loans?: VolumeLoanListRelationFilter
   }
 
   export type VolumeLoanOrderByWithRelationInput = {
@@ -19715,6 +21214,7 @@ export namespace Prisma {
     status?: SortOrder
     volume_id?: SortOrder
     user_id?: SortOrder
+    renewed_from_loan_id?: SortOrderInput | SortOrder
     loan_date?: SortOrder
     due_date?: SortOrder
     return_date?: SortOrderInput | SortOrder
@@ -19723,6 +21223,8 @@ export namespace Prisma {
     updated_by_user?: UserOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
     volume?: VolumeOrderByWithRelationInput
+    renewed_from_loan?: VolumeLoanOrderByWithRelationInput
+    renewed_into_loans?: VolumeLoanOrderByRelationAggregateInput
   }
 
   export type VolumeLoanWhereUniqueInput = Prisma.AtLeast<{
@@ -19737,6 +21239,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFilter<"VolumeLoan"> | $Enums.StatusEnum
     volume_id?: BigIntFilter<"VolumeLoan"> | bigint | number
     user_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    renewed_from_loan_id?: BigIntNullableFilter<"VolumeLoan"> | bigint | number | null
     loan_date?: DateTimeFilter<"VolumeLoan"> | Date | string
     due_date?: DateTimeFilter<"VolumeLoan"> | Date | string
     return_date?: DateTimeNullableFilter<"VolumeLoan"> | Date | string | null
@@ -19745,6 +21248,8 @@ export namespace Prisma {
     updated_by_user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     volume?: XOR<VolumeScalarRelationFilter, VolumeWhereInput>
+    renewed_from_loan?: XOR<VolumeLoanNullableScalarRelationFilter, VolumeLoanWhereInput> | null
+    renewed_into_loans?: VolumeLoanListRelationFilter
   }, "id" | "id">
 
   export type VolumeLoanOrderByWithAggregationInput = {
@@ -19756,6 +21261,7 @@ export namespace Prisma {
     status?: SortOrder
     volume_id?: SortOrder
     user_id?: SortOrder
+    renewed_from_loan_id?: SortOrderInput | SortOrder
     loan_date?: SortOrder
     due_date?: SortOrder
     return_date?: SortOrderInput | SortOrder
@@ -19779,6 +21285,7 @@ export namespace Prisma {
     status?: EnumStatusEnumWithAggregatesFilter<"VolumeLoan"> | $Enums.StatusEnum
     volume_id?: BigIntWithAggregatesFilter<"VolumeLoan"> | bigint | number
     user_id?: BigIntWithAggregatesFilter<"VolumeLoan"> | bigint | number
+    renewed_from_loan_id?: BigIntNullableWithAggregatesFilter<"VolumeLoan"> | bigint | number | null
     loan_date?: DateTimeWithAggregatesFilter<"VolumeLoan"> | Date | string
     due_date?: DateTimeWithAggregatesFilter<"VolumeLoan"> | Date | string
     return_date?: DateTimeNullableWithAggregatesFilter<"VolumeLoan"> | Date | string | null
@@ -19797,6 +21304,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -19819,6 +21327,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -19833,6 +21342,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -19855,6 +21365,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -19869,6 +21380,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -19891,6 +21403,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -19905,6 +21418,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -19927,6 +21441,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -19941,6 +21456,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
   }
 
@@ -19956,6 +21472,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
@@ -19971,6 +21488,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
@@ -20078,6 +21596,75 @@ export namespace Prisma {
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type PasswordResetTokenCreateInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_ip?: string | null
+    token: string
+    expires_at: Date | string
+    used_at?: Date | string | null
+    user: UserCreateNestedOneWithoutPassword_reset_tokensInput
+  }
+
+  export type PasswordResetTokenUncheckedCreateInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_ip?: string | null
+    user_id: bigint | number
+    token: string
+    expires_at: Date | string
+    used_at?: Date | string | null
+  }
+
+  export type PasswordResetTokenUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_ip?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutPassword_reset_tokensNestedInput
+  }
+
+  export type PasswordResetTokenUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_ip?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    token?: StringFieldUpdateOperationsInput | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PasswordResetTokenCreateManyInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_ip?: string | null
+    user_id: bigint | number
+    token: string
+    expires_at: Date | string
+    used_at?: Date | string | null
+  }
+
+  export type PasswordResetTokenUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_ip?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PasswordResetTokenUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_ip?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    token?: StringFieldUpdateOperationsInput | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type AuthorCreateInput = {
     id?: bigint | number
     slug?: string
@@ -20089,6 +21676,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_authorsInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_authorsInput
     volumes?: VolumeAuthorCreateNestedManyWithoutAuthorInput
@@ -20107,6 +21696,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
     volumes?: VolumeAuthorUncheckedCreateNestedManyWithoutAuthorInput
   }
 
@@ -20121,6 +21712,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_authorsNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_authorsNestedInput
     volumes?: VolumeAuthorUpdateManyWithoutAuthorNestedInput
@@ -20139,6 +21732,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     volumes?: VolumeAuthorUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
@@ -20155,6 +21750,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
   }
 
   export type AuthorUpdateManyMutationInput = {
@@ -20168,6 +21765,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type AuthorUncheckedUpdateManyInput = {
@@ -20183,6 +21782,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type VolumeAuthorCreateInput = {
@@ -21156,6 +22757,8 @@ export namespace Prisma {
     updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
     user: UserCreateNestedOneWithoutVolume_loansInput
     volume: VolumeCreateNestedOneWithoutLoansInput
+    renewed_from_loan?: VolumeLoanCreateNestedOneWithoutRenewed_into_loansInput
+    renewed_into_loans?: VolumeLoanCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanUncheckedCreateInput = {
@@ -21167,10 +22770,12 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     volume_id: bigint | number
     user_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
     description?: string | null
+    renewed_into_loans?: VolumeLoanUncheckedCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanUpdateInput = {
@@ -21186,6 +22791,8 @@ export namespace Prisma {
     updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
     user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
     volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+    renewed_from_loan?: VolumeLoanUpdateOneWithoutRenewed_into_loansNestedInput
+    renewed_into_loans?: VolumeLoanUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanUncheckedUpdateInput = {
@@ -21197,10 +22804,12 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    renewed_into_loans?: VolumeLoanUncheckedUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanCreateManyInput = {
@@ -21212,6 +22821,7 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     volume_id: bigint | number
     user_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
@@ -21238,6 +22848,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21383,6 +22994,12 @@ export namespace Prisma {
     none?: VolumeAccessWhereInput
   }
 
+  export type PasswordResetTokenListRelationFilter = {
+    every?: PasswordResetTokenWhereInput
+    some?: PasswordResetTokenWhereInput
+    none?: PasswordResetTokenWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -21432,6 +23049,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type PasswordResetTokenOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
@@ -21444,6 +23065,7 @@ export namespace Prisma {
     password?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    document?: SortOrder
     role?: SortOrder
   }
 
@@ -21463,6 +23085,7 @@ export namespace Prisma {
     password?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    document?: SortOrder
     role?: SortOrder
   }
 
@@ -21478,6 +23101,7 @@ export namespace Prisma {
     password?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    document?: SortOrder
     role?: SortOrder
   }
 
@@ -21679,6 +23303,46 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type PasswordResetTokenCountOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_ip?: SortOrder
+    user_id?: SortOrder
+    token?: SortOrder
+    expires_at?: SortOrder
+    used_at?: SortOrder
+  }
+
+  export type PasswordResetTokenAvgOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+  }
+
+  export type PasswordResetTokenMaxOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_ip?: SortOrder
+    user_id?: SortOrder
+    token?: SortOrder
+    expires_at?: SortOrder
+    used_at?: SortOrder
+  }
+
+  export type PasswordResetTokenMinOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    created_ip?: SortOrder
+    user_id?: SortOrder
+    token?: SortOrder
+    expires_at?: SortOrder
+    used_at?: SortOrder
+  }
+
+  export type PasswordResetTokenSumOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+  }
+
   export type BigIntNullableFilter<$PrismaModel = never> = {
     equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
     in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
@@ -21708,6 +23372,8 @@ export namespace Prisma {
     description?: SortOrder
     avatar_url?: SortOrder
     is_spirit?: SortOrder
+    birth_date?: SortOrder
+    death_date?: SortOrder
   }
 
   export type AuthorAvgOrderByAggregateInput = {
@@ -21729,6 +23395,8 @@ export namespace Prisma {
     description?: SortOrder
     avatar_url?: SortOrder
     is_spirit?: SortOrder
+    birth_date?: SortOrder
+    death_date?: SortOrder
   }
 
   export type AuthorMinOrderByAggregateInput = {
@@ -21744,6 +23412,8 @@ export namespace Prisma {
     description?: SortOrder
     avatar_url?: SortOrder
     is_spirit?: SortOrder
+    birth_date?: SortOrder
+    death_date?: SortOrder
   }
 
   export type AuthorSumOrderByAggregateInput = {
@@ -22366,6 +24036,11 @@ export namespace Prisma {
     volume_id?: SortOrder
   }
 
+  export type VolumeLoanNullableScalarRelationFilter = {
+    is?: VolumeLoanWhereInput | null
+    isNot?: VolumeLoanWhereInput | null
+  }
+
   export type VolumeLoanCountOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
@@ -22375,6 +24050,7 @@ export namespace Prisma {
     status?: SortOrder
     volume_id?: SortOrder
     user_id?: SortOrder
+    renewed_from_loan_id?: SortOrder
     loan_date?: SortOrder
     due_date?: SortOrder
     return_date?: SortOrder
@@ -22387,6 +24063,7 @@ export namespace Prisma {
     updated_by_user_id?: SortOrder
     volume_id?: SortOrder
     user_id?: SortOrder
+    renewed_from_loan_id?: SortOrder
   }
 
   export type VolumeLoanMaxOrderByAggregateInput = {
@@ -22398,6 +24075,7 @@ export namespace Prisma {
     status?: SortOrder
     volume_id?: SortOrder
     user_id?: SortOrder
+    renewed_from_loan_id?: SortOrder
     loan_date?: SortOrder
     due_date?: SortOrder
     return_date?: SortOrder
@@ -22413,6 +24091,7 @@ export namespace Prisma {
     status?: SortOrder
     volume_id?: SortOrder
     user_id?: SortOrder
+    renewed_from_loan_id?: SortOrder
     loan_date?: SortOrder
     due_date?: SortOrder
     return_date?: SortOrder
@@ -22425,6 +24104,7 @@ export namespace Prisma {
     updated_by_user_id?: SortOrder
     volume_id?: SortOrder
     user_id?: SortOrder
+    renewed_from_loan_id?: SortOrder
   }
 
   export type UserAuthTokenCreateNestedManyWithoutUserInput = {
@@ -22574,6 +24254,13 @@ export namespace Prisma {
     connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
   }
 
+  export type PasswordResetTokenCreateNestedManyWithoutUserInput = {
+    create?: XOR<PasswordResetTokenCreateWithoutUserInput, PasswordResetTokenUncheckedCreateWithoutUserInput> | PasswordResetTokenCreateWithoutUserInput[] | PasswordResetTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PasswordResetTokenCreateOrConnectWithoutUserInput | PasswordResetTokenCreateOrConnectWithoutUserInput[]
+    createMany?: PasswordResetTokenCreateManyUserInputEnvelope
+    connect?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
+  }
+
   export type UserAuthTokenUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserAuthTokenCreateWithoutUserInput, UserAuthTokenUncheckedCreateWithoutUserInput> | UserAuthTokenCreateWithoutUserInput[] | UserAuthTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserAuthTokenCreateOrConnectWithoutUserInput | UserAuthTokenCreateOrConnectWithoutUserInput[]
@@ -22719,6 +24406,13 @@ export namespace Prisma {
     connectOrCreate?: VolumeLoanCreateOrConnectWithoutUserInput | VolumeLoanCreateOrConnectWithoutUserInput[]
     createMany?: VolumeLoanCreateManyUserInputEnvelope
     connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+  }
+
+  export type PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PasswordResetTokenCreateWithoutUserInput, PasswordResetTokenUncheckedCreateWithoutUserInput> | PasswordResetTokenCreateWithoutUserInput[] | PasswordResetTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PasswordResetTokenCreateOrConnectWithoutUserInput | PasswordResetTokenCreateOrConnectWithoutUserInput[]
+    createMany?: PasswordResetTokenCreateManyUserInputEnvelope
+    connect?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
   }
 
   export type BigIntFieldUpdateOperationsInput = {
@@ -23047,6 +24741,20 @@ export namespace Prisma {
     deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
   }
 
+  export type PasswordResetTokenUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PasswordResetTokenCreateWithoutUserInput, PasswordResetTokenUncheckedCreateWithoutUserInput> | PasswordResetTokenCreateWithoutUserInput[] | PasswordResetTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PasswordResetTokenCreateOrConnectWithoutUserInput | PasswordResetTokenCreateOrConnectWithoutUserInput[]
+    upsert?: PasswordResetTokenUpsertWithWhereUniqueWithoutUserInput | PasswordResetTokenUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PasswordResetTokenCreateManyUserInputEnvelope
+    set?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
+    disconnect?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
+    delete?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
+    connect?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
+    update?: PasswordResetTokenUpdateWithWhereUniqueWithoutUserInput | PasswordResetTokenUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PasswordResetTokenUpdateManyWithWhereWithoutUserInput | PasswordResetTokenUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PasswordResetTokenScalarWhereInput | PasswordResetTokenScalarWhereInput[]
+  }
+
   export type UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserAuthTokenCreateWithoutUserInput, UserAuthTokenUncheckedCreateWithoutUserInput> | UserAuthTokenCreateWithoutUserInput[] | UserAuthTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserAuthTokenCreateOrConnectWithoutUserInput | UserAuthTokenCreateOrConnectWithoutUserInput[]
@@ -23341,6 +25049,20 @@ export namespace Prisma {
     deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
   }
 
+  export type PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PasswordResetTokenCreateWithoutUserInput, PasswordResetTokenUncheckedCreateWithoutUserInput> | PasswordResetTokenCreateWithoutUserInput[] | PasswordResetTokenUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PasswordResetTokenCreateOrConnectWithoutUserInput | PasswordResetTokenCreateOrConnectWithoutUserInput[]
+    upsert?: PasswordResetTokenUpsertWithWhereUniqueWithoutUserInput | PasswordResetTokenUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PasswordResetTokenCreateManyUserInputEnvelope
+    set?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
+    disconnect?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
+    delete?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
+    connect?: PasswordResetTokenWhereUniqueInput | PasswordResetTokenWhereUniqueInput[]
+    update?: PasswordResetTokenUpdateWithWhereUniqueWithoutUserInput | PasswordResetTokenUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PasswordResetTokenUpdateManyWithWhereWithoutUserInput | PasswordResetTokenUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PasswordResetTokenScalarWhereInput | PasswordResetTokenScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutAuth_tokensInput = {
     create?: XOR<UserCreateWithoutAuth_tokensInput, UserUncheckedCreateWithoutAuth_tokensInput>
     connectOrCreate?: UserCreateOrConnectWithoutAuth_tokensInput
@@ -23361,6 +25083,20 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAuth_tokensInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAuth_tokensInput, UserUpdateWithoutAuth_tokensInput>, UserUncheckedUpdateWithoutAuth_tokensInput>
+  }
+
+  export type UserCreateNestedOneWithoutPassword_reset_tokensInput = {
+    create?: XOR<UserCreateWithoutPassword_reset_tokensInput, UserUncheckedCreateWithoutPassword_reset_tokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPassword_reset_tokensInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPassword_reset_tokensNestedInput = {
+    create?: XOR<UserCreateWithoutPassword_reset_tokensInput, UserUncheckedCreateWithoutPassword_reset_tokensInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPassword_reset_tokensInput
+    upsert?: UserUpsertWithoutPassword_reset_tokensInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPassword_reset_tokensInput, UserUpdateWithoutPassword_reset_tokensInput>, UserUncheckedUpdateWithoutPassword_reset_tokensInput>
   }
 
   export type UserCreateNestedOneWithoutCreated_authorsInput = {
@@ -24126,6 +25862,26 @@ export namespace Prisma {
     connect?: VolumeWhereUniqueInput
   }
 
+  export type VolumeLoanCreateNestedOneWithoutRenewed_into_loansInput = {
+    create?: XOR<VolumeLoanCreateWithoutRenewed_into_loansInput, VolumeLoanUncheckedCreateWithoutRenewed_into_loansInput>
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutRenewed_into_loansInput
+    connect?: VolumeLoanWhereUniqueInput
+  }
+
+  export type VolumeLoanCreateNestedManyWithoutRenewed_from_loanInput = {
+    create?: XOR<VolumeLoanCreateWithoutRenewed_from_loanInput, VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput> | VolumeLoanCreateWithoutRenewed_from_loanInput[] | VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutRenewed_from_loanInput | VolumeLoanCreateOrConnectWithoutRenewed_from_loanInput[]
+    createMany?: VolumeLoanCreateManyRenewed_from_loanInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+  }
+
+  export type VolumeLoanUncheckedCreateNestedManyWithoutRenewed_from_loanInput = {
+    create?: XOR<VolumeLoanCreateWithoutRenewed_from_loanInput, VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput> | VolumeLoanCreateWithoutRenewed_from_loanInput[] | VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutRenewed_from_loanInput | VolumeLoanCreateOrConnectWithoutRenewed_from_loanInput[]
+    createMany?: VolumeLoanCreateManyRenewed_from_loanInputEnvelope
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+  }
+
   export type UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput = {
     create?: XOR<UserCreateWithoutCreated_volume_loansInput, UserUncheckedCreateWithoutCreated_volume_loansInput>
     connectOrCreate?: UserCreateOrConnectWithoutCreated_volume_loansInput
@@ -24158,6 +25914,44 @@ export namespace Prisma {
     upsert?: VolumeUpsertWithoutLoansInput
     connect?: VolumeWhereUniqueInput
     update?: XOR<XOR<VolumeUpdateToOneWithWhereWithoutLoansInput, VolumeUpdateWithoutLoansInput>, VolumeUncheckedUpdateWithoutLoansInput>
+  }
+
+  export type VolumeLoanUpdateOneWithoutRenewed_into_loansNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutRenewed_into_loansInput, VolumeLoanUncheckedCreateWithoutRenewed_into_loansInput>
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutRenewed_into_loansInput
+    upsert?: VolumeLoanUpsertWithoutRenewed_into_loansInput
+    disconnect?: VolumeLoanWhereInput | boolean
+    delete?: VolumeLoanWhereInput | boolean
+    connect?: VolumeLoanWhereUniqueInput
+    update?: XOR<XOR<VolumeLoanUpdateToOneWithWhereWithoutRenewed_into_loansInput, VolumeLoanUpdateWithoutRenewed_into_loansInput>, VolumeLoanUncheckedUpdateWithoutRenewed_into_loansInput>
+  }
+
+  export type VolumeLoanUpdateManyWithoutRenewed_from_loanNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutRenewed_from_loanInput, VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput> | VolumeLoanCreateWithoutRenewed_from_loanInput[] | VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutRenewed_from_loanInput | VolumeLoanCreateOrConnectWithoutRenewed_from_loanInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutRenewed_from_loanInput | VolumeLoanUpsertWithWhereUniqueWithoutRenewed_from_loanInput[]
+    createMany?: VolumeLoanCreateManyRenewed_from_loanInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutRenewed_from_loanInput | VolumeLoanUpdateWithWhereUniqueWithoutRenewed_from_loanInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutRenewed_from_loanInput | VolumeLoanUpdateManyWithWhereWithoutRenewed_from_loanInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
+  }
+
+  export type VolumeLoanUncheckedUpdateManyWithoutRenewed_from_loanNestedInput = {
+    create?: XOR<VolumeLoanCreateWithoutRenewed_from_loanInput, VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput> | VolumeLoanCreateWithoutRenewed_from_loanInput[] | VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput[]
+    connectOrCreate?: VolumeLoanCreateOrConnectWithoutRenewed_from_loanInput | VolumeLoanCreateOrConnectWithoutRenewed_from_loanInput[]
+    upsert?: VolumeLoanUpsertWithWhereUniqueWithoutRenewed_from_loanInput | VolumeLoanUpsertWithWhereUniqueWithoutRenewed_from_loanInput[]
+    createMany?: VolumeLoanCreateManyRenewed_from_loanInputEnvelope
+    set?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    disconnect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    delete?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    connect?: VolumeLoanWhereUniqueInput | VolumeLoanWhereUniqueInput[]
+    update?: VolumeLoanUpdateWithWhereUniqueWithoutRenewed_from_loanInput | VolumeLoanUpdateWithWhereUniqueWithoutRenewed_from_loanInput[]
+    updateMany?: VolumeLoanUpdateManyWithWhereWithoutRenewed_from_loanInput | VolumeLoanUpdateManyWithWhereWithoutRenewed_from_loanInput[]
+    deleteMany?: VolumeLoanScalarWhereInput | VolumeLoanScalarWhereInput[]
   }
 
   export type NestedBigIntFilter<$PrismaModel = never> = {
@@ -24499,6 +26293,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
     updated_by_user?: UserCreateNestedOneWithoutUpdated_authorsInput
     volumes?: VolumeAuthorCreateNestedManyWithoutAuthorInput
   }
@@ -24515,6 +26311,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
     volumes?: VolumeAuthorUncheckedCreateNestedManyWithoutAuthorInput
   }
 
@@ -24539,6 +26337,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_authorsInput
     volumes?: VolumeAuthorCreateNestedManyWithoutAuthorInput
   }
@@ -24555,6 +26355,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
     volumes?: VolumeAuthorUncheckedCreateNestedManyWithoutAuthorInput
   }
 
@@ -25128,6 +26930,8 @@ export namespace Prisma {
     updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
     user: UserCreateNestedOneWithoutVolume_loansInput
     volume: VolumeCreateNestedOneWithoutLoansInput
+    renewed_from_loan?: VolumeLoanCreateNestedOneWithoutRenewed_into_loansInput
+    renewed_into_loans?: VolumeLoanCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanUncheckedCreateWithoutCreated_by_userInput = {
@@ -25138,10 +26942,12 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     volume_id: bigint | number
     user_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
     description?: string | null
+    renewed_into_loans?: VolumeLoanUncheckedCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanCreateOrConnectWithoutCreated_by_userInput = {
@@ -25166,6 +26972,8 @@ export namespace Prisma {
     created_by_user: UserCreateNestedOneWithoutCreated_volume_loansInput
     user: UserCreateNestedOneWithoutVolume_loansInput
     volume: VolumeCreateNestedOneWithoutLoansInput
+    renewed_from_loan?: VolumeLoanCreateNestedOneWithoutRenewed_into_loansInput
+    renewed_into_loans?: VolumeLoanCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanUncheckedCreateWithoutUpdated_by_userInput = {
@@ -25176,10 +26984,12 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     volume_id: bigint | number
     user_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
     description?: string | null
+    renewed_into_loans?: VolumeLoanUncheckedCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanCreateOrConnectWithoutUpdated_by_userInput = {
@@ -25316,6 +27126,8 @@ export namespace Prisma {
     created_by_user: UserCreateNestedOneWithoutCreated_volume_loansInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
     volume: VolumeCreateNestedOneWithoutLoansInput
+    renewed_from_loan?: VolumeLoanCreateNestedOneWithoutRenewed_into_loansInput
+    renewed_into_loans?: VolumeLoanCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanUncheckedCreateWithoutUserInput = {
@@ -25326,10 +27138,12 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     volume_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
     description?: string | null
+    renewed_into_loans?: VolumeLoanUncheckedCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanCreateOrConnectWithoutUserInput = {
@@ -25339,6 +27153,34 @@ export namespace Prisma {
 
   export type VolumeLoanCreateManyUserInputEnvelope = {
     data: VolumeLoanCreateManyUserInput | VolumeLoanCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PasswordResetTokenCreateWithoutUserInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_ip?: string | null
+    token: string
+    expires_at: Date | string
+    used_at?: Date | string | null
+  }
+
+  export type PasswordResetTokenUncheckedCreateWithoutUserInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_ip?: string | null
+    token: string
+    expires_at: Date | string
+    used_at?: Date | string | null
+  }
+
+  export type PasswordResetTokenCreateOrConnectWithoutUserInput = {
+    where: PasswordResetTokenWhereUniqueInput
+    create: XOR<PasswordResetTokenCreateWithoutUserInput, PasswordResetTokenUncheckedCreateWithoutUserInput>
+  }
+
+  export type PasswordResetTokenCreateManyUserInputEnvelope = {
+    data: PasswordResetTokenCreateManyUserInput | PasswordResetTokenCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -25408,6 +27250,8 @@ export namespace Prisma {
     description?: StringNullableFilter<"Author"> | string | null
     avatar_url?: StringNullableFilter<"Author"> | string | null
     is_spirit?: BoolFilter<"Author"> | boolean
+    birth_date?: DateTimeNullableFilter<"Author"> | Date | string | null
+    death_date?: DateTimeNullableFilter<"Author"> | Date | string | null
   }
 
   export type AuthorUpsertWithWhereUniqueWithoutUpdated_by_userInput = {
@@ -25771,6 +27615,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFilter<"VolumeLoan"> | $Enums.StatusEnum
     volume_id?: BigIntFilter<"VolumeLoan"> | bigint | number
     user_id?: BigIntFilter<"VolumeLoan"> | bigint | number
+    renewed_from_loan_id?: BigIntNullableFilter<"VolumeLoan"> | bigint | number | null
     loan_date?: DateTimeFilter<"VolumeLoan"> | Date | string
     due_date?: DateTimeFilter<"VolumeLoan"> | Date | string
     return_date?: DateTimeNullableFilter<"VolumeLoan"> | Date | string | null
@@ -25892,6 +27737,35 @@ export namespace Prisma {
     data: XOR<VolumeLoanUpdateManyMutationInput, VolumeLoanUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type PasswordResetTokenUpsertWithWhereUniqueWithoutUserInput = {
+    where: PasswordResetTokenWhereUniqueInput
+    update: XOR<PasswordResetTokenUpdateWithoutUserInput, PasswordResetTokenUncheckedUpdateWithoutUserInput>
+    create: XOR<PasswordResetTokenCreateWithoutUserInput, PasswordResetTokenUncheckedCreateWithoutUserInput>
+  }
+
+  export type PasswordResetTokenUpdateWithWhereUniqueWithoutUserInput = {
+    where: PasswordResetTokenWhereUniqueInput
+    data: XOR<PasswordResetTokenUpdateWithoutUserInput, PasswordResetTokenUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PasswordResetTokenUpdateManyWithWhereWithoutUserInput = {
+    where: PasswordResetTokenScalarWhereInput
+    data: XOR<PasswordResetTokenUpdateManyMutationInput, PasswordResetTokenUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PasswordResetTokenScalarWhereInput = {
+    AND?: PasswordResetTokenScalarWhereInput | PasswordResetTokenScalarWhereInput[]
+    OR?: PasswordResetTokenScalarWhereInput[]
+    NOT?: PasswordResetTokenScalarWhereInput | PasswordResetTokenScalarWhereInput[]
+    id?: BigIntFilter<"PasswordResetToken"> | bigint | number
+    created_at?: DateTimeFilter<"PasswordResetToken"> | Date | string
+    created_ip?: StringNullableFilter<"PasswordResetToken"> | string | null
+    user_id?: BigIntFilter<"PasswordResetToken"> | bigint | number
+    token?: StringFilter<"PasswordResetToken"> | string
+    expires_at?: DateTimeFilter<"PasswordResetToken"> | Date | string
+    used_at?: DateTimeNullableFilter<"PasswordResetToken"> | Date | string | null
+  }
+
   export type UserCreateWithoutAuth_tokensInput = {
     id?: bigint | number
     slug?: string
@@ -25904,6 +27778,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -25925,6 +27800,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuth_tokensInput = {
@@ -25939,6 +27815,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -25960,6 +27837,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuth_tokensInput = {
@@ -25990,7 +27868,173 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUpdateManyWithoutUpdated_by_userNestedInput
+    created_volumes?: VolumeUpdateManyWithoutCreated_by_userNestedInput
+    updated_volumes?: VolumeUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: VolumeAuthorUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_authors?: VolumeAuthorUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUpdateManyWithoutUpdated_by_userNestedInput
+    created_publishers?: PublisherUpdateManyWithoutCreated_by_userNestedInput
+    updated_publishers?: PublisherUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
+    volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAuth_tokensInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_books?: BookUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_books?: BookUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volumes?: VolumeUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volumes?: VolumeUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_authors?: VolumeAuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_authors?: VolumeAuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_tags?: TagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_tags?: TagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_publishers?: PublisherUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_publishers?: PublisherUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_book_tags?: BookTagUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_book_tags?: BookTagUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
+    volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutPassword_reset_tokensInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    document?: string | null
+    role?: $Enums.UserRole
+    auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
+    created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookCreateNestedManyWithoutUpdated_by_userInput
+    created_volumes?: VolumeCreateNestedManyWithoutCreated_by_userInput
+    updated_volumes?: VolumeCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: VolumeAuthorCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_authors?: VolumeAuthorCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagCreateNestedManyWithoutUpdated_by_userInput
+    created_publishers?: PublisherCreateNestedManyWithoutCreated_by_userInput
+    updated_publishers?: PublisherCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
+    volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPassword_reset_tokensInput = {
+    id?: bigint | number
+    slug?: string
+    created_at?: Date | string
+    name: string
+    display_name: string
+    sex?: $Enums.SexEnum | null
+    login: string
+    status?: $Enums.StatusEnum
+    password?: string | null
+    email?: string | null
+    phone?: string | null
+    document?: string | null
+    role?: $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
+    created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_books?: BookUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_books?: BookUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volumes?: VolumeUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volumes?: VolumeUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_authors?: VolumeAuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_authors?: VolumeAuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_tags?: TagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_tags?: TagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_publishers?: PublisherUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_publishers?: PublisherUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_book_tags?: BookTagUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_book_tags?: BookTagUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
+    updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
+    volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPassword_reset_tokensInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPassword_reset_tokensInput, UserUncheckedCreateWithoutPassword_reset_tokensInput>
+  }
+
+  export type UserUpsertWithoutPassword_reset_tokensInput = {
+    update: XOR<UserUpdateWithoutPassword_reset_tokensInput, UserUncheckedUpdateWithoutPassword_reset_tokensInput>
+    create: XOR<UserCreateWithoutPassword_reset_tokensInput, UserUncheckedCreateWithoutPassword_reset_tokensInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPassword_reset_tokensInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPassword_reset_tokensInput, UserUncheckedUpdateWithoutPassword_reset_tokensInput>
+  }
+
+  export type UserUpdateWithoutPassword_reset_tokensInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    slug?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    display_name?: StringFieldUpdateOperationsInput | string
+    sex?: NullableEnumSexEnumFieldUpdateOperationsInput | $Enums.SexEnum | null
+    login?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
     updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
     created_books?: BookUpdateManyWithoutCreated_by_userNestedInput
@@ -26013,7 +28057,7 @@ export namespace Prisma {
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutAuth_tokensInput = {
+  export type UserUncheckedUpdateWithoutPassword_reset_tokensInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     slug?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26025,7 +28069,9 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     created_books?: BookUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26060,6 +28106,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     updated_authors?: AuthorCreateNestedManyWithoutUpdated_by_userInput
@@ -26081,6 +28128,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_authorsInput = {
@@ -26095,6 +28143,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     updated_authors?: AuthorUncheckedCreateNestedManyWithoutUpdated_by_userInput
@@ -26116,6 +28165,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_authorsInput = {
@@ -26135,6 +28185,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -26156,6 +28207,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_authorsInput = {
@@ -26170,6 +28222,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -26191,6 +28244,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_authorsInput = {
@@ -26253,6 +28307,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     updated_authors?: AuthorUpdateManyWithoutUpdated_by_userNestedInput
@@ -26274,6 +28329,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_authorsInput = {
@@ -26288,6 +28344,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     updated_authors?: AuthorUncheckedUpdateManyWithoutUpdated_by_userNestedInput
@@ -26309,6 +28366,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_authorsInput = {
@@ -26334,6 +28392,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -26355,6 +28414,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_authorsInput = {
@@ -26369,6 +28429,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26390,6 +28451,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VolumeAuthorUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -26420,6 +28482,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -26441,6 +28504,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_book_authorsInput = {
@@ -26455,6 +28519,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -26476,6 +28541,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_book_authorsInput = {
@@ -26495,6 +28561,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -26516,6 +28583,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_volume_authorsInput = {
@@ -26530,6 +28598,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -26551,6 +28620,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_volume_authorsInput = {
@@ -26569,6 +28639,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
     created_by_user: UserCreateNestedOneWithoutCreated_authorsInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_authorsInput
   }
@@ -26586,6 +28658,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
   }
 
   export type AuthorCreateOrConnectWithoutVolumesInput = {
@@ -26687,6 +28761,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -26708,6 +28783,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_book_authorsInput = {
@@ -26722,6 +28798,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26743,6 +28820,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_volume_authorsInput = {
@@ -26768,6 +28846,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -26789,6 +28868,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_volume_authorsInput = {
@@ -26803,6 +28883,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -26824,6 +28905,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AuthorUpsertWithoutVolumesInput = {
@@ -26848,6 +28930,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_authorsNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_authorsNestedInput
   }
@@ -26865,6 +28949,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type VolumeUpsertWithoutAuthorsInput = {
@@ -26956,6 +29042,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -26977,6 +29064,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_tagsInput = {
@@ -26991,6 +29079,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -27012,6 +29101,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_tagsInput = {
@@ -27031,6 +29121,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -27052,6 +29143,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_tagsInput = {
@@ -27066,6 +29158,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -27087,6 +29180,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_tagsInput = {
@@ -27147,6 +29241,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -27168,6 +29263,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_tagsInput = {
@@ -27182,6 +29278,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -27203,6 +29300,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_tagsInput = {
@@ -27228,6 +29326,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -27249,6 +29348,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_tagsInput = {
@@ -27263,6 +29363,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -27284,6 +29385,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BookTagUpsertWithWhereUniqueWithoutTagInput = {
@@ -27314,6 +29416,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -27335,6 +29438,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_book_tagsInput = {
@@ -27349,6 +29453,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -27370,6 +29475,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_book_tagsInput = {
@@ -27389,6 +29495,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -27410,6 +29517,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_book_tagsInput = {
@@ -27424,6 +29532,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -27445,6 +29554,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_book_tagsInput = {
@@ -27561,6 +29671,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -27582,6 +29693,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_book_tagsInput = {
@@ -27596,6 +29708,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -27617,6 +29730,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_book_tagsInput = {
@@ -27642,6 +29756,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -27663,6 +29778,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_book_tagsInput = {
@@ -27677,6 +29793,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -27698,6 +29815,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TagUpsertWithoutBooksInput = {
@@ -27810,6 +29928,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -27831,6 +29950,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_categoriesInput = {
@@ -27845,6 +29965,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -27866,6 +29987,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_categoriesInput = {
@@ -27885,6 +30007,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -27906,6 +30029,7 @@ export namespace Prisma {
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_categoriesInput = {
@@ -27920,6 +30044,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -27941,6 +30066,7 @@ export namespace Prisma {
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_categoriesInput = {
@@ -28031,6 +30157,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -28052,6 +30179,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_categoriesInput = {
@@ -28066,6 +30194,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -28087,6 +30216,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_categoriesInput = {
@@ -28112,6 +30242,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -28133,6 +30264,7 @@ export namespace Prisma {
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_categoriesInput = {
@@ -28147,6 +30279,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -28168,6 +30301,7 @@ export namespace Prisma {
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BookUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -28198,6 +30332,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -28219,6 +30354,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_publishersInput = {
@@ -28233,6 +30369,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -28254,6 +30391,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_publishersInput = {
@@ -28273,6 +30411,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -28294,6 +30433,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_publishersInput = {
@@ -28308,6 +30448,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -28329,6 +30470,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_publishersInput = {
@@ -28435,6 +30577,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -28456,6 +30599,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_publishersInput = {
@@ -28470,6 +30614,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -28491,6 +30636,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_publishersInput = {
@@ -28516,6 +30662,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -28537,6 +30684,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_publishersInput = {
@@ -28551,6 +30699,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -28572,6 +30721,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VolumeUpsertWithWhereUniqueWithoutPublisherInput = {
@@ -28602,6 +30752,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -28623,6 +30774,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_booksInput = {
@@ -28637,6 +30789,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -28658,6 +30811,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_booksInput = {
@@ -28677,6 +30831,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -28698,6 +30853,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_booksInput = {
@@ -28712,6 +30868,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -28733,6 +30890,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_booksInput = {
@@ -28824,6 +30982,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -28845,6 +31004,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_booksInput = {
@@ -28859,6 +31019,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -28880,6 +31041,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_booksInput = {
@@ -28905,6 +31067,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -28926,6 +31089,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_booksInput = {
@@ -28940,6 +31104,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -28961,6 +31126,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CategoryUpsertWithoutBooksInput = {
@@ -29028,6 +31194,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -29049,6 +31216,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_volumesInput = {
@@ -29063,6 +31231,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -29084,6 +31253,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_volumesInput = {
@@ -29103,6 +31273,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -29124,6 +31295,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_volumesInput = {
@@ -29138,6 +31310,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -29159,6 +31332,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_volumesInput = {
@@ -29285,6 +31459,8 @@ export namespace Prisma {
     created_by_user: UserCreateNestedOneWithoutCreated_volume_loansInput
     updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
     user: UserCreateNestedOneWithoutVolume_loansInput
+    renewed_from_loan?: VolumeLoanCreateNestedOneWithoutRenewed_into_loansInput
+    renewed_into_loans?: VolumeLoanCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanUncheckedCreateWithoutVolumeInput = {
@@ -29295,10 +31471,12 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     user_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
     description?: string | null
+    renewed_into_loans?: VolumeLoanUncheckedCreateNestedManyWithoutRenewed_from_loanInput
   }
 
   export type VolumeLoanCreateOrConnectWithoutVolumeInput = {
@@ -29334,6 +31512,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -29355,6 +31534,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_volumesInput = {
@@ -29369,6 +31549,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -29390,6 +31571,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_volumesInput = {
@@ -29415,6 +31597,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -29436,6 +31619,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_volumesInput = {
@@ -29450,6 +31634,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -29471,6 +31656,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PublisherUpsertWithoutVolumesInput = {
@@ -29574,6 +31760,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -29595,6 +31782,7 @@ export namespace Prisma {
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVolume_accessesInput = {
@@ -29609,6 +31797,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -29630,6 +31819,7 @@ export namespace Prisma {
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVolume_accessesInput = {
@@ -29731,6 +31921,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -29752,6 +31943,7 @@ export namespace Prisma {
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVolume_accessesInput = {
@@ -29766,6 +31958,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -29787,6 +31980,7 @@ export namespace Prisma {
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VolumeUpsertWithoutAccessesInput = {
@@ -29878,6 +32072,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -29899,6 +32094,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreated_volume_loansInput = {
@@ -29913,6 +32109,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -29934,6 +32131,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreated_volume_loansInput = {
@@ -29953,6 +32151,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -29974,6 +32173,7 @@ export namespace Prisma {
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUpdated_volume_loansInput = {
@@ -29988,6 +32188,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -30009,6 +32210,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
     volume_loans?: VolumeLoanUncheckedCreateNestedManyWithoutUserInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUpdated_volume_loansInput = {
@@ -30028,6 +32230,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenCreateNestedManyWithoutUserInput
     created_authors?: AuthorCreateNestedManyWithoutCreated_by_userInput
@@ -30049,6 +32252,7 @@ export namespace Prisma {
     created_categories?: CategoryCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessCreateNestedManyWithoutCreated_by_userInput
+    password_reset_tokens?: PasswordResetTokenCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVolume_loansInput = {
@@ -30063,6 +32267,7 @@ export namespace Prisma {
     password?: string | null
     email?: string | null
     phone?: string | null
+    document?: string | null
     role?: $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedCreateNestedManyWithoutUserInput
     created_authors?: AuthorUncheckedCreateNestedManyWithoutCreated_by_userInput
@@ -30084,6 +32289,7 @@ export namespace Prisma {
     created_categories?: CategoryUncheckedCreateNestedManyWithoutCreated_by_userInput
     updated_categories?: CategoryUncheckedCreateNestedManyWithoutUpdated_by_userInput
     volume_accesses?: VolumeAccessUncheckedCreateNestedManyWithoutCreated_by_userInput
+    password_reset_tokens?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVolume_loansInput = {
@@ -30162,6 +32368,85 @@ export namespace Prisma {
     create: XOR<VolumeCreateWithoutLoansInput, VolumeUncheckedCreateWithoutLoansInput>
   }
 
+  export type VolumeLoanCreateWithoutRenewed_into_loansInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    status?: $Enums.StatusEnum
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_volume_loansInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
+    user: UserCreateNestedOneWithoutVolume_loansInput
+    volume: VolumeCreateNestedOneWithoutLoansInput
+    renewed_from_loan?: VolumeLoanCreateNestedOneWithoutRenewed_into_loansInput
+  }
+
+  export type VolumeLoanUncheckedCreateWithoutRenewed_into_loansInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    user_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
+  export type VolumeLoanCreateOrConnectWithoutRenewed_into_loansInput = {
+    where: VolumeLoanWhereUniqueInput
+    create: XOR<VolumeLoanCreateWithoutRenewed_into_loansInput, VolumeLoanUncheckedCreateWithoutRenewed_into_loansInput>
+  }
+
+  export type VolumeLoanCreateWithoutRenewed_from_loanInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    updated_at?: Date | string | null
+    status?: $Enums.StatusEnum
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+    created_by_user: UserCreateNestedOneWithoutCreated_volume_loansInput
+    updated_by_user?: UserCreateNestedOneWithoutUpdated_volume_loansInput
+    user: UserCreateNestedOneWithoutVolume_loansInput
+    volume: VolumeCreateNestedOneWithoutLoansInput
+    renewed_into_loans?: VolumeLoanCreateNestedManyWithoutRenewed_from_loanInput
+  }
+
+  export type VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+    renewed_into_loans?: VolumeLoanUncheckedCreateNestedManyWithoutRenewed_from_loanInput
+  }
+
+  export type VolumeLoanCreateOrConnectWithoutRenewed_from_loanInput = {
+    where: VolumeLoanWhereUniqueInput
+    create: XOR<VolumeLoanCreateWithoutRenewed_from_loanInput, VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput>
+  }
+
+  export type VolumeLoanCreateManyRenewed_from_loanInputEnvelope = {
+    data: VolumeLoanCreateManyRenewed_from_loanInput | VolumeLoanCreateManyRenewed_from_loanInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutCreated_volume_loansInput = {
     update: XOR<UserUpdateWithoutCreated_volume_loansInput, UserUncheckedUpdateWithoutCreated_volume_loansInput>
     create: XOR<UserCreateWithoutCreated_volume_loansInput, UserUncheckedCreateWithoutCreated_volume_loansInput>
@@ -30185,6 +32470,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -30206,6 +32492,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreated_volume_loansInput = {
@@ -30220,6 +32507,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -30241,6 +32529,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutUpdated_volume_loansInput = {
@@ -30266,6 +32555,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -30287,6 +32577,7 @@ export namespace Prisma {
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUpdated_volume_loansInput = {
@@ -30301,6 +32592,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -30322,6 +32614,7 @@ export namespace Prisma {
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
     volume_loans?: VolumeLoanUncheckedUpdateManyWithoutUserNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutVolume_loansInput = {
@@ -30347,6 +32640,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUpdateManyWithoutCreated_by_userNestedInput
@@ -30368,6 +32662,7 @@ export namespace Prisma {
     created_categories?: CategoryUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUpdateManyWithoutCreated_by_userNestedInput
+    password_reset_tokens?: PasswordResetTokenUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVolume_loansInput = {
@@ -30382,6 +32677,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    document?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     auth_tokens?: UserAuthTokenUncheckedUpdateManyWithoutUserNestedInput
     created_authors?: AuthorUncheckedUpdateManyWithoutCreated_by_userNestedInput
@@ -30403,6 +32699,7 @@ export namespace Prisma {
     created_categories?: CategoryUncheckedUpdateManyWithoutCreated_by_userNestedInput
     updated_categories?: CategoryUncheckedUpdateManyWithoutUpdated_by_userNestedInput
     volume_accesses?: VolumeAccessUncheckedUpdateManyWithoutCreated_by_userNestedInput
+    password_reset_tokens?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VolumeUpsertWithoutLoansInput = {
@@ -30482,6 +32779,65 @@ export namespace Prisma {
     accesses?: VolumeAccessUncheckedUpdateManyWithoutVolumeNestedInput
   }
 
+  export type VolumeLoanUpsertWithoutRenewed_into_loansInput = {
+    update: XOR<VolumeLoanUpdateWithoutRenewed_into_loansInput, VolumeLoanUncheckedUpdateWithoutRenewed_into_loansInput>
+    create: XOR<VolumeLoanCreateWithoutRenewed_into_loansInput, VolumeLoanUncheckedCreateWithoutRenewed_into_loansInput>
+    where?: VolumeLoanWhereInput
+  }
+
+  export type VolumeLoanUpdateToOneWithWhereWithoutRenewed_into_loansInput = {
+    where?: VolumeLoanWhereInput
+    data: XOR<VolumeLoanUpdateWithoutRenewed_into_loansInput, VolumeLoanUncheckedUpdateWithoutRenewed_into_loansInput>
+  }
+
+  export type VolumeLoanUpdateWithoutRenewed_into_loansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
+    user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
+    volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+    renewed_from_loan?: VolumeLoanUpdateOneWithoutRenewed_into_loansNestedInput
+  }
+
+  export type VolumeLoanUncheckedUpdateWithoutRenewed_into_loansInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VolumeLoanUpsertWithWhereUniqueWithoutRenewed_from_loanInput = {
+    where: VolumeLoanWhereUniqueInput
+    update: XOR<VolumeLoanUpdateWithoutRenewed_from_loanInput, VolumeLoanUncheckedUpdateWithoutRenewed_from_loanInput>
+    create: XOR<VolumeLoanCreateWithoutRenewed_from_loanInput, VolumeLoanUncheckedCreateWithoutRenewed_from_loanInput>
+  }
+
+  export type VolumeLoanUpdateWithWhereUniqueWithoutRenewed_from_loanInput = {
+    where: VolumeLoanWhereUniqueInput
+    data: XOR<VolumeLoanUpdateWithoutRenewed_from_loanInput, VolumeLoanUncheckedUpdateWithoutRenewed_from_loanInput>
+  }
+
+  export type VolumeLoanUpdateManyWithWhereWithoutRenewed_from_loanInput = {
+    where: VolumeLoanScalarWhereInput
+    data: XOR<VolumeLoanUpdateManyMutationInput, VolumeLoanUncheckedUpdateManyWithoutRenewed_from_loanInput>
+  }
+
   export type UserAuthTokenCreateManyUserInput = {
     id?: bigint | number
     slug?: string
@@ -30508,6 +32864,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
   }
 
   export type AuthorCreateManyUpdated_by_userInput = {
@@ -30522,6 +32880,8 @@ export namespace Prisma {
     description?: string | null
     avatar_url?: string | null
     is_spirit?: boolean
+    birth_date?: Date | string | null
+    death_date?: Date | string | null
   }
 
   export type BookCreateManyCreated_by_userInput = {
@@ -30734,6 +33094,7 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     volume_id: bigint | number
     user_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
@@ -30748,6 +33109,7 @@ export namespace Prisma {
     status?: $Enums.StatusEnum
     volume_id: bigint | number
     user_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
@@ -30801,10 +33163,20 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     volume_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
     description?: string | null
+  }
+
+  export type PasswordResetTokenCreateManyUserInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_ip?: string | null
+    token: string
+    expires_at: Date | string
+    used_at?: Date | string | null
   }
 
   export type UserAuthTokenUpdateWithoutUserInput = {
@@ -30860,6 +33232,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user?: UserUpdateOneWithoutUpdated_authorsNestedInput
     volumes?: VolumeAuthorUpdateManyWithoutAuthorNestedInput
   }
@@ -30876,6 +33250,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     volumes?: VolumeAuthorUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
@@ -30891,6 +33267,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type AuthorUpdateWithoutUpdated_by_userInput = {
@@ -30904,6 +33282,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     created_by_user?: UserUpdateOneRequiredWithoutCreated_authorsNestedInput
     volumes?: VolumeAuthorUpdateManyWithoutAuthorNestedInput
   }
@@ -30920,6 +33300,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     volumes?: VolumeAuthorUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
@@ -30935,6 +33317,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_spirit?: BoolFieldUpdateOperationsInput | boolean
+    birth_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    death_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type BookUpdateWithoutCreated_by_userInput = {
@@ -31579,6 +33963,8 @@ export namespace Prisma {
     updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
     user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
     volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+    renewed_from_loan?: VolumeLoanUpdateOneWithoutRenewed_into_loansNestedInput
+    renewed_into_loans?: VolumeLoanUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanUncheckedUpdateWithoutCreated_by_userInput = {
@@ -31589,10 +33975,12 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    renewed_into_loans?: VolumeLoanUncheckedUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanUncheckedUpdateManyWithoutCreated_by_userInput = {
@@ -31603,6 +33991,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -31621,6 +34010,8 @@ export namespace Prisma {
     created_by_user?: UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput
     user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
     volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+    renewed_from_loan?: VolumeLoanUpdateOneWithoutRenewed_into_loansNestedInput
+    renewed_into_loans?: VolumeLoanUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanUncheckedUpdateWithoutUpdated_by_userInput = {
@@ -31631,10 +34022,12 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    renewed_into_loans?: VolumeLoanUncheckedUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanUncheckedUpdateManyWithoutUpdated_by_userInput = {
@@ -31645,6 +34038,7 @@ export namespace Prisma {
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -31784,6 +34178,8 @@ export namespace Prisma {
     created_by_user?: UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
     volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+    renewed_from_loan?: VolumeLoanUpdateOneWithoutRenewed_into_loansNestedInput
+    renewed_into_loans?: VolumeLoanUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanUncheckedUpdateWithoutUserInput = {
@@ -31794,10 +34190,12 @@ export namespace Prisma {
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    renewed_into_loans?: VolumeLoanUncheckedUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanUncheckedUpdateManyWithoutUserInput = {
@@ -31808,10 +34206,38 @@ export namespace Prisma {
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PasswordResetTokenUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_ip?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PasswordResetTokenUncheckedUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_ip?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PasswordResetTokenUncheckedUpdateManyWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_ip?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type VolumeAuthorCreateManyAuthorInput = {
@@ -32196,6 +34622,7 @@ export namespace Prisma {
     updated_by_user_id?: bigint | number | null
     status?: $Enums.StatusEnum
     user_id: bigint | number
+    renewed_from_loan_id?: bigint | number | null
     loan_date?: Date | string
     due_date: Date | string
     return_date?: Date | string | null
@@ -32292,6 +34719,8 @@ export namespace Prisma {
     created_by_user?: UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput
     updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
     user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
+    renewed_from_loan?: VolumeLoanUpdateOneWithoutRenewed_into_loansNestedInput
+    renewed_into_loans?: VolumeLoanUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanUncheckedUpdateWithoutVolumeInput = {
@@ -32302,10 +34731,12 @@ export namespace Prisma {
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string
     return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    renewed_into_loans?: VolumeLoanUncheckedUpdateManyWithoutRenewed_from_loanNestedInput
   }
 
   export type VolumeLoanUncheckedUpdateManyWithoutVolumeInput = {
@@ -32315,6 +34746,69 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    renewed_from_loan_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VolumeLoanCreateManyRenewed_from_loanInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    created_by_user_id: bigint | number
+    updated_at?: Date | string | null
+    updated_by_user_id?: bigint | number | null
+    status?: $Enums.StatusEnum
+    volume_id: bigint | number
+    user_id: bigint | number
+    loan_date?: Date | string
+    due_date: Date | string
+    return_date?: Date | string | null
+    description?: string | null
+  }
+
+  export type VolumeLoanUpdateWithoutRenewed_from_loanInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_user?: UserUpdateOneRequiredWithoutCreated_volume_loansNestedInput
+    updated_by_user?: UserUpdateOneWithoutUpdated_volume_loansNestedInput
+    user?: UserUpdateOneRequiredWithoutVolume_loansNestedInput
+    volume?: VolumeUpdateOneRequiredWithoutLoansNestedInput
+    renewed_into_loans?: VolumeLoanUpdateManyWithoutRenewed_from_loanNestedInput
+  }
+
+  export type VolumeLoanUncheckedUpdateWithoutRenewed_from_loanInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    due_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    return_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    renewed_into_loans?: VolumeLoanUncheckedUpdateManyWithoutRenewed_from_loanNestedInput
+  }
+
+  export type VolumeLoanUncheckedUpdateManyWithoutRenewed_from_loanInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by_user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_by_user_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    status?: EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+    volume_id?: BigIntFieldUpdateOperationsInput | bigint | number
     user_id?: BigIntFieldUpdateOperationsInput | bigint | number
     loan_date?: DateTimeFieldUpdateOperationsInput | Date | string
     due_date?: DateTimeFieldUpdateOperationsInput | Date | string

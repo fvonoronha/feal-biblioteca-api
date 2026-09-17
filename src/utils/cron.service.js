@@ -1,18 +1,16 @@
 const cron = require("node-cron");
-const { db } = require("./db.service");
 
 const { updateMonthlyAccessCounter } = require("../book/service/book.service");
 
 module.exports = {
     setupCronJobs() {
         cron.schedule(
-            // "0 3 * * *", // Diariamente às 3:00 AM
-            "0 * * * *", // No minuto 0 de cada hora
+            "0 3 * * *", // Uma vez por dia, às 3:00 AM (horário de menor acesso ao site)
             async () => {
                 console.log(" [CRON] Atualizando estatísticas de acesso (Query Única)...");
 
                 try {
-                    updateMonthlyAccessCounter();
+                    await updateMonthlyAccessCounter();
 
                     console.log(" [CRON] Estatísticas atualizadas com sucesso...");
                 } catch (err) {
