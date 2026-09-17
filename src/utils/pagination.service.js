@@ -1,6 +1,8 @@
 const DEFAULT_PAGINATION_LIMIT = 10;
 const DEFAULT_PAGINATION_PAGE = 1;
-const MAX_PAGINATION_LIMIT = 100;
+// Alto o suficiente para as telas administrativas carregarem taxonomias inteiras (editoras,
+// autores) de uma vez só nos selects de cadastro, sem paginar - ver TAXONOMY_LIST_LIMIT no web.
+const MAX_PAGINATION_LIMIT = 500;
 
 const { Prisma } = require("./db.service");
 

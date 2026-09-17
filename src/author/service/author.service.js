@@ -1,4 +1,5 @@
-const { getSlug, getId } = require("../../utils/id.service");
+const { getId } = require("../../utils/id.service");
+const { generateUniqueSlug } = require("../../utils/slug.service");
 const { parsePagination, buildPageMeta } = require("../../utils/pagination.service");
 const { treatVolumeFilters, getAuthorSearchScore } = require("../../utils/filters.service");
 const { normalizeSearchText } = require("../../utils/string.service");
@@ -231,9 +232,12 @@ module.exports = {
 
     async createAuthor(data, req) {
         try {
+            const slug =
+                data.slug || (await generateUniqueSlug(data.name, (slug) => db.author.findFirst({ where: { slug } })));
+
             const newAuthor = await db.author.create({
                 data: {
-                    slug: data.slug || getSlug(),
+                    slug,
                     status: data.status || "A",
                     name: data.name,
                     search_name: normalizeSearchText(data.name),
@@ -297,7 +301,7 @@ module.exports = {
             }
 
             const processedImage = await processImage(fileBuffer, AVATAR_SIZE, AVATAR_SIZE);
-            const filename = `${existing.slug}-${getId(8)}.jpg`;
+            const filename = `${existing.slug}-${getId(8, "hex")}.jpg`;
             const avatarUrl = await uploadObject(`autor/${filename}`, processedImage, "image/jpeg");
 
             return await module.exports.updateAuthor(authorId, { avatar_url: avatarUrl }, req);

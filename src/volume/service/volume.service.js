@@ -1,4 +1,5 @@
-const { getSlug, getId } = require("../../utils/id.service");
+const { getId } = require("../../utils/id.service");
+const { generateUniqueSlug } = require("../../utils/slug.service");
 const { parsePagination, buildPageMeta } = require("../../utils/pagination.service");
 const { treatVolumeFilters, getVolumeSearchScore } = require("../../utils/filters.service");
 const { db, Prisma, parseError, notFoundError } = require("../../utils/db.service");
@@ -395,14 +396,20 @@ module.exports = {
         try {
             const bookId = BigInt(data.book_id);
 
-            const book = await db.book.findFirst({ where: { id: bookId, status: { not: "D" } }, select: { id: true } });
+            const book = await db.book.findFirst({
+                where: { id: bookId, status: { not: "D" } },
+                select: { id: true, title: true }
+            });
             if (!book) {
                 throw notFoundError("Livro não encontrado");
             }
 
+            const slug =
+                data.slug || (await generateUniqueSlug(book.title, (slug) => db.volume.findFirst({ where: { slug } })));
+
             const newVolume = await db.volume.create({
                 data: {
-                    slug: data.slug || getSlug(),
+                    slug,
                     status: data.status || "A",
                     book_id: bookId,
                     publisher_id: data.publisher_id ? BigInt(data.publisher_id) : null,
@@ -485,7 +492,7 @@ module.exports = {
             }
 
             const processedImage = await processImage(fileBuffer, COVER_WIDTH, COVER_HEIGHT);
-            const filename = `${existing.slug}-${getId(8)}.jpg`;
+            const filename = `${existing.slug}-${getId(8, "hex")}.jpg`;
             const coverUrl = await uploadObject(`capa/${filename}`, processedImage, "image/jpeg");
 
             return await module.exports.updateVolume(volumeId, { cover_url: coverUrl }, req);
@@ -509,7 +516,7 @@ module.exports = {
             }
 
             const processedImage = await processImage(fileBuffer, COVER_WIDTH, COVER_HEIGHT);
-            const filename = `${existing.slug}-${getId(8)}.jpg`;
+            const filename = `${existing.slug}-${getId(8, "hex")}.jpg`;
             const backUrl = await uploadObject(`capa/verso/${filename}`, processedImage, "image/jpeg");
 
             return await module.exports.updateVolume(volumeId, { back_url: backUrl }, req);
@@ -533,7 +540,7 @@ module.exports = {
             }
 
             const processedImage = await processImage(fileBuffer, COVER_WIDTH, COVER_HEIGHT);
-            const filename = `${existing.slug}-${getId(8)}.jpg`;
+            const filename = `${existing.slug}-${getId(8, "hex")}.jpg`;
             const imageUrl = await uploadObject(`capa/extra/${filename}`, processedImage, "image/jpeg");
 
             return await module.exports.updateVolume(volumeId, { images_url: [...existing.images_url, imageUrl] }, req);

@@ -1,4 +1,4 @@
-const { getSlug } = require("../../utils/id.service");
+const { generateUniqueSlug } = require("../../utils/slug.service");
 const { parsePagination, buildPageMeta } = require("../../utils/pagination.service");
 const { treatVolumeFilters, getVolumeSearchScore } = require("../../utils/filters.service");
 const { db, Prisma, parseError, notFoundError, withTransaction } = require("../../utils/db.service");
@@ -146,9 +146,12 @@ module.exports = {
             const { book, volume } = payload;
 
             const result = await withTransaction(async (tx) => {
+                const bookSlug =
+                    book.slug || (await generateUniqueSlug(book.title, (slug) => tx.book.findFirst({ where: { slug } })));
+
                 const newBook = await tx.book.create({
                     data: {
-                        slug: book.slug || getSlug(),
+                        slug: bookSlug,
                         status: book.status || "A",
                         title: book.title,
                         search_title: buildSearchText(book.title),
@@ -165,9 +168,17 @@ module.exports = {
 
                 let newVolume = null;
                 if (volume) {
+                    // Volume não tem um "título" próprio - na falta de um slug explícito, deriva
+                    // do título do livro (o mesmo texto que gerou o slug do Book), então o
+                    // primeiro exemplar de um livro novo normalmente fica com book.slug ===
+                    // volume.slug (só divergem se colidirem, quando um short-id é acrescentado).
+                    const volumeSlug =
+                        volume.slug ||
+                        (await generateUniqueSlug(book.title, (slug) => tx.volume.findFirst({ where: { slug } })));
+
                     newVolume = await tx.volume.create({
                         data: {
-                            slug: volume.slug || getSlug(),
+                            slug: volumeSlug,
                             status: volume.status || "A",
                             book_id: newBook.id,
                             publisher_id: volume.publisher_id ? BigInt(volume.publisher_id) : null,

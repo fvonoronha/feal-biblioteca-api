@@ -1,4 +1,4 @@
-const { getSlug } = require("../../utils/id.service");
+const { generateUniqueSlug } = require("../../utils/slug.service");
 const { normalizeSearchText } = require("../../utils/string.service");
 const { parsePagination, buildPageMeta } = require("../../utils/pagination.service");
 const { treatVolumeFilters } = require("../../utils/filters.service");
@@ -41,9 +41,12 @@ module.exports = {
 
     async createPublisher(data, req) {
         try {
+            const slug =
+                data.slug || (await generateUniqueSlug(data.name, (slug) => db.publisher.findFirst({ where: { slug } })));
+
             const newPublisher = await db.publisher.create({
                 data: {
-                    slug: data.slug || getSlug(),
+                    slug,
                     status: data.status || "A",
                     name: data.name,
                     search_name: normalizeSearchText(data.name),

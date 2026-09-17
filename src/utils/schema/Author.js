@@ -14,7 +14,7 @@ const createAuthorSchema = z.object({
     description: z.string().max(4000).optional(),
     status: z.enum(["A", "I", "D"]).optional(),
     slug: slugField,
-    avatar_url: z.string().max(500).optional(),
+    avatar_url: z.string().max(500).optional().nullable(),
     is_spirit: z.boolean().default(false),
     birth_date: dateField,
     death_date: dateField
@@ -25,7 +25,9 @@ const updateAuthorSchema = z.object({
     description: z.string().max(4000).optional(),
     status: z.enum(["A", "I", "D"]).optional(),
     slug: slugField,
-    avatar_url: z.string().max(500).optional(),
+    // Aceita `null` explicitamente pra permitir limpar a foto do autor (ver
+    // AuthorImageManager/onClearImage no front) - o mesmo padrão de cover_url/back_url em Volume.
+    avatar_url: z.string().max(500).optional().nullable(),
     is_spirit: z.boolean().optional(),
     birth_date: dateField,
     death_date: dateField
